@@ -21,7 +21,96 @@
                     name: "TEXTURE_WRAP_T", val: "CLAMP"
                 }
             ]
+        },
+        {
+            name: "bloom_pass1",
+            lod: 0,
+            internalFormat: "RGBA8",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass2",
+            lod: 0,
+            internalFormat: "RGBA8",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass3",
+            lod: 0,
+            internalFormat: "RGBA8",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass4",
+            lod: 0,
+            internalFormat: "RGBA8",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                }
+            ]
         }
+
     ],
 
     framebuffers: [
@@ -32,7 +121,39 @@
                     image: "bright_color"
                 }
             ]
-        }
+        },
+        {
+            name: "bloom_pass1",
+            colorAttachments: [
+                {
+                    image: "bloom_pass1"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass2",
+            colorAttachments: [
+                {
+                    image: "bloom_pass2"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass3",
+            colorAttachments: [
+                {
+                    image: "bloom_pass3"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass4",
+            colorAttachments: [
+                {
+                    image: "bloom_pass4"
+                }
+            ]
+        },
     ],
 
     programs: [
@@ -41,13 +162,14 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/final.frag",
             samplers: [
-                "u_main_color"
+                "u_main_color",
+                "u_bloom"
             ]
         },
         {
             name: "bright_color",
             vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/bright_color.frag",
+            fragmentSource: "honey:shaders/post/bloom/bright_color.frag",
             samplers: [
                 "u_main_color",
                 "u_emissive",
@@ -57,6 +179,39 @@
                 "u_particles_depth"
             ]
         }
+        {
+            name: "bloom_pass1",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass1.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_pass2",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass2.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_pass3",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass3.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_pass4",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass4.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        }
+
     ],
 
     afterRenderHand: {
@@ -66,7 +221,8 @@
                 program: "final",
                 framebuffer: "copy_to_main",
                 samplerImages: [
-                    "main_color"
+                    "main_color",
+                    "bloom_pass4"
                 ]
             },
             {
@@ -81,7 +237,40 @@
                     "clouds_depth",
                     "particles_depth"
                 ]
-            }
+            },
+            {
+                name: "bloom_pass1",
+                program: "bloom_pass1",
+                framebuffer: "bloom_pass1",
+                samplerImages: [
+                    "bright_color"
+                ]
+            },
+            {
+                name: "bloom_pass2",
+                program: "bloom_pass2",
+                framebuffer: "bloom_pass2",
+                samplerImages: [
+                    "bloom_pass1"
+                ]
+            },
+            {
+                name: "bloom_pass3",
+                program: "bloom_pass3",
+                framebuffer: "bloom_pass3",
+                samplerImages: [
+                    "bloom_pass2"
+                ]
+            },
+            {
+                name: "bloom_pass4",
+                program: "bloom_pass4",
+                framebuffer: "bloom_pass4",
+                samplerImages: [
+                    "bloom_pass3"
+                ]
+            },
+
         ]
     }
 }
