@@ -154,6 +154,7 @@
         "honey:include/composite/translucent.json5",
         "honey:include/composite/weather.json5",
         "honey:include/composite/composite.json5",
-        "honey:include/passes.json5"
+        "honey:include/fabulous.json5"
+        "honey:include/fullscreen.json5"
     ]
 }
