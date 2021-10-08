@@ -7,7 +7,7 @@ in vec2 texcoord;
 out vec4 fragColor;
 
 void main() {
-    color = texture2D(u_main_color, texcoord);
+    vec4 color = texture2D(u_main_color, texcoord);
 
     fragColor = color;
 }

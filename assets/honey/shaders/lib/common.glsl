@@ -13,6 +13,7 @@
 #include frex:shaders/lib/math.glsl
 #include frex:shaders/lib/sample.glsl
 
+#include honey:shaders/lib/config.glsl
 #include honey:shaders/lib/blur.glsl
 
 uniform ivec2 frxu_size; // size of viewport

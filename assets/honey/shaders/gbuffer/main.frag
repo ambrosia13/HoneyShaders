@@ -2,7 +2,9 @@
 
 uniform sampler2D u_glint;
 
+#ifdef VANILLA_LIGHTING
 in float diffuse;
+#endif
 
 out vec4[2] fragColor;
 
