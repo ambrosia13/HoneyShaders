@@ -3,7 +3,6 @@ Taken with permission from Xordev's Ominous Shaderpack
 https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc
 */
 
-#define BLOOM_QUALITY 5
 vec4 blur(sampler2D texture,vec2 c,float radius)
 {
 	vec2 texel = 1./vec2(frx_viewWidth,frx_viewHeight);
