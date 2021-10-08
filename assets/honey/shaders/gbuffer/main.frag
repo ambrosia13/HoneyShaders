@@ -6,7 +6,7 @@ uniform sampler2D u_glint;
 in float diffuse;
 #endif
 
-out vec4[2] fragColor;
+out vec4[3] fragColor;
 
 void frx_pipelineFragment() {
     vec4 color = frx_fragColor;
@@ -42,6 +42,7 @@ void frx_pipelineFragment() {
 
     fragColor[0] = color;
     fragColor[1] = emissive_color;
+    fragColor[2] = color;
 
     gl_FragDepth = gl_FragCoord.z;
 }

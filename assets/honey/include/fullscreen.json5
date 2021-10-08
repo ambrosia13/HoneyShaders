@@ -230,7 +230,7 @@
                 program: "bright_color",
                 framebuffer: "bright_color",
                 samplerImages: [
-                    "main_color",
+                    "main_color_copy",
                     "emissive_color",
                     "translucent_depth",
                     "main_depth",
