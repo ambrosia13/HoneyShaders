@@ -1,0 +1,33 @@
+{
+    fabulous: {
+        passes: [
+            {
+                name: "composite",
+                program: "composite",
+                framebuffer: "composite",
+                samplerImages: [
+                    "main_color",
+                    "main_depth",
+                    "translucent_color",
+                    "translucent_depth",
+                    "entity_color",
+                    "entity_depth",
+                    "weather_color",
+                    "weather_depth",
+                    "clouds_color",
+                    "clouds_depth",
+                    "particles_color",
+                    "particles_depth"
+                ]
+            },
+            {
+                name: "copy",
+                program: "copy",
+                framebuffer: "copy_to_main",
+                samplerImages: [
+                    "composite"
+                ]
+            }
+        ]
+    }
+}

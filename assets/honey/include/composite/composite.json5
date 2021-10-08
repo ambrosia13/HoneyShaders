@@ -1,0 +1,75 @@
+{
+    images: [
+        {
+            name: "composite",
+            lod: 0,
+            internalFormat: "RGBA8",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                }
+            ]
+        }
+    ],
+
+    framebuffers: [
+        {
+            name: "composite",
+            colorAttachments: [
+                {
+                    image: "composite", clearColor: 0x00000000
+                }
+            ]
+        },
+        {
+            name: "copy_to_main",
+            colorAttachments: [
+                {
+                    image: "main_color", clearColor: 0x00000000
+                }
+            ]
+        }
+    ],
+
+    programs: [
+        {
+            name: "composite",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/composite/composite.frag",
+            samplers: [
+                "u_main_color",
+                "u_main_depth",
+                "u_translucent_color",
+                "u_translucent_depth",
+                "u_entity_color",
+                "u_entity_depth",
+                "u_weather_color",
+                "u_weather_depth",
+                "u_clouds_color",
+                "u_clouds_depth",
+                "u_particles_color",
+                "u_particles_depth"
+            ]
+        },
+        {
+            name: "copy",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/composite/copy.frag",
+            samplers: [
+                "u_composite"
+            ]
+        }
+    ]
+}
