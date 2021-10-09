@@ -110,7 +110,6 @@
                 }
             ]
         }
-
     ],
 
     framebuffers: [
@@ -153,7 +152,7 @@
                     image: "bloom_pass4"
                 }
             ]
-        },
+        }
     ],
 
     programs: [
@@ -178,7 +177,7 @@
                 "u_clouds_depth",
                 "u_particles_depth"
             ]
-        }
+        },
         {
             name: "bloom_pass1",
             vertexSource: "honey:shaders/post/basic_frame.vert",
@@ -211,7 +210,6 @@
                 "u_color_input"
             ]
         }
-
     ],
 
     afterRenderHand: {
@@ -269,8 +267,7 @@
                 samplerImages: [
                     "bloom_pass3"
                 ]
-            },
-
+            }
         ]
     }
 }
