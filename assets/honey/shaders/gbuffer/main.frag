@@ -37,6 +37,9 @@ void frx_pipelineFragment() {
     if(frx_matFlash()) {
         color += flash / 3.0;
     }
+    if(frx_matCutout == 1.0) {
+        color.a = 1.0;
+    }
 
     color.rgb = mix(color.rgb, emissive_color.rgb, frx_fragEmissive);
     emissive_color *= frx_fragEmissive;
