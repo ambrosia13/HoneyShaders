@@ -27,7 +27,7 @@ void main() {
         }
         //lower threshold during night
         if(frx_worldIsMoonlit == 1.0) {
-            brightColor += vec4(0.4, 0.7, 1.0, 1.0) * frx_smootherstep(0.4, 1.0, frx_luminance(color.rgb));
+            brightColor += vec4(0.2, 0.4, 1.0, 1.0) * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb));
         }
     }
 
