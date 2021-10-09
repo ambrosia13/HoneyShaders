@@ -14,6 +14,7 @@ void frx_pipelineFragment() {
 
     #ifdef VANILLA_LIGHTING
     vec3 lightmap = texture2D(frxs_lightmap, frx_fragLight.xy).rgb;
+
     if(frx_fragEnableAo) {
         lightmap *= frx_fragLight.z;
     }

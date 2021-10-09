@@ -31,9 +31,5 @@ void main() {
         }
     }
 
-    if(translucentDepth != 1.0 && particlesDepth != 1.0) {
-        brightColor += emissive;
-    }
-
     fragColor = brightColor;
 }
