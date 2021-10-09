@@ -168,6 +168,10 @@
         }
     ],
 
+    sky: {
+        defaultZenithAngle: 0
+    },
+
     include: [
         "honey:include/composite/clouds.json5",
         "honey:include/composite/entity.json5",

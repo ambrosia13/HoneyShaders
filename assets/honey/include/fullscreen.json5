@@ -15,10 +15,10 @@
                     name: "TEXTURE_MAG_FILTER", val: "NEAREST"
                 },
                 {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
                 }, 
                 {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
         },
@@ -37,10 +37,10 @@
                     name: "TEXTURE_MAG_FILTER", val: "NEAREST"
                 },
                 {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
                 }, 
                 {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
         },
@@ -59,10 +59,10 @@
                     name: "TEXTURE_MAG_FILTER", val: "NEAREST"
                 },
                 {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
                 }, 
                 {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
         },
@@ -81,10 +81,10 @@
                     name: "TEXTURE_MAG_FILTER", val: "NEAREST"
                 },
                 {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
                 }, 
                 {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
         },
@@ -103,10 +103,10 @@
                     name: "TEXTURE_MAG_FILTER", val: "NEAREST"
                 },
                 {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP"
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
                 }, 
                 {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP"
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
         }
