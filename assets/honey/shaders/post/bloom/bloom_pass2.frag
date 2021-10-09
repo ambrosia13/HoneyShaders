@@ -1,4 +1,4 @@
-#include tutorialpack:shaders/lib/common.glsl
+#include honey:shaders/lib/common.glsl
 
 uniform sampler2D u_color_input;
 

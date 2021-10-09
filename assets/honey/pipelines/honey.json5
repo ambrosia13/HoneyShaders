@@ -181,5 +181,40 @@
         "honey:include/composite/composite.json5",
         "honey:include/fabulous.json5"
         "honey:include/fullscreen.json5"
+    ],
+
+    options: [
+        {
+            includeToken: "honey:bloom",
+            categoryKey: "config.honey.category.bloom",
+            elements: {
+                enable_bloom: {
+                    default: "true",
+                    nameKey: "config.honey.name.enable_bloom",
+                    descriptionKey: "config.honey.help.enable_bloom"
+                },
+                bloom_quality: {
+                    default: 5,
+                    min: 3,
+                    max: 10,
+                    nameKey: "config.honey.name.bloom_quality",
+                    descriptionKey: "config.honey.help.bloom_quality"
+                },
+                bloom_base_amt: {
+                    default: 4.0,
+                    min: 0.0,
+                    max: 100.0,
+                    nameKey: "config.honey.name.bloom_base_amt",
+                    descriptionKey: "config.honey.help.bloom_base_amt"
+                },
+                bloom_opacity: {
+                    default: 0.75,
+                    min: 0.0,
+                    max: 5.0,
+                    nameKey: "config.honey.name.bloom_opacity",
+                    descriptionKey: "config.honey.help.bloom_opacity"
+                }
+            }
+        }
     ]
 }

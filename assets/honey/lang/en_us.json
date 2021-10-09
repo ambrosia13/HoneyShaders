@@ -1,4 +1,14 @@
 {
     "pipeline.honey.name": "Honey Shaders",
-    "pipeline.honey.desc": "shaders for canvas"
+    "pipeline.honey.desc": "shaders for canvas",
+
+    "config.honey.category.bloom": "Bloom Configuration",
+    "config.honey.name.enable_bloom": "Enable Bloom",
+    "config.honey.help.enable_bloom": "Whether or not bloom is enabled. Will lower performance when enabled.",
+    "config.honey.name.bloom_quality": "Bloom Quality",
+    "config.honey.help.bloom_quality": "Performance cost is exponential. At default settings you don't need more than 5",
+    "config.honey.name.bloom_base_amt": "Bloom Amount",
+    "config.honey.help.bloom_base_amt": "Radius of bloom effect.",
+    "config.honey.name.bloom_opacity": "Bloom Opacity",
+    "config.honey.help.bloom_opacity": "The opacity at which bloom is added on to the original image."
 }

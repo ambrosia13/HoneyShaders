@@ -9,8 +9,10 @@ out vec4 fragColor;
 
 void main() {
     vec4 color = texture2D(u_main_color, texcoord);
+    #ifdef ENABLE_BLOOM
     vec4 bloom = texture2D(u_bloom, texcoord);
-    color += bloom / 1.5;
+    color += bloom * BLOOM_OPACITY;
+    #endif
 
     fragColor = color;
 }

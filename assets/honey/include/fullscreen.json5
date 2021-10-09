@@ -170,7 +170,6 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/bloom/bright_color.frag",
             samplers: [
-                "u_main_color",
                 "u_emissive",
                 "u_translucent_depth",
                 "u_main_depth",
@@ -221,20 +220,21 @@
                 samplerImages: [
                     "main_color",
                     "bloom_pass4"
-                ]
+                ],
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bright_color",
                 program: "bright_color",
                 framebuffer: "bright_color",
                 samplerImages: [
-                    "main_color_copy",
                     "emissive_color",
                     "translucent_depth",
                     "main_depth",
                     "clouds_depth",
                     "particles_depth"
-                ]
+                ],
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bloom_pass1",
@@ -242,7 +242,8 @@
                 framebuffer: "bloom_pass1",
                 samplerImages: [
                     "bright_color"
-                ]
+                ],
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bloom_pass2",
@@ -250,7 +251,8 @@
                 framebuffer: "bloom_pass2",
                 samplerImages: [
                     "bloom_pass1"
-                ]
+                ],
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bloom_pass3",
@@ -258,7 +260,8 @@
                 framebuffer: "bloom_pass3",
                 samplerImages: [
                     "bloom_pass2"
-                ]
+                ],
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bloom_pass4",
@@ -266,7 +269,8 @@
                 framebuffer: "bloom_pass4",
                 samplerImages: [
                     "bloom_pass3"
-                ]
+                ],
+                toggleConfig: "enable_bloom"
             }
         ]
     }
