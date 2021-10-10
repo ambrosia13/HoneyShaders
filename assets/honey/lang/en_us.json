@@ -2,13 +2,29 @@
     "pipeline.honey.name": "Honey Shaders",
     "pipeline.honey.desc": "shaders for canvas",
 
-    "config.honey.category.bloom": "Bloom Configuration",
+    "config.honey.category.bloom": "Blur Configuration",
     "config.honey.name.enable_bloom": "Enable Bloom",
     "config.honey.help.enable_bloom": "Whether or not bloom is enabled. Will lower performance when enabled.",
-    "config.honey.name.bloom_quality": "Bloom Quality",
-    "config.honey.help.bloom_quality": "Performance cost is exponential. At default settings you don't need more than 5",
     "config.honey.name.bloom_base_amt": "Bloom Amount",
     "config.honey.help.bloom_base_amt": "Radius of bloom effect.",
     "config.honey.name.bloom_opacity": "Bloom Opacity",
-    "config.honey.help.bloom_opacity": "The opacity at which bloom is added on to the original image."
+    "config.honey.help.bloom_opacity": "The opacity at which bloom is added on to the original image.",
+    "config.honey.name.bloom_quality": "Blur Quality",
+    "config.honey.help.bloom_quality": "Performance cost is exponential, samples = quality squared.",
+    "config.honey.name.underwater_blur": "Underwater Blur",
+    "config.honey.help.underwater_blur": "Blurs the screen when the player is underwater or in lava.",
+    "config.honey.name.underwater_blur_amt": "Underwater Blur Amount",
+    "config.honey.help.underwater_blur_amt": "The amount at which the screen is blurred underwater. Has minor visual artifacts.",
+
+    "config.honey.category.misc": "Misc Configuration",
+    "config.honey.name.hunger_desaturation": "Hunger Desaturation",
+    "config.honey.help.hunger_desaturation": "Desaturates the screen when hunger effect is active.",
+    "config.honey.name.fire_resistance_tint": "Fire Resistance Tint",
+    "config.honey.help.fire_resistance_tint": "Tints the lightmap red when fire resistance effect is active.",
+    "config.honey.name.water_breathing_tint": "Water Breathing Tint",
+    "config.honey.help.water_breathing_tint": "Tints the lightmap blue when water breathing effect is active",
+    "config.honey.name.among_us": "Among Us Screen",
+    "config.honey.help.among_us": "Adds among us overlay to the screen.",
+    "config.honey.name.trans_sky": "Trans Sky",
+    "config.honey.help.trans_sky": "Adds trans flag overlay to the sky."
 }

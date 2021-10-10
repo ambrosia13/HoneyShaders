@@ -5,7 +5,7 @@ Shaders for Canvas. Adds a pipeline to the game, which works best with material 
 ## Currently adds:
 
 - Bloom that applies to both terrain and the sun & moon
-- Translucent & in-fluid blur
+- Underwater & under lava tinting and blur
 - More is planned!
 
 ## Known issues:

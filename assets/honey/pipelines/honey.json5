@@ -193,13 +193,6 @@
                     nameKey: "config.honey.name.enable_bloom",
                     descriptionKey: "config.honey.help.enable_bloom"
                 },
-                bloom_quality: {
-                    default: 5,
-                    min: 3,
-                    max: 10,
-                    nameKey: "config.honey.name.bloom_quality",
-                    descriptionKey: "config.honey.help.bloom_quality"
-                },
                 bloom_base_amt: {
                     default: 4.0,
                     min: 0.0,
@@ -213,6 +206,56 @@
                     max: 5.0,
                     nameKey: "config.honey.name.bloom_opacity",
                     descriptionKey: "config.honey.help.bloom_opacity"
+                },
+                bloom_quality: {
+                    default: 5,
+                    min: 3,
+                    max: 10,
+                    nameKey: "config.honey.name.bloom_quality",
+                    descriptionKey: "config.honey.help.bloom_quality"
+                },
+                underwater_blur: {
+                    default: "true",
+                    nameKey: "config.honey.name.underwater_blur",
+                    descriptionKey: "config.honey.help.underwater_blur"
+                },
+                underwater_blur_amt: {
+                    default: 3.0,
+                    min: 0.0,
+                    max: 10.0,
+                    nameKey: "config.honey.name.underwater_blur_amt",
+                    descriptionKey: "config.honey.help.underwater_blur_amt"
+                }
+            }
+        },
+        {
+            includeToken: "honey:misc",
+            categoryKey: "config.honey.category.misc",
+            elements: {
+                hunger_desaturation: {
+                    default: "true",
+                    nameKey: "config.honey.name.hunger_desaturation",
+                    descriptionKey: "config.honey.help.hunger_desaturation"
+                },
+                fire_resistance_tint: {
+                    default: "true",
+                    nameKey: "config.honey.name.fire_resistance_tint",
+                    descriptionKey: "config.honey.help.fire_resistance_tint"
+                },
+                water_breathing_tint: {
+                    default: "true",
+                    nameKey: "config.honey.name.water_breathing_tint",
+                    descriptionKey: "config.honey.help.water_breathing_tint"
+                },
+                among_us: {
+                    default: "false",
+                    nameKey: "config.honey.name.among_us",
+                    descriptionKey: "config.honey.help.among_us"
+                },
+                trans_sky: {
+                    default: "false",
+                    nameKey: "config.honey.name.trans_sky",
+                    descriptionKey: "config.honey.help.trans_sky"
                 }
             }
         }

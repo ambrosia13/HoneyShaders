@@ -23,6 +23,16 @@ void frx_pipelineFragment() {
     if (frx_fragEnableDiffuse) {
         color.rgb *= diffuse;
     }
+    #ifdef FIRE_RESISTANCE_TINT
+    if(frx_effectFireResistance == 1) {
+      lightmap.r *= 1.5;
+    }
+    #endif
+    #ifdef WATER_BREATHING_TINT
+    if(frx_effectWaterBreathing == 1) {
+      lightmap.b *= 1.5;
+    }
+    #endif
     #endif
 
     vec4 glint = texture2D(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5);

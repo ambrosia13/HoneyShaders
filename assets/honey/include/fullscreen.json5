@@ -162,7 +162,8 @@
             fragmentSource: "honey:shaders/post/final.frag",
             samplers: [
                 "u_main_color",
-                "u_bloom"
+                "u_bloom",
+                "u_translucent_depth"
             ]
         },
         {
@@ -219,7 +220,8 @@
                 framebuffer: "copy_to_main",
                 samplerImages: [
                     "main_color",
-                    "bloom_pass4"
+                    "bloom_pass4",
+                    "translucent_depth"
                 ]
             },
             {
