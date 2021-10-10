@@ -4,16 +4,16 @@ Shaders for Canvas. Adds a pipeline to the game, which works best with material 
 
 ## Currently adds:
 
-- Bloom
+- Bloom that applies to both terrain and the sun & moon
 - Translucent & in-fluid blur
 - More is planned!
 
 ## Known issues:
 
 - Bloom "lags" behind the original image
-- Hand bloom currently doesn't work and things will be weird in some interactions regarding bloom
-- Some visual artifacts
-- The shader is generally very incomplete, but is suitable for normal gameplay. I wouldn't recommend using it if you want purely beautiful visuals.
+- Hand bloom currently doesn't work properly and some objects will look weird with bloom.
+- Some visual artifacts & probably poor performance
+- The shaderpack is generally very incomplete, but is suitable for normal gameplay. I wouldn't recommend using it if you want pretty images.
 
 # Credits
 
