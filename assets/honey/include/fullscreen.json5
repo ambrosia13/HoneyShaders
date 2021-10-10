@@ -220,8 +220,7 @@
                 samplerImages: [
                     "main_color",
                     "bloom_pass4"
-                ],
-                toggleConfig: "enable_bloom"
+                ]
             },
             {
                 name: "bright_color",
