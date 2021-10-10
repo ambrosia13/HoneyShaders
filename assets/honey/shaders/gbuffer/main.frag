@@ -36,13 +36,13 @@ void frx_pipelineFragment() {
     #endif
 
     vec4 glint = texture2D(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5);
-    vec4 hurt = vec4(1.0, 0.0, 0.0, 0.1);
+    vec4 hurt = vec4(1.5, 0.6, 0.6, 1.0);
     vec4 flash = vec4(1.0, 1.0, 1.0, 0.1);
     if(frx_matGlint() == 1.0) {
         color *= glint;
     }
     if(frx_matHurt()) {
-        color += hurt / 3.0;
+        color *= hurt;
     }
     if(frx_matFlash()) {
         color += flash / 3.0;
