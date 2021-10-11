@@ -25,5 +25,5 @@ Shaders for Canvas. Adds a pipeline to the game, which works best with material 
 
 # Screenshots
 
-![screenshot 1](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/img1.png?raw=true)
-![screenshot 2](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/img2.png?raw=true)
+![screenshot 1](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/image1.png?raw=true)
+![screenshot 2](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/image2.png?raw=true)
