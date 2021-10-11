@@ -11,8 +11,9 @@ out vec4 fragColor;
 void main() {
     vec4 color = texture2D(u_main_color, texcoord);
     float depth = texture2D(u_translucent_depth, texcoord).r;
-    #ifdef ENABLE_BLOOM
     vec4 bloom = texture2D(u_bloom, texcoord);
+    //bloom.rgb = reinhard2(bloom.rgb);
+    #ifdef ENABLE_BLOOM
     color += bloom * BLOOM_OPACITY;
     #endif
     
@@ -21,12 +22,18 @@ void main() {
         color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
         #endif
         color *= vec4(0.8, 0.8, 1.5, 1.0) / 1.0;
+        #ifdef ENABLE_BLOOM
+        color += bloom * BLOOM_OPACITY;
+        #endif
     }
     if(frx_cameraInLava == 1) {
         #ifdef UNDERWATER_BLUR
         color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
         #endif
         color *= vec4(1.5, 0.8, 0.8, 1.0) / 1.0;
+        #ifdef ENABLE_BLOOM
+        color += bloom * BLOOM_OPACITY;
+        #endif
     }
     #ifdef HUNGER_DESATURATION
     if(frx_effectHunger == 1) {
@@ -76,5 +83,5 @@ void main() {
     color.rgb *= sussy;
     #endif
 
-    fragColor = color;
+    fragColor = vec4((color.rgb), 1.0);
 }

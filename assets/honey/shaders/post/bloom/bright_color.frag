@@ -21,11 +21,11 @@ void main() {
     if(translucentDepth == 1.0 && handDepth == 1.0 && frx_worldHasSkylight == 1 && cloudsDepth == 1.0) {
         //only targetting the sky for bloom threshold
         if(frx_worldIsMoonlit == 0.0) {
-            brightColor += vec4(1.0, 0.7, 0.4, 1.0) * frx_smootherstep(0.79, 0.9, frx_luminance(emissive.rgb));
+            brightColor += vec4(2.0, 1.2, 0.4, 1.0) * frx_smootherstep(0.89, 0.9, frx_luminance(emissive.rgb));
         }
         //lower threshold during night
         if(frx_worldIsMoonlit == 1.0) {
-            brightColor += vec4(0.2, 0.2, 1.0, 1.0) * frx_smootherstep(0.4, 0.6, frx_luminance(emissive.rgb));
+            brightColor += vec4(0.3, 0.7, 2.0, 1.0) * frx_smootherstep(0.4, 0.6, frx_luminance(emissive.rgb));
         }
     }
 
