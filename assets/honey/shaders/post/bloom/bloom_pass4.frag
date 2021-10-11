@@ -9,7 +9,7 @@ out vec4 fragColor;
 void main() {
     vec4 color = texture2D(u_color_input, texcoord);
 
-    color = blur(u_color_input, texcoord, BLOOM_BASE_AMT);
+    color = blur(u_color_input, texcoord, BLOOM_BASE_AMT * 9.0);
 
     fragColor = color;
 }

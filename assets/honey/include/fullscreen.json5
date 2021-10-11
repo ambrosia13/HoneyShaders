@@ -113,7 +113,7 @@
         {
             name: "bloom_composite",
             lod: 0,
-            internalFormat: "RGBA32",
+            internalFormat: "RGBA32F",
             pixelFormat: "RGBA",
             pixelDataType: "UNSIGNED_BYTE",
             target: "TEXTURE_2D",
@@ -202,6 +202,7 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/bloom/bloom_composite.frag",
             samplers: [
+                "u_bloom0",
                 "u_bloom1",
                 "u_bloom2",
                 "u_bloom3",
@@ -262,7 +263,7 @@
                 framebuffer: "copy_to_main",
                 samplerImages: [
                     "main_color",
-                    "bloom_pass4",
+                    "bloom_composite",
                     "translucent_depth"
                 ]
             },
@@ -271,6 +272,7 @@
                 program: "bloom_composite",
                 framebuffer: "bloom_composite",
                 samplerImages: [
+                    "bright_color",
                     "bloom_pass1",
                     "bloom_pass2",
                     "bloom_pass3",

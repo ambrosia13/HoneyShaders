@@ -37,9 +37,3 @@ vec3 hsv2rgb(vec3 c)
     vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
-
-vec3 reinhard2(vec3 x) {
-  const float L_white = 4.0;
-
-  return (x * (1.0 + x / (L_white * L_white))) / (1.0 + x);
-}
