@@ -15,7 +15,7 @@ void frx_pipelineVertex() {
 
     #ifdef VANILLA_LIGHTING
     float lightSource = dot(frx_vertexNormal.rgb, frx_skyLightVector + vec3(0.2, 0.3, 0.4));
-    lightSource = lightSource * 0.25 + 0.75; //make the range 0.5 to 1.0
+    lightSource = lightSource * 0.2 + 0.75; //make the range 0.5 to 1.0
     diffuse = lightSource;
     #endif
 }

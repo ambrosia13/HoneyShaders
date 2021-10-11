@@ -17,5 +17,5 @@ void main() {
     vec4 bloom3 = texture2D(u_bloom3, texcoord);
     vec4 bloom4 = texture2D(u_bloom4, texcoord);
 
-    fragColor = vec4((bloom0.rgb + bloom1.rgb + bloom2.rgb + bloom3.rgb + bloom4.rgb), 1.0) / 5.0;
+    fragColor = vec4((bloom0.rgb + bloom1.rgb + bloom2.rgb + bloom3.rgb + bloom4.rgb), 1.0) / 4.5;
 }
