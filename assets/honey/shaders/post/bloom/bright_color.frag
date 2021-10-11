@@ -29,7 +29,7 @@ void main() {
         }
     }
 
-    if(handDepth == 1.0 && translucentDepth != 1.0 && particlesDepth != 1.0) {
+    if(handDepth != 1.0 || (translucentDepth != 1.0 && particlesDepth != 1.0)) {
         brightColor += emissive;
     }
 
