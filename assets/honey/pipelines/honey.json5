@@ -214,6 +214,30 @@
                     nameKey: "config.honey.name.bloom_quality",
                     descriptionKey: "config.honey.help.bloom_quality"
                 },
+                tonemap_bloom: {
+                    default: "true",
+                    nameKey: "config.honey.name.tonemap_bloom",
+                    descriptionKey: "config.honey.help.tonemap_bloom"
+                },
+                sunlight_emissivity: {
+                    default: 30,
+                    min: 0,
+                    max: 50,
+                    nameKey: "config.honey.name.sunlight_emissivity",
+                    descriptionKey: "config.honey.help.sunlight_emissivity"
+                },
+                moonlight_emissivity: {
+                    default: 10,
+                    min: 0,
+                    max: 50,
+                    nameKey: "config.honey.name.moonlight_emissivity",
+                    descriptionKey: "config.honey.help.moonlight_emissivity"
+                },
+                smart_sunlight_bloom: {
+                    default: "true",
+                    nameKey: "config.honey.name.smart_sunlight_bloom",
+                    descriptionKey: "config.honey.help.smart_sunlight_bloom"
+                },
                 underwater_blur: {
                     default: "true",
                     nameKey: "config.honey.name.underwater_blur",

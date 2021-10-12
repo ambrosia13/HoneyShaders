@@ -18,12 +18,14 @@ void main() {
     float particlesDepth = texture2D(u_particles_depth, texcoord).r;
     vec4 brightColor;
 
-    float sunLightIlluminance = 30.0;
-    float moonLightIlluminance = 10.0;
+    float sunLightIlluminance = SUNLIGHT_EMISSIVITY;
+    float moonLightIlluminance = MOONLIGHT_EMISSIVITY;
     float blockLightIlluminance = frx_fragEmissive;
 
+    #ifdef SMART_SUNLIGHT_BLOOM
     float sunView = (dot(frx_cameraView, frx_skyLightVector) * 0.5 + 0.5);
     sunLightIlluminance *= clamp(1.0 - sunView, 0.005, 1.0);
+    #endif
 
     if(translucentDepth == 1.0 && handDepth == 1.0 && frx_worldHasSkylight == 1 && cloudsDepth == 1.0) {
         //only targetting the sky for bloom threshold

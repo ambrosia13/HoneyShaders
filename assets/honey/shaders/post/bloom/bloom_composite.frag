@@ -23,5 +23,9 @@ void main() {
 
     //composite /= luminance;
 
-    fragColor = (vec4(composite, 1.0));
+    #ifdef TONEMAP_BLOOM
+    composite = frx_toneMap(composite);
+    #endif
+
+    fragColor = (vec4((composite), 1.0));
 }
