@@ -22,8 +22,8 @@ void main() {
     float moonLightIlluminance = 10.0;
     float blockLightIlluminance = frx_fragEmissive;
 
-    float sunView = dot(frx_cameraView, frx_skyLightVector) * 0.5 + 0.5;
-    sunLightIlluminance *= (1.0 - sunView);
+    float sunView = (dot(frx_cameraView, frx_skyLightVector) * 0.5 + 0.5);
+    sunLightIlluminance *= clamp(1.0 - sunView, 0.005, 1.0);
 
     if(translucentDepth == 1.0 && handDepth == 1.0 && frx_worldHasSkylight == 1 && cloudsDepth == 1.0) {
         //only targetting the sky for bloom threshold
@@ -40,7 +40,7 @@ void main() {
     }
 
     if(handDepth != 1.0 || (translucentDepth != 1.0 && particlesDepth != 1.0)) {
-        brightColor += emissive * (emissive + vec4(1.0));
+        brightColor += emissive / 2.5;
     }
 
     fragColor = brightColor;
