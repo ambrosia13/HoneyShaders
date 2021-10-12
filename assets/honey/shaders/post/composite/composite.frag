@@ -66,6 +66,10 @@ void main() {
     vec4  particles_color = texture2D(u_particles_color, texcoord);
     float particles_depth = texture2D(u_particles_depth, texcoord).r;
 
+    if(frx_luminance(clouds_color.rgb) > 0.0) {
+        clouds_color.a = 1.0;
+    }
+
     color_layers[0] = main_color;
     depth_layers[0] = main_depth;
     active_layers = 1;
