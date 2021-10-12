@@ -18,19 +18,29 @@ void main() {
     float particlesDepth = texture2D(u_particles_depth, texcoord).r;
     vec4 brightColor;
 
+    float sunLightIlluminance = 30.0;
+    float moonLightIlluminance = 10.0;
+    float blockLightIlluminance = frx_fragEmissive;
+
+    float sunView = dot(frx_cameraView, frx_skyLightVector) * 0.5 + 0.5;
+    sunLightIlluminance *= (1.0 - sunView);
+
     if(translucentDepth == 1.0 && handDepth == 1.0 && frx_worldHasSkylight == 1 && cloudsDepth == 1.0) {
         //only targetting the sky for bloom threshold
         if(frx_worldIsMoonlit == 0.0) {
             brightColor += vec4(2.0, 1.2, 0.4, 1.0) * frx_smootherstep(0.89, 0.9, frx_luminance(emissive.rgb));
+            brightColor *= sunLightIlluminance;
         }
         //lower threshold during night
         if(frx_worldIsMoonlit == 1.0) {
             brightColor += vec4(0.3, 0.7, 2.0, 1.0) * frx_smootherstep(0.4, 0.6, frx_luminance(emissive.rgb));
+            brightColor *= moonLightIlluminance;
         }
+        emissive = vec4(0.0);
     }
 
     if(handDepth != 1.0 || (translucentDepth != 1.0 && particlesDepth != 1.0)) {
-        brightColor += emissive;
+        brightColor += emissive * (emissive + vec4(1.0));
     }
 
     fragColor = brightColor;
