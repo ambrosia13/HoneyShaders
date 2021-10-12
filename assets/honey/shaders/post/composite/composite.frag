@@ -50,7 +50,7 @@ vec3 blend( vec3 dst, vec4 src ) {
 
 in vec2 texcoord;
 
-out vec4 fragColor;
+out vec4[2] fragColor;
 
 void main() {
     vec4  main_color = texture2D(u_main_color, texcoord);
@@ -85,5 +85,6 @@ void main() {
         composite = blend(composite, color_layers[ii]);
     }
 
-    fragColor = vec4(composite.rgb, 1.0);
+    fragColor[0] = vec4(composite.rgb, 1.0);
+    fragColor[1] = vec4(0.0);
 }
