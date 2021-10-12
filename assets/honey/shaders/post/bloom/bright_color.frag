@@ -24,7 +24,7 @@ void main() {
 
     #ifdef SMART_SUNLIGHT_BLOOM
     float sunView = (dot(frx_cameraView, frx_skyLightVector) * 0.5 + 0.5);
-    sunLightIlluminance *= clamp(1.0 - sunView, 0.005, 1.0);
+    sunLightIlluminance *= clamp(1.0 - sunView, 0.005, 0.1);
     #endif
 
     if(translucentDepth == 1.0 && handDepth == 1.0 && frx_worldHasSkylight == 1 && cloudsDepth == 1.0) {
@@ -33,7 +33,7 @@ void main() {
             brightColor += vec4(2.0, 1.2, 0.4, 1.0) * frx_smootherstep(0.89, 0.9, frx_luminance(emissive.rgb));
             brightColor *= sunLightIlluminance;
         }
-        //lower threshold during night
+        //lower threshold during night (todo: smooth this out)
         if(frx_worldIsMoonlit == 1.0) {
             brightColor += vec4(0.3, 0.7, 2.0, 1.0) * frx_smootherstep(0.4, 0.6, frx_luminance(emissive.rgb));
             brightColor *= moonLightIlluminance;
