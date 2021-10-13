@@ -9,10 +9,10 @@
             target: "TEXTURE_2D",
             texParams: [
                 {
-                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
                 }, 
                 {
-                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
                 },
                 {
                     name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
@@ -31,10 +31,10 @@
             target: "TEXTURE_2D",
             texParams: [
                 {
-                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
                 }, 
                 {
-                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
                 },
                 {
                     name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
@@ -53,10 +53,10 @@
             target: "TEXTURE_2D",
             texParams: [
                 {
-                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
                 }, 
                 {
-                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
                 },
                 {
                     name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
@@ -75,10 +75,10 @@
             target: "TEXTURE_2D",
             texParams: [
                 {
-                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
                 }, 
                 {
-                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
                 },
                 {
                     name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
@@ -97,10 +97,10 @@
             target: "TEXTURE_2D",
             texParams: [
                 {
-                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
                 }, 
                 {
-                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
                 },
                 {
                     name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
@@ -119,10 +119,10 @@
             target: "TEXTURE_2D",
             texParams: [
                 {
-                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
                 }, 
                 {
-                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
                 },
                 {
                     name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"

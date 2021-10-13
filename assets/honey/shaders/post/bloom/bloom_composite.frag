@@ -19,12 +19,14 @@ void main() {
 
     vec3 composite = bloom0.rgb + bloom1.rgb + bloom2.rgb + bloom3.rgb + bloom4.rgb;
 
-    float luminance = frx_luminance(composite);
-
-    //composite /= luminance;
-
     #ifdef TONEMAP_BLOOM
     composite = frx_toneMap(composite);
+    #endif
+
+    #ifdef AUTO_EXPOSURE
+    vec3 exposure_value = texture2D(u_bloom3, vec2(0.5)).rgb;
+    float exposure_luminance = frx_luminance(1.0 - exposure_value.rgb);
+    composite *= clamp(exposure_luminance, 0.2, 1.0);
     #endif
 
     fragColor = (vec4((composite), 1.0));

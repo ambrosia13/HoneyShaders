@@ -19,6 +19,8 @@
     "config.honey.help.moonlight_emissivity": "The brightness for the moon's emissive value. Used for bloom. For comparison, most material shaders set blocklight emissivity between 0.0 and 1.0.",
     "config.honey.name.smart_sunlight_bloom": "Smart Skylight Bloom",
     "config.honey.help.smart_sunlight_bloom": "If true, lowers the emissivity of the sun/moon if the camera is looking directly at it. Useful if the sunlight or moonlight emissivity is set high.",
+    "config.honey.name.auto_exposure": "Fake Auto Exposure",
+    "config.honey.help.auto_exposure": "Lowers the bloom intensity if the pixel the player looks at has a bright emissivity. Not true exposure. Experimental.",
     "config.honey.name.underwater_blur": "Underwater Blur",
     "config.honey.help.underwater_blur": "Blurs the screen when the player is underwater or in lava.",
     "config.honey.name.underwater_blur_amt": "Underwater Blur Amount",
