@@ -1,19 +1,24 @@
 # Honey Shaders
 
-Shaders for Canvas. Adds a pipeline to the game, which works best with material shaders to accompany.
+Shaderpack for the [Canvas Renderer](https://github.com/vram-guild/canvas). Adds a customizable pipeline to the game which works best with material shaders to accompany.
+
+This is in early alpha at the moment, and may not look very pretty. It has several noticeable bugs and visual artifacts.
 
 ## Currently adds:
 
-- Bloom that applies to both terrain and the sun & moon
-- Underwater & under lava tinting and blur
-- More is planned!
+- Bloom that supports realistic emissivity values more reminiscent to that of real life, completely customizable (WIP)
+- Tonemapping & HDR support (WIP, currently only for bloom)
+- Support for vanilla effects
+- Underwater & underlava blur and screen tints
+- Shader effects triggered by potion activation
+- Many misc & memey effects. For those that like fun!
 
 ## Known issues:
 
 - Bloom "lags" behind the original image
-- Hand bloom currently doesn't work properly and some objects will look weird with bloom.
+- Some objects look strange with bloom. For example, entities will have bloom if against the sky.
 - Some visual artifacts & probably poor performance
-- The shaderpack is generally very incomplete, but is suitable for normal gameplay. I wouldn't recommend using it if you want pretty images.
+- The shaderpack is generally very incomplete and not very suitable for normal gameplay. I wouldn't recommend using it if you want pretty pictures.
 
 # Credits
 
