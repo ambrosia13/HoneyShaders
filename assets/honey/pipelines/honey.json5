@@ -239,7 +239,9 @@
                     descriptionKey: "config.honey.help.smart_sunlight_bloom"
                 },
                 auto_exposure: {
-                    default: "true",
+                    default: "3",
+                    min: "0",
+                    max: "4",
                     nameKey: "config.honey.name.auto_exposure",
                     descriptionKey: "config.honey.help.auto_exposure"
                 },
@@ -285,6 +287,11 @@
                     default: "false",
                     nameKey: "config.honey.name.trans_sky",
                     descriptionKey: "config.honey.help.trans_sky"
+                },
+                drunk_shaders: {
+                    default: "false",
+                    nameKey: "config.honey.name.drunk_shaders",
+                    descriptionKey: "config.honey.help.drunk_shaders"
                 }
             }
         }

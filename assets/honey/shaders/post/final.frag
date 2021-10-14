@@ -83,5 +83,11 @@ void main() {
     color.rgb *= sussy;
     #endif
 
+    #ifdef DRUNK_SHADERS
+    vec3 drunk1 = texture2D(u_main_color, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
+    vec3 drunk2 = texture2D(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
+    color.rgb += (drunk1 * drunk2);
+    #endif
+
     fragColor = vec4((color.rgb), 1.0);
 }

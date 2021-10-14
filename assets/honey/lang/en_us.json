@@ -19,8 +19,8 @@
     "config.honey.help.moonlight_emissivity": "The brightness for the moon's emissive value. Used for bloom. For comparison, most material shaders set blocklight emissivity between 0.0 and 1.0.",
     "config.honey.name.smart_sunlight_bloom": "Smart Skylight Bloom",
     "config.honey.help.smart_sunlight_bloom": "If true, lowers the emissivity of the sun/moon if the camera is looking directly at it. Useful if the sunlight or moonlight emissivity is set high.",
-    "config.honey.name.auto_exposure": "Fake Auto Exposure",
-    "config.honey.help.auto_exposure": "Lowers the bloom intensity if the pixel the player looks at has a bright emissivity. Not true exposure. Experimental.",
+    "config.honey.name.auto_exposure": "Auto Exposure",
+    "config.honey.help.auto_exposure": "Lowers the bloom intensity the more bright bloom is on the screen. Performance cost is exponential. Set to higher for more sample points, set to 0 to disable.",
     "config.honey.name.underwater_blur": "Underwater Blur",
     "config.honey.help.underwater_blur": "Blurs the screen when the player is underwater or in lava.",
     "config.honey.name.underwater_blur_amt": "Underwater Blur Amount",
@@ -32,9 +32,11 @@
     "config.honey.name.fire_resistance_tint": "Fire Resistance Tint",
     "config.honey.help.fire_resistance_tint": "Tints the lightmap red when fire resistance effect is active.",
     "config.honey.name.water_breathing_tint": "Water Breathing Tint",
-    "config.honey.help.water_breathing_tint": "Tints the lightmap blue when water breathing effect is active",
+    "config.honey.help.water_breathing_tint": "Tints the lightmap blue when water breathing effect is active.",
     "config.honey.name.among_us": "Among Us Screen",
     "config.honey.help.among_us": "Adds among us overlay to the screen.",
     "config.honey.name.trans_sky": "Trans Sky",
-    "config.honey.help.trans_sky": "Adds trans flag overlay to the sky."
+    "config.honey.help.trans_sky": "Adds trans flag overlay to the sky.",
+    "config.honey.name.drunk_shaders": "Drunk Shaders",
+    "config.honey.help.drunk_shaders": "Adds some extra crazy. Don't use this if you get dizzy or epileptic!"
 }
