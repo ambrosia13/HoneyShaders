@@ -18,7 +18,12 @@ void main() {
     float handDepth = texture2D(u_main_depth, texcoord).r;
     float cloudsDepth = texture2D(u_clouds_depth, texcoord).r;
     vec4 color = texture2D(u_color, texcoord);
+    color.a = 1.0;
     vec4 brightColor;
+
+    // emissive -= (1.0 - handDepth);
+    // emissive = clamp(emissive, 0.0, 1.0);
+    // emissive += ((1.0 - handDepth) * color.rgb);
 
     float sunLightIlluminance = SUNLIGHT_EMISSIVITY;
     float moonLightIlluminance = MOONLIGHT_EMISSIVITY;
@@ -29,6 +34,7 @@ void main() {
     sunLightIlluminance *= clamp(1.0 - sunView, 0.005, 0.1);
     #endif
 
+    //I'm getting headaches so I do this but it still doesn't work properly :(
     bool isCloud = cloudsDepth != 1.0 && cloudsDepth != 0.0;
     bool isPlayer = particlesDepth <= 0.1;
     bool isHand = handDepth != 1.0;
@@ -52,7 +58,10 @@ void main() {
     vec3 handColor = color.rgb * (1 - handDepth) * frx_fragEmissive;
 
     if(isHand) {
-        brightColor.rgb += emissive.rgb + handColor; //handbloom
+        if(frx_luminance(emissive.rgb) == 0.0) {
+            emissive.rgb = vec3(0.0);
+        }
+        brightColor.rgb += (emissive.rgb) + handColor; //handbloom
     }
     if(isTerrain) {
         brightColor += emissive; //terrain bloom

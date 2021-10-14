@@ -278,7 +278,8 @@
                     "bloom_pass2",
                     "bloom_pass3",
                     "bloom_pass4"
-                ]
+                ],
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bright_color",
