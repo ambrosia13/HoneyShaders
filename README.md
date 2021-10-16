@@ -15,20 +15,23 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 ## Known issues:
 
-- Bloom "lags" behind the original image
 - Some objects look strange with bloom. For example, entities will have bloom if against the sky.
-- Some visual artifacts & probably poor performance
-- The shaderpack is generally very incomplete and not very suitable for normal gameplay. I wouldn't recommend using it if you want pretty pictures.
+- Some visual artifacts
+- Poor performance
+- Some config options may not work correctly 
+- The shaderpack is generally very incomplete, but suitable for normal gameplay. Though I wouldn't recommend using it if you want to take pretty screenshots.
 
 # Credits
 
 - Xordev for providing me permission to use their blur function from the [Ominous Shaderpack](https://github.com/XorDev/Ominous-Shaderpack) (used for bloom and blur effects)
 
-- Spiralhalo's [Canvas Tutorial](https://github.com/spiralhalo/CanvasTutorial/wiki) for teaching me how to make a Canvas pipeline. Also credits to their shaderpack [Lumi Lights](https://github.com/spiralhalo/LumiLights) for being a great example for a working pipeline.
+- Spiralhalo's [Canvas Tutorial](https://github.com/spiralhalo/CanvasTutorial/wiki) for teaching me how to make a Canvas pipeline. Also thanks to spiralhalo for helping me solve numerous issues.
 
-- Grondag, author of Canvas and FREX, for creating and maintaining such a nice shader API.
+- Grondag, author of Canvas and FREX, for creating and maintaining a pleasant shader API to work with.
 
-# Screenshots
+- Credits to [Lumi Lights](https://github.com/spiralhalo/LumiLights) by Spiralhalo and Canvas Basic/Standard/Dev by Grondag for being a great example for a working pipeline.  
+
+<!-- # Screenshots
 
 ![screenshot 1](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/image1.png?raw=true)
-![screenshot 2](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/image2.png?raw=true)
+![screenshot 2](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/image2.png?raw=true) -->

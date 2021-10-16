@@ -43,7 +43,7 @@ void main() {
     }
     #endif
 
-    #ifdef TRANS_SKY
+    #ifndef TRANS_SKY_OVERLAY
     vec3 transSky = vec3(0.0);
     if(texcoord.y >= 0.0 && texcoord.y <= 0.2) {
         transSky += vec3(0.428,0.924,0.980);
@@ -64,7 +64,7 @@ void main() {
        color.rgb *= (transSky);
     }
     #endif
-    #ifdef AMONG_US
+    #ifndef AMONG_US_OVERLAY
     vec3 sussy = vec3(1.000,0.076,0.029);
     
     if(texcoord.x < 0.9 && texcoord.x > 0.1 && texcoord.y < 0.8 && texcoord.y > 0.3) {
@@ -83,7 +83,7 @@ void main() {
     color.rgb *= sussy;
     #endif
 
-    #ifdef DRUNK_SHADERS
+    #ifndef DRUNK_SHADER
     vec3 drunk1 = texture2D(u_main_color, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
     vec3 drunk2 = texture2D(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
     color.rgb += (drunk1 * drunk2);

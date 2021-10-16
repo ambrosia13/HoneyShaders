@@ -33,10 +33,10 @@
     "config.honey.help.fire_resistance_tint": "Tints the lightmap red when fire resistance effect is active.",
     "config.honey.name.water_breathing_tint": "Water Breathing Tint",
     "config.honey.help.water_breathing_tint": "Tints the lightmap blue when water breathing effect is active.",
-    "config.honey.name.among_us": "Among Us Screen",
-    "config.honey.help.among_us": "Adds among us overlay to the screen.",
-    "config.honey.name.trans_sky": "Trans Sky",
-    "config.honey.help.trans_sky": "Adds trans flag overlay to the sky.",
-    "config.honey.name.drunk_shaders": "Drunk Shaders",
-    "config.honey.help.drunk_shaders": "Adds some extra crazy. Don't use this if you get dizzy or epileptic!"
+    "config.honey.name.among_us": "Disable Among Us Overlay",
+    "config.honey.help.among_us": "When false, adds among us overlay to the screen.",
+    "config.honey.name.trans_sky": "Disable Trans Sky",
+    "config.honey.help.trans_sky": "When false, adds trans flag overlay to the sky.",
+    "config.honey.name.drunk_shaders": "Disable Drunk Shaders",
+    "config.honey.help.drunk_shaders": "When false, adds some extra crazy. Don't use this if you get dizzy or epileptic!"
 }

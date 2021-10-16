@@ -207,13 +207,6 @@
                     nameKey: "config.honey.name.bloom_opacity",
                     descriptionKey: "config.honey.help.bloom_opacity"
                 },
-                bloom_quality: {
-                    default: 5,
-                    min: 3,
-                    max: 10,
-                    nameKey: "config.honey.name.bloom_quality",
-                    descriptionKey: "config.honey.help.bloom_quality"
-                },
                 tonemap_bloom: {
                     default: "true",
                     nameKey: "config.honey.name.tonemap_bloom",
@@ -238,12 +231,19 @@
                     nameKey: "config.honey.name.smart_sunlight_bloom",
                     descriptionKey: "config.honey.help.smart_sunlight_bloom"
                 },
-                auto_exposure: {
-                    default: "3",
-                    min: "0",
-                    max: "4",
+                auto_exposure_quality: {
+                    default: 3,
+                    min: 0,
+                    max: 4,
                     nameKey: "config.honey.name.auto_exposure",
                     descriptionKey: "config.honey.help.auto_exposure"
+                },
+                bloom_quality: {
+                    default: 5,
+                    min: 3,
+                    max: 10,
+                    nameKey: "config.honey.name.bloom_quality",
+                    descriptionKey: "config.honey.help.bloom_quality"
                 },
                 underwater_blur: {
                     default: "true",
@@ -278,18 +278,18 @@
                     nameKey: "config.honey.name.water_breathing_tint",
                     descriptionKey: "config.honey.help.water_breathing_tint"
                 },
-                among_us: {
-                    default: "false",
+                among_us_overlay: {
+                    default: "true",
                     nameKey: "config.honey.name.among_us",
                     descriptionKey: "config.honey.help.among_us"
                 },
-                trans_sky: {
-                    default: "false",
+                trans_sky_overlay: {
+                    default: "true",
                     nameKey: "config.honey.name.trans_sky",
                     descriptionKey: "config.honey.help.trans_sky"
                 },
-                drunk_shaders: {
-                    default: "false",
+                drunk_shader: {
+                    default: "true",
                     nameKey: "config.honey.name.drunk_shaders",
                     descriptionKey: "config.honey.help.drunk_shaders"
                 }

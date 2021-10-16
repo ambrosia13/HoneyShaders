@@ -1,6 +1,6 @@
 #include honey:shaders/lib/common.glsl
 
-#define AUTO_EXPOSURE 4 //config not working (bug probably) so this is temporary
+//#define AUTO_EXPOSURE_QUALITY 4 //config not working (bug probably) so this is temporary
 
 uniform sampler2D u_bloom0;
 uniform sampler2D u_bloom1;
@@ -25,11 +25,11 @@ void main() {
     composite = frx_toneMap(composite);
     #endif
 
-    #ifdef AUTO_EXPOSURE //todo: more efficient method probably using an array
-    #if AUTO_EXPOSURE >= 1
+    #ifdef AUTO_EXPOSURE_QUALITY //todo: more efficient method probably using an array
+    #if AUTO_EXPOSURE_QUALITY >= 1
     vec3 exposure_middle = texture2D(u_bloom3, vec2(0.5)).rgb;
     float exposure_middle_l = frx_luminance(1.0 - exposure_middle.rgb);
-    #if AUTO_EXPOSURE >= 2
+    #if AUTO_EXPOSURE_QUALITY >= 2
     vec3 exposure2a = texture2D(u_bloom3, vec2(0.33, 0.33)).rgb;
     vec3 exposure2b = texture2D(u_bloom3, vec2(0.33, 0.67)).rgb;
     vec3 exposure2c = texture2D(u_bloom3, vec2(0.67, 0.33)).rgb;
@@ -39,7 +39,7 @@ void main() {
     float exposure2c_l = frx_luminance(1.0 - exposure2c);
     float exposure2d_l = frx_luminance(1.0 - exposure2d);
     float exposure2avg = (exposure2a_l + exposure2b_l + exposure2c_l + exposure2d_l) / 4.0;
-    #if AUTO_EXPOSURE >= 3
+    #if AUTO_EXPOSURE_QUALITY >= 3
     vec3 exposure3a = texture2D(u_bloom3, vec2(0.25, 0.25)).rgb;
     vec3 exposure3b = texture2D(u_bloom3, vec2(0.25, 0.50)).rgb;
     vec3 exposure3c = texture2D(u_bloom3, vec2(0.25, 0.75)).rgb;
@@ -58,7 +58,7 @@ void main() {
     float exposure3h_l = frx_luminance(1.0 - exposure3h);
     float exposure3avg = (exposure3a_l + exposure3b_l + exposure3c_l + exposure3d_l
                         + exposure3e_l + exposure3f_l + exposure3g_l + exposure3h_l) / 8.0;
-    #if AUTO_EXPOSURE >= 4
+    #if AUTO_EXPOSURE_QUALITY >= 4
     vec3 exposure4a = texture2D(u_bloom3, vec2(0.2, 0.2)).rgb;
     vec3 exposure4b = texture2D(u_bloom3, vec2(0.2, 0.4)).rgb;
     vec3 exposure4c = texture2D(u_bloom3, vec2(0.2, 0.6)).rgb;
@@ -99,25 +99,17 @@ void main() {
     #endif
     #endif
     float exposure_luminance = 0.0;
-    #if AUTO_EXPOSURE == 1
+    #if AUTO_EXPOSURE_QUALITY == 1
     exposure_luminance = exposure_middle_l;
     #endif
-    #if AUTO_EXPOSURE == 2
-    exposure_luminance = (exposure_middle_l + exposure2a_l + exposure2b_l + exposure2c_l + exposure2d_l) / 5.0;
+    #if AUTO_EXPOSURE_QUALITY == 2
+    exposure_luminance = (exposure_middle_l + exposure2avg) / 2.0;
     #endif
-    #if AUTO_EXPOSURE == 3
-    exposure_luminance = (exposure_middle_l + exposure2a_l + exposure2b_l + exposure2c_l + exposure2d_l
-                        + exposure3a_l + exposure3b_l + exposure3c_l + exposure3d_l
-                        + exposure3e_l + exposure3f_l + exposure3g_l + exposure3h_l) / 13.0;
+    #if AUTO_EXPOSURE_QUALITY == 3
+    exposure_luminance = (exposure_middle_l + exposure2avg + exposure3avg) / 3.0;
     #endif
-    #if AUTO_EXPOSURE == 4
-    exposure_luminance = (exposure_middle_l + exposure2a_l + exposure2b_l + exposure2c_l + exposure2d_l
-                        + exposure3a_l + exposure3b_l + exposure3c_l + exposure3d_l
-                        + exposure3e_l + exposure3f_l + exposure3g_l + exposure3h_l
-                        + exposure4a_l + exposure4b_l + exposure4c_l + exposure4d_l
-                        + exposure4e_l + exposure4f_l + exposure4g_l + exposure4h_l
-                        + exposure4i_l + exposure4j_l + exposure4k_l + exposure4l_l
-                        + exposure4m_l + exposure4n_l + exposure4o_l + exposure4p_l) / 29.0;
+    #if AUTO_EXPOSURE_QUALITY == 4
+    exposure_luminance = (exposure_middle_l + exposure2avg + exposure3avg + exposure4avg) / 4.0;
     #endif
     composite *= clamp(exposure_luminance, 0.1, 1.0);
     //composite *= exposure_luminance;

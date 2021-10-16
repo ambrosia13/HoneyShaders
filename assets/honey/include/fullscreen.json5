@@ -259,29 +259,6 @@
     afterRenderHand: {
         passes: [
             {
-                name: "final",
-                program: "final",
-                framebuffer: "copy_to_main",
-                samplerImages: [
-                    "main_color",
-                    "bloom_composite",
-                    "translucent_depth"
-                ]
-            },
-            {
-                name: "bloom_composite",
-                program: "bloom_composite",
-                framebuffer: "bloom_composite",
-                samplerImages: [
-                    "bright_color",
-                    "bloom_pass1",
-                    "bloom_pass2",
-                    "bloom_pass3",
-                    "bloom_pass4"
-                ],
-                toggleConfig: "enable_bloom"
-            },
-            {
                 name: "bright_color",
                 program: "bright_color",
                 framebuffer: "bright_color",
@@ -330,6 +307,29 @@
                     "bloom_pass3"
                 ],
                 toggleConfig: "enable_bloom"
+            },
+            {
+                name: "bloom_composite",
+                program: "bloom_composite",
+                framebuffer: "bloom_composite",
+                samplerImages: [
+                    "bright_color",
+                    "bloom_pass1",
+                    "bloom_pass2",
+                    "bloom_pass3",
+                    "bloom_pass4"
+                ],
+                toggleConfig: "enable_bloom"
+            },
+            {
+                name: "final",
+                program: "final",
+                framebuffer: "copy_to_main",
+                samplerImages: [
+                    "main_color",
+                    "bloom_composite",
+                    "translucent_depth"
+                ]
             }
         ]
     }
