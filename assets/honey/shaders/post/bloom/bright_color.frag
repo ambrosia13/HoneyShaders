@@ -44,12 +44,12 @@ void main() {
     if(isSky) {
         //only targetting the sky for bloom threshold
         if(frx_worldIsMoonlit == 0.0) {
-            brightColor += vec4(2.0, 1.2, 0.4, 1.0) * frx_smootherstep(0.89, 0.9, frx_luminance(color.rgb));
+            brightColor += vec4(2.0, 1.2, 0.4, 1.1) * frx_smootherstep(0.89, 0.9, frx_luminance(color.rgb));
             brightColor *= sunLightIlluminance;
         }
         //lower threshold during night (todo: smooth this out)
         if(frx_worldIsMoonlit == 1.0) {
-            brightColor += vec4(0.3, 0.7, 2.0, 1.0) * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb));
+            brightColor += vec4(0.3, 0.7, 2.0, 1.1) * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb));
             brightColor *= moonLightIlluminance;
         }
         emissive = vec4(0.0);

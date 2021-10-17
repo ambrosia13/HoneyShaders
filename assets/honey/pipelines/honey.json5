@@ -220,7 +220,7 @@
                     descriptionKey: "config.honey.help.sunlight_emissivity"
                 },
                 moonlight_emissivity: {
-                    default: 10,
+                    default: 3,
                     min: 0,
                     max: 50,
                     nameKey: "config.honey.name.moonlight_emissivity",
@@ -260,8 +260,8 @@
             }
         },
         {
-            includeToken: "honey:misc",
-            categoryKey: "config.honey.category.misc",
+            includeToken: "honey:vanilla_tweaks",
+            categoryKey: "config.honey.category.vanilla_tweaks",
             elements: {
                 hunger_desaturation: {
                     default: "true",
@@ -282,7 +282,13 @@
                     default: "false",
                     nameKey: "config.honey.name.stylized_water",
                     descriptionKey: "config.honey.help.stylized_water"
-                },
+                }
+            }
+        },
+        {
+            includeToken: "honey:misc",
+            categoryKey: "config.honey.category.misc",
+            elements: {
                 among_us_overlay: {
                     default: "true",
                     nameKey: "config.honey.name.among_us",
