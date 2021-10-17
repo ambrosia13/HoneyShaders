@@ -4,8 +4,16 @@
 #ifdef VANILLA_LIGHTING
 out float diffuse;
 #endif
+out vec2 n_texcoord;
 
 void frx_pipelineVertex() {
+    //implementation for normalized texture coordinates taken from Canvas Dev
+    //https://github.com/vram-guild/canvas/blob/1.17/src/main/resources/assets/canvas/shaders/material/lava.vert
+	if (abs(frx_vertexNormal.y) < 0.001) {
+	    n_texcoord.xy = frx_faceUv(frx_vertex.xyz, frx_vertexNormal.xyz);
+	} else {
+	    n_texcoord.xy = frx_faceUv(frx_vertex.xyz, FACE_UP);
+	}
     if (frx_modelOriginType() == MODEL_ORIGIN_SCREEN) {
         gl_Position = frx_guiViewProjectionMatrix() * frx_vertex;
     } else {

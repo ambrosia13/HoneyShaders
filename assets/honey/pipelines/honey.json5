@@ -278,6 +278,11 @@
                     nameKey: "config.honey.name.water_breathing_tint",
                     descriptionKey: "config.honey.help.water_breathing_tint"
                 },
+                stylized_water: {
+                    default: "false",
+                    nameKey: "config.honey.name.stylized_water",
+                    descriptionKey: "config.honey.help.stylized_water"
+                },
                 among_us_overlay: {
                     default: "true",
                     nameKey: "config.honey.name.among_us",

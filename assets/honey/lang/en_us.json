@@ -33,6 +33,8 @@
     "config.honey.help.fire_resistance_tint": "Tints the lightmap red when fire resistance effect is active.",
     "config.honey.name.water_breathing_tint": "Water Breathing Tint",
     "config.honey.help.water_breathing_tint": "Tints the lightmap blue when water breathing effect is active.",
+    "config.honey.name.stylized_water": "Disable Stylized Water",
+    "config.honey.help.stylized_water": "When false, uses an animated and cartoony water texture instead of the default.",
     "config.honey.name.among_us": "Disable Among Us Overlay",
     "config.honey.help.among_us": "When false, adds among us overlay to the screen.",
     "config.honey.name.trans_sky": "Disable Trans Sky",
