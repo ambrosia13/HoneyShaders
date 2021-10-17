@@ -213,7 +213,7 @@
                     descriptionKey: "config.honey.help.tonemap_bloom"
                 },
                 sunlight_emissivity: {
-                    default: 30,
+                    default: 10,
                     min: 0,
                     max: 50,
                     nameKey: "config.honey.name.sunlight_emissivity",

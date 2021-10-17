@@ -40,7 +40,7 @@ void frx_pipelineFragment() {
     vec4 hurt = vec4(1.5, 0.6, 0.6, 1.0);
     vec4 flash = vec4(1.0, 1.0, 1.0, 0.1);
     if(frx_matGlint() == 1.0) {
-        color *= glint;
+        color += glint;
     }
     if(frx_matHurt()) {
         color *= hurt;

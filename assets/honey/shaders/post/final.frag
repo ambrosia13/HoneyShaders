@@ -32,7 +32,7 @@ void main() {
         #endif
         color *= vec4(1.5, 0.8, 0.8, 1.0) / 1.0;
         #ifdef ENABLE_BLOOM
-        color += bloom * BLOOM_OPACITY;
+        color += bloom * BLOOM_OPACITY * vec4(1.5, 0.8, 0.8, 1.0);
         #endif
     }
     #ifdef HUNGER_DESATURATION
