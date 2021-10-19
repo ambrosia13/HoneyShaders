@@ -21,28 +21,6 @@
                     name: "TEXTURE_WRAP_T", val: "NONE"
                 }
             ]
-        },
-        {
-            name: "composite_no_clouds",
-            lod: 0,
-            internalFormat: "RGBA8",
-            pixelFormat: "RGBA",
-            pixelDataType: "UNSIGNED_BYTE",
-            target: "TEXTURE_2D",
-            texParams: [
-                {
-                    name: "TEXTURE_MIN_FILTER", val: "NEAREST"
-                }, 
-                {
-                    name: "TEXTURE_MAG_FILTER", val: "NEAREST"
-                },
-                {
-                    name: "TEXTURE_WRAP_S", val: "NONE"
-                }, 
-                {
-                    name: "TEXTURE_WRAP_T", val: "NONE"
-                }
-            ]
         }
     ],
 

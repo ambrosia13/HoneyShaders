@@ -14,6 +14,12 @@ void frx_pipelineVertex() {
 	} else {
 	    n_texcoord.xy = frx_faceUv(frx_vertex.xyz, FACE_UP);
 	}
+
+    bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
+    if(isWater) {
+        frx_vertexNormal.x = 0.5;
+    }
+
     if (frx_modelOriginType() == MODEL_ORIGIN_SCREEN) {
         gl_Position = frx_guiViewProjectionMatrix() * frx_vertex;
     } else {

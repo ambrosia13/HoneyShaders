@@ -131,11 +131,41 @@
                     name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
+        },
+        {
+            name: "composite_with_hand",
+            lod: 0,
+            internalFormat: "RGBA8",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
         }
 
     ],
 
     framebuffers: [
+        {
+            name: "composite_with_hand",
+            colorAttachments: [
+                {
+                    image: "composite_with_hand"
+                }
+            ]
+        },
         {
             name: "bright_color",
             colorAttachments: [
@@ -195,6 +225,16 @@
                 "u_main_color",
                 "u_bloom",
                 "u_translucent_depth"
+            ]
+        },
+        {
+            name: "composite_with_hand",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/composite_with_hand.frag",
+            samplers: [
+                "u_composite",
+                "u_main_depth",
+                "u_main_color"
             ]
         },
         {
@@ -259,6 +299,16 @@
     afterRenderHand: {
         passes: [
             {
+                name: "composite_with_hand",
+                program: "composite_with_hand",
+                framebuffer: "composite_with_hand",
+                samplerImages: [
+                    "composite",
+                    "main_depth",
+                    "main_color_copy"
+                ]
+            },
+            {
                 name: "bright_color",
                 program: "bright_color",
                 framebuffer: "bright_color",
@@ -268,7 +318,7 @@
                     "translucent_depth",
                     "main_depth",
                     "clouds_depth",
-                    "main_color_copy"
+                    "composite_with_hand"
                 ],
                 toggleConfig: "enable_bloom"
             },
