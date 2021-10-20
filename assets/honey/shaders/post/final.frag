@@ -20,19 +20,19 @@ void main() {
         #ifdef UNDERWATER_BLUR
         color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
         #endif
-        color *= vec4(0.8, 0.8, 1.5, 1.0) / 1.0;
         #ifdef ENABLE_BLOOM
         color += bloom * BLOOM_OPACITY;
         #endif
+        color *= vec4(0.8, 0.8, 1.5, 1.0) / 1.0;
     }
     if(frx_cameraInLava == 1) {
         #ifdef UNDERWATER_BLUR
         color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
         #endif
-        color *= vec4(1.5, 0.8, 0.8, 1.0) / 1.0;
         #ifdef ENABLE_BLOOM
         color += bloom * BLOOM_OPACITY * vec4(1.5, 0.8, 0.8, 1.0);
         #endif
+        color *= vec4(1.5, 0.8, 0.8, 1.0) / 1.0;
     }
     #ifdef HUNGER_DESATURATION
     if(frx_effectHunger == 1) {

@@ -27,8 +27,11 @@ void frx_pipelineFragment() {
     vec3 waterColor = vec3(0.179,0.350,0.590);
     vec2 st = vec2(n_texcoord.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
                                     n_texcoord.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0));
-    float foam = waterlayer(st * 0.5);
-    vec3 water = (waterColor + foam / 2.5);
+    float distortX = sin(n_texcoord.y * 1.0 + frx_renderSeconds * 0.5) * 0.2;
+    float distortY = cos(n_texcoord.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
+    vec2 distort = vec2(distortX, distortY);
+    float foam = waterlayer(st * 0.5 + distort);
+    vec3 water = (waterColor + foam / 4.5);
     if(isWater) {
         color.rgb = water;
     }
