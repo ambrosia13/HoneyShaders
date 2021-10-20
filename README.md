@@ -2,7 +2,7 @@
 
 Shaderpack for the [Canvas Renderer](https://github.com/vram-guild/canvas). Adds a customizable pipeline to the game which works best with material shaders to accompany.
 
-This is in early alpha at the moment, and may not look very pretty. It has several noticeable bugs and visual artifacts.
+This is in early alpha at the moment, and may not look very pretty. It has several noticeable bugs and visual artifacts. However, it is playable for normal gameplay. Providing feedback and reporting (unknown) bugs is greatly appreciated.
 
 ## Currently adds:
 
@@ -14,11 +14,10 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 ## Known issues:
 
-- Some objects look strange with bloom. For example, entities will have bloom if against the sky.
-- Some visual artifacts
-- Poor performance
+- Bloom applies to certain things that shouldn't have bloom
+- Minor visual artifacts
+- Poor optimization
 - Some config options may not work correctly 
-- The shaderpack is generally very incomplete, but suitable for normal gameplay. Though I wouldn't recommend using it if you want to take pretty screenshots.
 
 # Credits
 
@@ -28,7 +27,7 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 - Grondag, author of Canvas and FREX, for creating and maintaining a pleasant shader API to work with.
 
-- Credits to [Lumi Lights](https://github.com/spiralhalo/LumiLights) by Spiralhalo and Canvas Basic/Standard/Dev by Grondag for being a great example for a working pipeline.  
+- Credits to [Lumi Lights](https://github.com/spiralhalo/LumiLights) by Spiralhalo and Canvas Basic/Standard/Dev by Grondag for being great references for working pipelines.  
 
 <!-- # Screenshots
 
