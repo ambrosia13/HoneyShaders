@@ -7,8 +7,7 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 ## Currently adds:
 
 - Bloom that supports realistic emissivity values more reminiscent to that of real life, completely customizable (WIP)
-- Tonemapping & HDR support (WIP, currently only for bloom)
-- Auto exposure (WIP, currently only for bloom)
+- Tonemapping & HDR (WIP)
 - Support for vanilla effects
 - Fancy extra shader effects for various vanilla situations
 - Many misc & memey effects. For those that like fun!
