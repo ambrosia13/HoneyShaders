@@ -14,15 +14,33 @@ void frx_pipelineFragment() {
     vec4 emissive_color = color;
 
     #ifdef VANILLA_LIGHTING
-    vec3 lightmap = texture2D(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
+    vec3 lightmap = texture2D(frxs_lightmap, frx_fragLight.xy).rgb;
 
     if(frx_fragEnableAo) {
         lightmap *= frx_fragLight.z;
     }
+
+    #ifndef STYLIZED_WATER //todo: move to material shader
+    // Taken from https://www.shadertoy.com/view/ltfGD7
+    // - see comment in common.glsl for proper credit
+    bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
+    vec3 waterColor = vec3(0.179,0.350,0.590);
+    vec2 st = vec2(n_texcoord.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
+                                    n_texcoord.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0));
+    float foam = waterlayer(st * 0.5);
+    vec3 water = (waterColor + foam / 2.5);
+    if(isWater) {
+        color.rgb = water;
+    }
+    #endif
+
     color.rgb *= lightmap;
+    if(!frx_isGui) {
+        color.rgb *= vec3(2.0, 1.8, 1.6) * max(frx_fragLight.x, 0.5);
+    }
 
     if (frx_fragEnableDiffuse) {
-        color.rgb *= diffuse;
+        color.rgb *= (diffuse);
     }
     #ifdef FIRE_RESISTANCE_TINT
     if(frx_effectFireResistance == 1) {
@@ -54,20 +72,6 @@ void frx_pipelineFragment() {
 
     color.rgb = mix(color.rgb, emissive_color.rgb, frx_fragEmissive);
     emissive_color *= frx_fragEmissive;
-
-
-    #ifndef STYLIZED_WATER //todo: move to material shader
-    // Taken from https://www.shadertoy.com/view/ltfGD7
-    // - see comment in common.glsl for proper credit
-    bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
-    vec3 waterColor = vec3(0.179,0.350,0.590);
-    vec2 st = vec2(n_texcoord.x + (sin(frx_renderSeconds / 10.0) + frx_renderSeconds / 10.0 + sin(frx_renderSeconds / 10.0)), n_texcoord.y + (sin(frx_renderSeconds / 10.0) + frx_renderSeconds / 10.0 + sin(frx_renderSeconds / 10.0)));
-    float foam = waterlayer(st * 0.5);
-    vec3 water = (waterColor + foam / 2.5) * lightmap;
-    if(isWater) {
-        color.rgb = water;
-    }
-    #endif
 
     fragColor[0] = color;
     fragColor[1] = (emissive_color);

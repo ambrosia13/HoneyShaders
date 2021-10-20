@@ -12,7 +12,6 @@ void main() {
     vec4 color = texture2D(u_main_color, texcoord);
     float depth = texture2D(u_translucent_depth, texcoord).r;
     vec4 bloom = texture2D(u_bloom, texcoord);
-    //bloom.rgb = reinhard2(bloom.rgb);
     #ifdef ENABLE_BLOOM
     color += bloom * BLOOM_OPACITY;
     #endif
@@ -88,6 +87,8 @@ void main() {
     vec3 drunk2 = texture2D(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
     color.rgb += (drunk1 * drunk2);
     #endif
+
+    color.rgb = frx_toneMap(color.rgb);
 
     fragColor = vec4((color.rgb), 1.0);
 }

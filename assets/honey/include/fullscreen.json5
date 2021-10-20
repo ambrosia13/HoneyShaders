@@ -376,7 +376,7 @@
                 program: "final",
                 framebuffer: "copy_to_main",
                 samplerImages: [
-                    "main_color",
+                    "composite_with_hand",
                     "bloom_composite",
                     "translucent_depth"
                 ]
