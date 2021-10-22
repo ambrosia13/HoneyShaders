@@ -224,7 +224,8 @@
             samplers: [
                 "u_main_color",
                 "u_bloom",
-                "u_translucent_depth"
+                "u_translucent_depth",
+                "u_translucent_only"
             ]
         },
         {
@@ -378,7 +379,8 @@
                 samplerImages: [
                     "composite_with_hand",
                     "bloom_composite",
-                    "translucent_depth"
+                    "translucent_depth",
+                    "translucent_only"
                 ]
             }
         ]

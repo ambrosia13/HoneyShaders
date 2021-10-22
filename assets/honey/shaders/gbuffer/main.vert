@@ -1,6 +1,8 @@
 #include frex:shaders/api/vertex.glsl
 #include frex:shaders/api/world.glsl
 #include frex:shaders/lib/face.glsl
+#include frex:shaders/lib/noise/noise2d.glsl
+
 
 #ifdef VANILLA_LIGHTING
 out float diffuse;
@@ -18,7 +20,7 @@ void frx_pipelineVertex() {
 
     bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
     if(isWater) {
-        frx_vertexNormal.x = 0.5;
+        frx_vertex.y += snoise((frx_renderSeconds / 2.0) + 0.1 * n_texcoord.xy) * 0.05;
     }
 
     if (frx_modelOriginType() == MODEL_ORIGIN_SCREEN) {

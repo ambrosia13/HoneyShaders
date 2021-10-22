@@ -3,6 +3,7 @@
 uniform sampler2D u_main_color;
 uniform sampler2D u_bloom;
 uniform sampler2D u_translucent_depth;
+uniform sampler2D u_translucent_only;
 
 in vec2 texcoord;
 
@@ -10,6 +11,12 @@ out vec4 fragColor;
 
 void main() {
     vec4 color = texture2D(u_main_color, texcoord);
+    #ifndef TRANSLUCENT_BLUR
+    vec4 translucent = texture2D(u_translucent_only, texcoord);
+    if(frx_luminance(translucent.rgb) > 0.0) {
+        color = blur(u_main_color, texcoord, TRANSLUCENT_BLUR_AMT);
+    }
+    #endif
     float depth = texture2D(u_translucent_depth, texcoord).r;
     vec4 bloom = texture2D(u_bloom, texcoord);
     #ifdef ENABLE_BLOOM

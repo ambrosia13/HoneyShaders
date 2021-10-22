@@ -85,6 +85,15 @@ void main() {
         composite = blend(composite, color_layers[ii]);
     }
 
-    fragColor[0] = vec4(composite.rgb, 1.0);
-    fragColor[1] = vec4(0.0);
+    vec3 b;
+    if(frx_luminance(translucent_color.rgb) != 0.0) {
+        b = max(translucent_color.rgb, 1.0);
+    }
+    bool isTranslucent = frx_luminance(b) >= 1.0;
+    if(isTranslucent) {
+        b = main_color.rgb;
+    }
+
+    fragColor[0] = vec4(composite, 1.0);
+    fragColor[1] = vec4(b.rgb, 1.0);
 }

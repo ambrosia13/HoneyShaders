@@ -278,6 +278,18 @@
                     nameKey: "config.honey.name.underwater_blur_amt",
                     descriptionKey: "config.honey.help.underwater_blur_amt"
                 },
+                translucent_blur: {
+                    default: "true",
+                    nameKey: "config.honey.name.translucent_blur",
+                    descriptionKey: "config.honey.help.translucent_blur"
+                },
+                translucent_blur_amt: {
+                    default: 2,
+                    min: 0,
+                    max: 10,
+                    nameKey: "config.honey.name.translucent_blur_amt",
+                    descriptionKey: "config.honey.help.translucent_blur_amt"
+                },
                 stylized_water: {
                     default: "false",
                     nameKey: "config.honey.name.stylized_water",

@@ -28,7 +28,11 @@
     "config.honey.name.underwater_blur": "Underwater Blur",
     "config.honey.help.underwater_blur": "Blurs the screen when the player is underwater or in lava.",
     "config.honey.name.underwater_blur_amt": "Underwater Blur Amount",
-    "config.honey.help.underwater_blur_amt": "The amount at which the screen is blurred underwater. Has minor visual artifacts.",
+    "config.honey.help.underwater_blur_amt": "The amount at which the screen is blurred underwater.",
+    "config.honey.name.translucent_blur": "Translucent Blur",
+    "config.honey.help.translucent_blur": "When false, blurs objects behind translucents.",
+    "config.honey.name.translucent_blur_amt": "Translucent Blur Amount",
+    "config.honey.help.translucent_blur_amt": "The amount at which the screen is blurred behind translucents.",
     "config.honey.name.stylized_water": "Disable Stylized Water",
     "config.honey.help.stylized_water": "When false, uses an animated and cartoony water texture instead of the default.",
 
