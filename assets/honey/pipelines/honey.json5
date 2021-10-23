@@ -185,6 +185,22 @@
 
     options: [
         {
+            includeToken: "honey:general",
+            categoryKey: "config.honey.category.general",
+            elements: {
+                tone_mapping: {
+                    default: "true",
+                    nameKey: "config.honey.name.tone_mapping",
+                    descriptionKey: "config.honey.help.tone_mapping"
+                },
+                stylized_water: {
+                    default: "true",
+                    nameKey: "config.honey.name.stylized_water",
+                    descriptionKey: "config.honey.help.stylized_water"
+                }
+            }
+        }
+        {
             includeToken: "honey:bloom",
             categoryKey: "config.honey.category.bloom",
             elements: {
@@ -289,11 +305,6 @@
                     max: 10,
                     nameKey: "config.honey.name.translucent_blur_amt",
                     descriptionKey: "config.honey.help.translucent_blur_amt"
-                },
-                stylized_water: {
-                    default: "false",
-                    nameKey: "config.honey.name.stylized_water",
-                    descriptionKey: "config.honey.help.stylized_water"
                 }
             }
         },

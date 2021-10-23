@@ -2,6 +2,12 @@
     "pipeline.honey.name": "Honey Shaders",
     "pipeline.honey.desc": "shaders for canvas",
 
+    "config.honey.category.general": "General",
+    "config.honey.name.tone_mapping": "Tone Mapping",
+    "config.honey.help.tone_mapping": "Enables tone mapping which brings out more detail in bright parts of the screen.",
+    "config.honey.name.stylized_water": "Stylized Water",
+    "config.honey.help.stylized_water": "When true, uses an animated and cartoony water texture instead of the default.",
+
     "config.honey.category.bloom": "Bloom Configuration",
     "config.honey.name.enable_bloom": "Enable Bloom",
     "config.honey.help.enable_bloom": "Whether or not bloom is enabled. Will lower performance when enabled.",
@@ -33,9 +39,6 @@
     "config.honey.help.translucent_blur": "When false, blurs objects behind translucents.",
     "config.honey.name.translucent_blur_amt": "Translucent Blur Amount",
     "config.honey.help.translucent_blur_amt": "The amount at which the screen is blurred behind translucents.",
-    "config.honey.name.stylized_water": "Disable Stylized Water",
-    "config.honey.help.stylized_water": "When false, uses an animated and cartoony water texture instead of the default.",
-
     "config.honey.category.misc": "Misc Configuration",
     "config.honey.name.among_us": "Disable Among Us Overlay",
     "config.honey.help.among_us": "When false, adds among us overlay to the screen.",

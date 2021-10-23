@@ -95,7 +95,9 @@ void main() {
     color.rgb += (drunk1 * drunk2);
     #endif
 
+    #ifdef TONE_MAPPING
     color.rgb = frx_toneMap(color.rgb);
+    #endif
 
     fragColor = vec4((color.rgb), 1.0);
 }

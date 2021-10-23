@@ -1,8 +1,4 @@
-#include frex:shaders/api/vertex.glsl
-#include frex:shaders/api/world.glsl
-#include frex:shaders/lib/face.glsl
-#include frex:shaders/lib/noise/noise2d.glsl
-
+#include honey:shaders/lib/common.glsl 
 
 #ifdef VANILLA_LIGHTING
 out float diffuse;

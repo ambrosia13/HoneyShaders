@@ -20,7 +20,7 @@ void frx_pipelineFragment() {
         lightmap *= frx_fragLight.z;
     }
 
-    #ifndef STYLIZED_WATER //todo: move to material shader
+    #ifdef STYLIZED_WATER //todo: move to material shader
     // Taken from https://www.shadertoy.com/view/ltfGD7
     // - see comment in common.glsl for proper credit
     bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
