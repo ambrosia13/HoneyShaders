@@ -5,7 +5,7 @@ uniform sampler2D u_glint;
 #ifdef VANILLA_LIGHTING
 in float diffuse;
 #endif
-in vec2 n_texcoord;
+in vec2 faceUV;
 
 out vec4[3] fragColor;
 
@@ -25,10 +25,10 @@ void frx_pipelineFragment() {
     // - see comment in common.glsl for proper credit
     bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
     vec3 waterColor = vec3(0.179,0.350,0.590);
-    vec2 st = vec2(n_texcoord.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
-                                    n_texcoord.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0));
-    float distortX = sin(n_texcoord.y * 1.0 + frx_renderSeconds * 0.5) * 0.2;
-    float distortY = cos(n_texcoord.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
+    vec2 st = vec2(faceUV.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
+                                    faceUV.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0));
+    float distortX = sin(faceUV.y * 1.0 + frx_renderSeconds * 0.5) * 0.2;
+    float distortY = cos(faceUV.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
     vec2 distort = vec2(distortX, distortY);
     float foam = waterlayer(st * 0.5 + distort);
     vec3 water = (waterColor + foam / 4.5);

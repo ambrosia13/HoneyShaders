@@ -11,6 +11,8 @@
     "config.honey.category.bloom": "Bloom Configuration",
     "config.honey.name.enable_bloom": "Enable Bloom",
     "config.honey.help.enable_bloom": "Whether or not bloom is enabled. Will lower performance when enabled.",
+    "config.honey.name.bloom_style": "Bloom Style",
+    "config.honey.help.bloom_style": "Emissive is based on the blocklight's emissive value, luminance is based on the brightness of pixels on the screen. ;Luminance style has less issues but is WIP.",
     "config.honey.name.bloom_base_amt": "Bloom Amount",
     "config.honey.help.bloom_base_amt": "Radius of bloom effect.",
     "config.honey.name.bloom_opacity": "Bloom Opacity",

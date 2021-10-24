@@ -209,6 +209,15 @@
                     nameKey: "config.honey.name.enable_bloom",
                     descriptionKey: "config.honey.help.enable_bloom"
                 },
+                bloom_style: {
+                define: "BLOOM_STYLE",
+                default: "emissivity",
+                choices: ["emissivity", "luminance"],
+                enum: true,
+                prefix: "STYLE_",
+                nameKey: "config.honey.name.bloom_style",
+                descriptionKey: "config.honey.help.bloom_style"
+                },
                 bloom_base_amt: {
                     default: 4.0,
                     min: 0.0,
@@ -217,7 +226,7 @@
                     descriptionKey: "config.honey.help.bloom_base_amt"
                 },
                 bloom_opacity: {
-                    default: 0.75,
+                    default: 0.3,
                     min: 0.0,
                     max: 5.0,
                     nameKey: "config.honey.name.bloom_opacity",
