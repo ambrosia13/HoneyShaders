@@ -1,3 +1,4 @@
+// includes
 #include frex:shaders/api/fog.glsl
 #ifndef VERTEX_SHADER
 #include frex:shaders/api/fragment.glsl
@@ -24,10 +25,13 @@
 #include honey:shaders/lib/blur.glsl
 #include honey:shaders/lib/raytrace.glsl
 
-uniform ivec2 frxu_size; // size of viewport
-uniform int frxu_lod; // lod value of this pass
+// uniforms
+uniform int frxu_cascade;
+uniform ivec2 frxu_size;
+uniform int frxu_lod;
 
-//from https://gist.github.com/sugi-cho/6a01cae436acddd72bdf
+// from https://gist.github.com/sugi-cho/6a01cae436acddd72bdf
+// - used for saturation effects
 vec3 rgb2hsv(vec3 c)
 {
     vec4 _K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -46,10 +50,10 @@ vec3 hsv2rgb(vec3 c)
     return c.z * mix(_K.xxx, clamp(p - _K.xxx, 0.0, 1.0), c.y);
 }
 
-//-------------
+// -------------
 // Water layer pattern function by Polyflare at https://www.shadertoy.com/view/ltfGD7, license CC BY 4.0
-// No changes were made other than changing #if FAST_CIRCLES to #ifdef FAST_CIRCLES to avoid compilation error.
-//-------------
+// No changes were made other than changing #if FAST_CIRCLES to #ifdef FAST_CIRCLES.
+// -------------
 // Foam pattern for the water constructed out of a series of circles
 float circ(vec2 pos, vec2 c, float s)
 {

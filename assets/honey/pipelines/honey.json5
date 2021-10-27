@@ -6,10 +6,12 @@
         vertexSource: "honey:shaders/gbuffer/main.vert",
         fragmentSource: "honey:shaders/gbuffer/main.frag",
         samplers: [
-            "u_glint"
+            "u_glint",
+            "u_shadowmap"
         ],
         samplerImages: [
-            "minecraft:textures/misc/enchanted_item_glint.png"
+            "minecraft:textures/misc/enchanted_item_glint.png",
+            "shadow_map"
         ]
     },
 
@@ -169,10 +171,11 @@
     ],
 
     sky: {
-        defaultZenithAngle: 0
+        defaultZenithAngle: -40
     },
 
     include: [
+        "honey:include/shadow.json5",
         "honey:include/composite/clouds.json5",
         "honey:include/composite/entity.json5",
         "honey:include/composite/particles.json5",
@@ -189,12 +192,12 @@
             categoryKey: "config.honey.category.general",
             elements: {
                 tone_mapping: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.tone_mapping",
                     descriptionKey: "config.honey.help.tone_mapping"
                 },
                 stylized_water: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.stylized_water",
                     descriptionKey: "config.honey.help.stylized_water"
                 }
@@ -205,7 +208,7 @@
             categoryKey: "config.honey.category.bloom",
             elements: {
                 enable_bloom: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.enable_bloom",
                     descriptionKey: "config.honey.help.enable_bloom"
                 },
@@ -233,7 +236,7 @@
                     descriptionKey: "config.honey.help.bloom_opacity"
                 },
                 // tonemap_bloom: {
-                //     default: "true",
+                //     default: true,
                 //     nameKey: "config.honey.name.tonemap_bloom",
                 //     descriptionKey: "config.honey.help.tonemap_bloom"
                 // },
@@ -252,17 +255,17 @@
                     descriptionKey: "config.honey.help.moonlight_emissivity"
                 },
                 // smart_sunlight_bloom: {
-                //     default: "true",
+                //     default: true,
                 //     nameKey: "config.honey.name.smart_sunlight_bloom",
                 //     descriptionKey: "config.honey.help.smart_sunlight_bloom"
                 // },
-                auto_exposure_quality: {
-                    default: 0,
-                    min: 0,
-                    max: 4,
-                    nameKey: "config.honey.name.auto_exposure",
-                    descriptionKey: "config.honey.help.auto_exposure"
-                },
+                // auto_exposure_quality: {
+                //     default: 0,
+                //     min: 0,
+                //     max: 4,
+                //     nameKey: "config.honey.name.auto_exposure",
+                //     descriptionKey: "config.honey.help.auto_exposure"
+                // },
                 bloom_quality: {
                     default: 5,
                     min: 3,
@@ -277,22 +280,22 @@
             categoryKey: "config.honey.category.vanilla_tweaks",
             elements: {
                 hunger_desaturation: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.hunger_desaturation",
                     descriptionKey: "config.honey.help.hunger_desaturation"
                 },
                 fire_resistance_tint: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.fire_resistance_tint",
                     descriptionKey: "config.honey.help.fire_resistance_tint"
                 },
                 water_breathing_tint: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.water_breathing_tint",
                     descriptionKey: "config.honey.help.water_breathing_tint"
                 },
                 underwater_blur: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.underwater_blur",
                     descriptionKey: "config.honey.help.underwater_blur"
                 },
@@ -304,7 +307,7 @@
                     descriptionKey: "config.honey.help.underwater_blur_amt"
                 },
                 translucent_blur: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.translucent_blur",
                     descriptionKey: "config.honey.help.translucent_blur"
                 },
@@ -322,17 +325,17 @@
             categoryKey: "config.honey.category.misc",
             elements: {
                 among_us_overlay: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.among_us",
                     descriptionKey: "config.honey.help.among_us"
                 },
                 trans_sky_overlay: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.trans_sky",
                     descriptionKey: "config.honey.help.trans_sky"
                 },
                 drunk_shader: {
-                    default: "true",
+                    default: true,
                     nameKey: "config.honey.name.drunk_shaders",
                     descriptionKey: "config.honey.help.drunk_shaders"
                 }

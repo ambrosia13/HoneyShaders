@@ -13,6 +13,11 @@ uniform sampler2D u_clouds_depth;
 uniform sampler2D u_particles_color;
 uniform sampler2D u_particles_depth;
 
+in vec2 texcoord;
+
+out vec4 compositeColor;
+out vec4 translucentOnly;
+
 //Sorting function for fabulous layers used from transparency.fsh in vanilla shaders
 
 #define NUM_LAYERS 6
@@ -48,10 +53,6 @@ vec3 blend( vec3 dst, vec4 src ) {
     return ( dst * ( 1.0 - src.a ) ) + src.rgb;
 }
 
-in vec2 texcoord;
-
-out vec4[2] fragColor;
-
 void main() {
     vec4  main_color = texture2D(u_main_color, texcoord);
     float main_depth = texture2D(u_main_depth, texcoord).r;
@@ -77,7 +78,7 @@ void main() {
     try_insert(translucent_color, translucent_depth);
     try_insert(entity_color, entity_depth);
     try_insert(weather_color, weather_depth);
-    try_insert(clouds_color, clouds_depth);
+    //try_insert(clouds_color, clouds_depth);
     try_insert(particles_color, particles_depth);
 
     vec3 composite = color_layers[0].rgb;
@@ -94,6 +95,6 @@ void main() {
         b = main_color.rgb;
     }
 
-    fragColor[0] = vec4(composite, 1.0);
-    fragColor[1] = vec4(b.rgb, 1.0);
+    compositeColor = vec4(composite, 1.0);
+    translucentOnly = vec4(b.rgb, 1.0);
 }

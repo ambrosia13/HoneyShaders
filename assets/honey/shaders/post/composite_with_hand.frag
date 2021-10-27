@@ -6,16 +6,19 @@ uniform sampler2D u_main_color;
 
 in vec2 texcoord;
 
-out vec4 fragColor;
+out vec4 compositeHand;
 
 void main() {
     vec4 composite = texture2D(u_composite, texcoord);
     float handDepth = texture2D(u_main_depth, texcoord).r * 1.0;
     vec4 color = texture2D(u_main_color, texcoord);
 
+    // combining the composite color with hand color for other programs to sample
+
     if(handDepth != 1.0) {
         handDepth = 0.0;
     }
+    
     handDepth = 1.0 - handDepth;
 
     composite -= handDepth;
@@ -26,5 +29,5 @@ void main() {
 
     composite += color;
 
-    fragColor = composite;
+    compositeHand = composite;
 }
