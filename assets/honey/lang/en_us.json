@@ -1,6 +1,6 @@
 {
     "pipeline.honey.name": "Honey Shaders",
-    "pipeline.honey.desc": "shaders for canvas",
+    "pipeline.honey.desc": "",
 
     "config.honey.category.general": "General",
     "config.honey.name.tone_mapping": "Tone Mapping",
@@ -38,14 +38,14 @@
     "config.honey.name.underwater_blur_amt": "Underwater Blur Amount",
     "config.honey.help.underwater_blur_amt": "The amount at which the screen is blurred underwater.",
     "config.honey.name.translucent_blur": "Translucent Blur",
-    "config.honey.help.translucent_blur": "When false, blurs objects behind translucents.",
+    "config.honey.help.translucent_blur": "When true, blurs objects behind translucents.",
     "config.honey.name.translucent_blur_amt": "Translucent Blur Amount",
     "config.honey.help.translucent_blur_amt": "The amount at which the screen is blurred behind translucents.",
     "config.honey.category.misc": "Misc Configuration",
-    "config.honey.name.among_us": "Disable Among Us Overlay",
-    "config.honey.help.among_us": "When false, adds among us overlay to the screen.",
-    "config.honey.name.trans_sky": "Disable Trans Sky",
-    "config.honey.help.trans_sky": "When false, adds trans flag overlay to the sky.",
-    "config.honey.name.drunk_shaders": "Disable Drunk Shaders",
-    "config.honey.help.drunk_shaders": "When false, adds some extra crazy. Don't use this if you get dizzy or epileptic!"
+    "config.honey.name.among_us": "Among Us Overlay",
+    "config.honey.help.among_us": "When true, adds among us overlay to the screen.",
+    "config.honey.name.trans_sky": "Trans Sky",
+    "config.honey.help.trans_sky": "When true, adds trans flag overlay to the sky.",
+    "config.honey.name.drunk_shaders": "Drunk Shaders",
+    "config.honey.help.drunk_shaders": "When true, adds some extra crazy. Don't use this if you get dizzy or epileptic!"
 }

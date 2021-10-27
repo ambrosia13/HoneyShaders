@@ -214,7 +214,7 @@
                 },
                 bloom_style: {
                 define: "BLOOM_STYLE",
-                default: "emissivity",
+                default: "luminance",
                 choices: ["emissivity", "luminance"],
                 enum: true,
                 prefix: "STYLE_",
@@ -307,7 +307,7 @@
                     descriptionKey: "config.honey.help.underwater_blur_amt"
                 },
                 translucent_blur: {
-                    default: true,
+                    default: false,
                     nameKey: "config.honey.name.translucent_blur",
                     descriptionKey: "config.honey.help.translucent_blur"
                 },
@@ -325,17 +325,17 @@
             categoryKey: "config.honey.category.misc",
             elements: {
                 among_us_overlay: {
-                    default: true,
+                    default: false,
                     nameKey: "config.honey.name.among_us",
                     descriptionKey: "config.honey.help.among_us"
                 },
                 trans_sky_overlay: {
-                    default: true,
+                    default: false,
                     nameKey: "config.honey.name.trans_sky",
                     descriptionKey: "config.honey.help.trans_sky"
                 },
                 drunk_shader: {
-                    default: true,
+                    default: false,
                     nameKey: "config.honey.name.drunk_shaders",
                     descriptionKey: "config.honey.help.drunk_shaders"
                 }

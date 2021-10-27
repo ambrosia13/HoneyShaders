@@ -11,7 +11,7 @@ out vec4 finalColor;
 
 void main() {
     vec4 color = texture2D(u_main_color, texcoord);
-    #ifndef TRANSLUCENT_BLUR
+    #ifdef TRANSLUCENT_BLUR
         vec4 translucent = texture2D(u_translucent_only, texcoord);
 
         if(frx_luminance(translucent.rgb) > 0.0) {
@@ -52,7 +52,7 @@ void main() {
         }
     #endif
 
-    #ifndef TRANS_SKY_OVERLAY
+    #ifdef TRANS_SKY_OVERLAY
         vec3 transSky = vec3(0.0);
 
         if(texcoord.y >= 0.0 && texcoord.y <= 0.2) {
@@ -80,7 +80,7 @@ void main() {
         }
     #endif
 
-    #ifndef AMONG_US_OVERLAY
+    #ifdef AMONG_US_OVERLAY
         vec3 sussy = vec3(1.000,0.076,0.029);
         
         if(texcoord.x < 0.9 && texcoord.x > 0.1 && texcoord.y < 0.8 && texcoord.y > 0.3) {
@@ -103,7 +103,7 @@ void main() {
         color.rgb *= sussy;
     #endif
 
-    #ifndef DRUNK_SHADER
+    #ifdef DRUNK_SHADER
         vec3 drunk1 = texture2D(u_main_color, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
         vec3 drunk2 = texture2D(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
         color.rgb += (drunk1 * drunk2);
