@@ -18,11 +18,11 @@ void main() {
     if(handDepth != 1.0) {
         handDepth = 0.0;
     }
-    
+
     handDepth = 1.0 - handDepth;
 
     composite -= handDepth;
-    composite = clamp(composite, 0.0, 1.0);
+    composite.rgb = max(vec3(0.0), composite.rgb);
 
     color -= (1.0 - handDepth);
     color = clamp(color, 0.0, 1.0);

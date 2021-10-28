@@ -1,4 +1,5 @@
 #include frex:shaders/api/vertex.glsl
+#include frex:shaders/lib/noise/noise2d.glsl
 
 uniform mat4 frxu_frameProjectionMatrix;
 uniform ivec2 frxu_size;

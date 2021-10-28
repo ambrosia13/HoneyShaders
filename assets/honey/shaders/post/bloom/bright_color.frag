@@ -61,7 +61,7 @@ void main() {
             brightColor += emissive; // terrain bloom
         }
     #elif BLOOM_STYLE == 1
-        brightColor.rgb += color.rgb * frx_smootherstep(0.0, 1.0, (color.rgb));
+        brightColor.rgb += color.rgb * frx_luminance(color.rgb);
 
         if(!isSun) {
             brightColor *= brightColor;

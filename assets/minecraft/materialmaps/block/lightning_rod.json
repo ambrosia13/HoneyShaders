@@ -1,0 +1,11 @@
+{
+	"defaultMap": {
+      "spriteMap": [
+        {
+          "sprite": "minecraft:block/lightning_rod_on",
+          "material": "minecraft:emissive_full"
+        }
+      ]
+    }
+}
+  

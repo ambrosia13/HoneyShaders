@@ -1,6 +1,28 @@
 {
     images: [
         {
+            name: "composite_with_hand",
+            lod: 0,
+            internalFormat: "RGBA8",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
+        },
+        {
             name: "bright_color",
             lod: 0,
             internalFormat: "R11F_G11F_B10F",
@@ -131,30 +153,7 @@
                     name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
-        },
-        {
-            name: "composite_with_hand",
-            lod: 0,
-            internalFormat: "RGBA8",
-            pixelFormat: "RGBA",
-            pixelDataType: "UNSIGNED_BYTE",
-            target: "TEXTURE_2D",
-            texParams: [
-                {
-                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
-                }, 
-                {
-                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
-                },
-                {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
-                }, 
-                {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
-                }
-            ]
         }
-
     ],
 
     framebuffers: [
@@ -306,7 +305,7 @@
                 samplerImages: [
                     "composite",
                     "main_depth",
-                    "main_color_copy"
+                    "main_color"
                 ]
             },
             {

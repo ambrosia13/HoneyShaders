@@ -1,0 +1,11 @@
+{
+	"defaultMap": {
+      "spriteMap": [
+        {
+          "sprite": "minecraft:block/redstone_torch",
+          "material": "minecraft:luminance_glow"
+        }
+      ]
+    }
+}
+  

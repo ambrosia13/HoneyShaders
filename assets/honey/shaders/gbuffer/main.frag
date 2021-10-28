@@ -10,7 +10,7 @@ in vec2 faceUV;
 in vec4 shadowPos;
 
 out vec4 fragColor;
-out vec4 emissiveColor;
+out vec4 fragEmissive;
 out vec4 fragCopy;
 
 void frx_pipelineFragment() {
@@ -31,15 +31,22 @@ void frx_pipelineFragment() {
         // - see comment in common.glsl for proper credit
         bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
         vec3 waterColor = vec3(0.179,0.350,0.590);
-        vec2 st = vec2(faceUV.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
-                                        faceUV.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0));
+        vec2 uv = vec2(
+            faceUV.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
+            faceUV.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0)
+        );
         float distortX = sin(faceUV.y * 1.0 + frx_renderSeconds * 0.5) * 0.2;
         float distortY = cos(faceUV.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
         vec2 distort = vec2(distortX, distortY);
-        float foam = waterlayer(st * 0.5 + distort);
+        float foam = waterlayer(uv * 0.5 + distort);
         vec3 water = (waterColor + foam / 4.5);
+
         if(isWater) {
             color.rgb = water;
+        }
+
+        if(frx_cameraInWater == 1 && !frx_isGui) {
+            color.rgb *= max(0.5, foam);
         }
     #endif
 
@@ -73,7 +80,7 @@ void frx_pipelineFragment() {
     vec4 glint = texture2D(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5);
     vec4 hurt = vec4(1.5, 0.6, 0.6, 1.0);
     vec4 flash = vec4(1.0, 1.0, 1.0, 0.1);
-    
+
     if(frx_matGlint() == 1.0) {
         color += glint;
     }
@@ -92,8 +99,7 @@ void frx_pipelineFragment() {
 
     // outputs
     fragColor = color;
-    emissiveColor = (emissive_color);
-    fragCopy = color;
+    fragEmissive = emissive_color;
 
     gl_FragDepth = gl_FragCoord.z;
 }
