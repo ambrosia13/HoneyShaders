@@ -153,6 +153,116 @@
                     name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
                 }
             ]
+        },
+        {
+            name: "bloom_pass5",
+            lod: 0,
+            internalFormat: "R11F_G11F_B10F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass6",
+            lod: 0,
+            internalFormat: "R11F_G11F_B10F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass7",
+            lod: 0,
+            internalFormat: "R11F_G11F_B10F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass8",
+            lod: 0,
+            internalFormat: "R11F_G11F_B10F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
+        },
+        {
+            name: "bloom_composite2",
+            lod: 0,
+            internalFormat: "R11F_G11F_B10F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
         }
     ],
 
@@ -213,6 +323,46 @@
                 }
             ]
         }
+        {
+            name: "bloom_pass5",
+            colorAttachments: [
+                {
+                    image: "bloom_pass5"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass6",
+            colorAttachments: [
+                {
+                    image: "bloom_pass6"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass7",
+            colorAttachments: [
+                {
+                    image: "bloom_pass7"
+                }
+            ]
+        },
+        {
+            name: "bloom_pass8",
+            colorAttachments: [
+                {
+                    image: "bloom_pass8"
+                }
+            ]
+        },
+        {
+            name: "bloom_composite2",
+            colorAttachments: [
+                {
+                    image: "bloom_composite2"
+                }
+            ]
+        }
     ],
 
     programs: [
@@ -223,6 +373,7 @@
             samplers: [
                 "u_main_color",
                 "u_bloom",
+                "u_bloom_boosted",
                 "u_translucent_depth",
                 "u_translucent_only"
             ]
@@ -292,6 +443,50 @@
             fragmentSource: "honey:shaders/post/bloom/bloom_pass4.frag",
             samplers: [
                 "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_pass5",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass5.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_pass6",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass6.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_pass7",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass7.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_pass8",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_pass8.frag",
+            samplers: [
+                "u_color_input"
+            ]
+        },
+        {
+            name: "bloom_composite2",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_composite.frag",
+            samplers: [
+                "u_bloom0",
+                "u_bloom1",
+                "u_bloom2",
+                "u_bloom3",
+                "u_bloom4"
             ]
         }
     ],
@@ -372,12 +567,62 @@
                 toggleConfig: "enable_bloom"
             },
             {
+                name: "bloom_pass5",
+                program: "bloom_pass5",
+                framebuffer: "bloom_pass5",
+                samplerImages: [
+                    "bloom_composite"
+                ],
+                toggleConfig: "hq_bloom"
+            },
+            {
+                name: "bloom_pass6",
+                program: "bloom_pass6",
+                framebuffer: "bloom_pass6",
+                samplerImages: [
+                    "bloom_pass5"
+                ],
+                toggleConfig: "hq_bloom"
+            },
+            {
+                name: "bloom_pass7",
+                program: "bloom_pass7",
+                framebuffer: "bloom_pass7",
+                samplerImages: [
+                    "bloom_pass6"
+                ],
+                toggleConfig: "hq_bloom"
+            },
+            {
+                name: "bloom_pass8",
+                program: "bloom_pass8",
+                framebuffer: "bloom_pass8",
+                samplerImages: [
+                    "bloom_pass7"
+                ],
+                toggleConfig: "hq_bloom"
+            },
+            {
+                name: "bloom_composite2",
+                program: "bloom_composite2",
+                framebuffer: "bloom_composite2",
+                samplerImages: [
+                    "bloom_composite",
+                    "bloom_pass5",
+                    "bloom_pass6",
+                    "bloom_pass7",
+                    "bloom_pass8"
+                ],
+                toggleConfig: "hq_bloom"
+            },
+            {
                 name: "final",
                 program: "final",
                 framebuffer: "copy_to_main",
                 samplerImages: [
                     "composite_with_hand",
                     "bloom_composite",
+                    "bloom_composite2",
                     "translucent_depth",
                     "translucent_only"
                 ]

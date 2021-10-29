@@ -21,13 +21,18 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 # Credits
 
-- Xordev for providing me permission to use their blur function from the [Ominous Shaderpack](https://github.com/XorDev/Ominous-Shaderpack) (used for bloom and blur effects)
-
 - Spiralhalo's [Canvas Tutorial](https://github.com/spiralhalo/CanvasTutorial/wiki) for teaching me how to make a Canvas pipeline. Also thanks to spiralhalo for helping me solve numerous issues.
 
 - Grondag, author of Canvas and FREX, for creating and maintaining a pleasant shader API to work with.
 
 - Credits to [Lumi Lights](https://github.com/spiralhalo/LumiLights) by Spiralhalo and Canvas Basic/Standard/Dev by Grondag for being great references for working pipelines.  
+
+## Code Credits
+
+- [Blur function used for bloom](https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc) by XorDev
+- [RGB to HSV functions](https://gist.github.com/sugi-cho/6a01cae436acddd72bdf) by sugi-cho
+- [Foam function for water](https://www.shadertoy.com/view/ltfGD7) by Polyflare
+
 
 <!-- # Screenshots
 

@@ -23,35 +23,6 @@ void frx_pipelineFragment() {
         if(frx_fragEnableAo) {
             lightmap *= frx_fragLight.z;
         }
-    #endif
-
-    // custom water - todo: move to material shader
-    #ifdef STYLIZED_WATER
-        // Foam function taken from https://www.shadertoy.com/view/ltfGD7
-        // - see comment in common.glsl for proper credit
-        bool isWater = frx_vertexColor.b >= 0.6 && frx_vertexColor.r <= 0.3 && frx_vertexColor.g <= 0.5;
-        vec3 waterColor = vec3(0.179,0.350,0.590);
-        vec2 uv = vec2(
-            faceUV.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
-            faceUV.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0)
-        );
-        float distortX = sin(faceUV.y * 1.0 + frx_renderSeconds * 0.5) * 0.2;
-        float distortY = cos(faceUV.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
-        vec2 distort = vec2(distortX, distortY);
-        float foam = waterlayer(uv * 0.5 + distort);
-        vec3 water = (waterColor + foam / 4.5);
-
-        if(isWater) {
-            color.rgb = water;
-        }
-
-        if(frx_cameraInWater == 1 && !frx_isGui) {
-            color.rgb *= max(0.5, foam);
-        }
-    #endif
-
-    // more vanilla lighting
-    #ifdef VANILLA_LIGHTING
         color.rgb *= lightmap;
 
         // blocklight boost

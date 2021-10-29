@@ -25,7 +25,7 @@ void main() {
     composite.rgb = max(vec3(0.0), composite.rgb);
 
     color -= (1.0 - handDepth);
-    color = clamp(color, 0.0, 1.0);
+    color.rgb = max(vec3(0.0), color.rgb);
 
     composite += color;
 

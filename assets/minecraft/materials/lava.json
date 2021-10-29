@@ -1,0 +1,9 @@
+{
+	"emissive": true,
+	"layers": [
+		{
+            "vertexSource": "minecraft:shaders/material/stylize/fluid.vert",
+			"fragmentSource": "minecraft:shaders/material/stylize/lava.frag"
+        }
+	]
+}

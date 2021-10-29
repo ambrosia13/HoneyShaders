@@ -1,9 +1,10 @@
-#include frex:shaders/api/fragment.glsl
-#include frex:shaders/lib/math.glsl
+#include honey:shaders/lib/common.glsl
 
 void frx_materialFragment() {
-    float purple = frx_luminance(frx_fragColor.rgb * vec3(4.0, 0.0, 4.0));
+    #ifdef INBUILT_MATERIALS
+        float purple = frx_luminance(frx_fragColor.rgb * vec3(4.0, 0.0, 4.0));
 
-    frx_fragEmissive = purple;
+        frx_fragEmissive = purple;
+    #endif
 }
 

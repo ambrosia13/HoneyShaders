@@ -2,6 +2,7 @@
 
 uniform sampler2D u_main_color;
 uniform sampler2D u_bloom;
+uniform sampler2D u_bloom_boosted;
 uniform sampler2D u_translucent_depth;
 uniform sampler2D u_translucent_only;
 
@@ -19,9 +20,19 @@ void main() {
         }
     #endif
     float depth = texture2D(u_translucent_depth, texcoord).r;
-    vec4 bloom = texture2D(u_bloom, texcoord);
     #ifdef ENABLE_BLOOM
-        color += bloom * BLOOM_OPACITY;
+        #ifdef HQ_BLOOM
+            vec4 bloom = texture2D(u_bloom_boosted, texcoord);
+        #else
+            vec4 bloom = texture2D(u_bloom, texcoord);
+        #endif
+
+        float opacity = BLOOM_OPACITY;
+        #ifdef HQ_BLOOM
+            opacity *= 0.5;
+        #endif
+
+        color += bloom * opacity;
     #endif
     
     if(frx_cameraInWater == 1) {

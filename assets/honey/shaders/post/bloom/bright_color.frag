@@ -33,13 +33,13 @@ void main() {
     if(isSky) {
         // bloom threshold for the sky only
         if(frx_worldIsMoonlit == 0.0) {
-            brightColor += vec4(2.0, 1.2, 0.4, 1.1) * frx_smootherstep(0.89, 0.9, frx_luminance(color.rgb));
+            brightColor += vec4(1.8, 1.2, 0.4, 1.1) * frx_smootherstep(0.89, 0.9, frx_luminance(color.rgb));
             brightColor *= sunLightIlluminance * frx_skyLightTransitionFactor;
         }
 
         // lower threshold during night
         if(frx_worldIsMoonlit == 1.0) {
-            brightColor += vec4(0.3, 0.7, 2.0, 1.1) * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb));
+            brightColor += vec4(0.3, 1.2, 1.8, 1.1) * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb));
             brightColor *= moonLightIlluminance * frx_skyLightTransitionFactor;
         }
 
@@ -63,8 +63,13 @@ void main() {
     #elif BLOOM_STYLE == 1
         brightColor.rgb += color.rgb * frx_luminance(color.rgb);
 
-        if(!isSun) {
+        brightColor *= brightColor;
+
+        if(!isSun && frx_worldIsNether != 1.0) {
             brightColor *= brightColor;
+            if(isSky && !isSun) {
+                brightColor *= brightColor * brightColor * brightColor * brightColor * brightColor;
+            }
         }
     #endif
 }

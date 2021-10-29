@@ -179,6 +179,16 @@
                     default: true,
                     nameKey: "config.honey.name.stylized_water",
                     descriptionKey: "config.honey.help.stylized_water"
+                },
+                stylized_lava: {
+                    default: true,
+                    nameKey: "config.honey.name.stylized_lava",
+                    descriptionKey: "config.honey.help.stylized_lava"
+                },
+                inbuilt_materials: {
+                    default: true,
+                    nameKey: "config.honey.name.inbuilt_materials",
+                    descriptionKey: "config.honey.help.inbuilt_materials"
                 }
             }
         }
@@ -190,6 +200,11 @@
                     default: true,
                     nameKey: "config.honey.name.enable_bloom",
                     descriptionKey: "config.honey.help.enable_bloom"
+                },
+                hq_bloom: {
+                    default: false,
+                    nameKey: "config.honey.name.boosted_bloom",
+                    descriptionKey: "config.honey.help.boosted_bloom"
                 },
                 bloom_style: {
                 define: "BLOOM_STYLE",
@@ -208,7 +223,7 @@
                     descriptionKey: "config.honey.help.bloom_base_amt"
                 },
                 bloom_opacity: {
-                    default: 0.3,
+                    default: 0.7,
                     min: 0.0,
                     max: 5.0,
                     nameKey: "config.honey.name.bloom_opacity",
