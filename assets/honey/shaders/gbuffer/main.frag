@@ -11,7 +11,7 @@ in vec4 shadowPos;
 
 out vec4 fragColor;
 out vec4 fragEmissive;
-out vec4 fragCopy;
+out vec4 fragData;
 
 void frx_pipelineFragment() {
     vec4 color = frx_fragColor;
@@ -68,9 +68,16 @@ void frx_pipelineFragment() {
     color.rgb = mix(color.rgb, emissive_color.rgb * 1.0, frx_fragEmissive);
     emissive_color *= frx_fragEmissive;
 
+    #ifdef BRIGHT_BLOOM
+    if(frx_luminance(color.rgb) > 1.0) {
+        frx_fragEmissive += frx_luminance(color.rgb) * frx_smootherstep(0.9, 1.5, frx_luminance(color.rgb));
+    }
+    #endif
+
     // outputs
     fragColor = color;
     fragEmissive = emissive_color;
+    fragData = vec4(frx_fragEmissive, diffuse, 0.0, 1.0); // data for other post shaders to access
 
     gl_FragDepth = gl_FragCoord.z;
 }

@@ -24,4 +24,6 @@ void frx_materialFragment() {
         frx_fragColor.rgb = lava;
     #endif
     frx_fragEmissive = frx_luminance(frx_fragColor.rgb);
+    frx_fragEnableDiffuse = false;
+    frx_fragEnableAo = false;
 }

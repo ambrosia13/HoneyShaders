@@ -99,6 +99,20 @@
             ]
         },
         {
+            name: "pipeline_data",
+            lod: 0,
+            internalFormat: "RGBA16F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {name: "TEXTURE_MIN_FILTER", val: "NEAREST"},
+                {name: "TEXTURE_MAG_FILTER", val: "NEAREST"},
+                {name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"}, 
+                {name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"}
+            ]
+        },
+        {
             name: "main_depth",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
@@ -129,6 +143,10 @@
                 },
                 {
                     image: "emissive_color",
+                    clearColor: 0x00000000
+                },
+                {
+                    image: "pipeline_data",
                     clearColor: 0x00000000
                 }
             ]
@@ -208,12 +226,17 @@
                 },
                 bloom_style: {
                 define: "BLOOM_STYLE",
-                default: "luminance",
+                default: "emissivity",
                 choices: ["emissivity", "luminance"],
                 enum: true,
                 prefix: "STYLE_",
                 nameKey: "config.honey.name.bloom_style",
                 descriptionKey: "config.honey.help.bloom_style"
+                },
+                bright_bloom: {
+                    default: false,
+                    nameKey: "config.honey.name.bright_bloom",
+                    descriptionKey: "config.honey.help.bright_bloom"
                 },
                 bloom_base_amt: {
                     default: 4.0,

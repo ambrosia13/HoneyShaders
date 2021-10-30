@@ -14,10 +14,7 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 ## Known issues:
 
-- Bloom applies to certain things that shouldn't have bloom
-- Minor visual artifacts
 - Poor optimization
-- Some config options may not work correctly 
 
 # Credits
 
