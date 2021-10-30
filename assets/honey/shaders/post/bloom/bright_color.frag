@@ -60,5 +60,20 @@ void main() {
                 brightColor *= brightColor * brightColor * brightColor * brightColor * brightColor;
             }
         }
+    #else // both - kind of ugly
+        float emissivity = texture2D(u_pipeline_data, texcoord).r;
+        vec4 emissive = color * emissivity;
+        brightColor += emissive;
+
+        brightColor.rgb += color.rgb * frx_luminance(color.rgb);
+
+        brightColor *= brightColor;
+
+        if(!isSun && frx_worldIsNether != 1.0) {
+            brightColor *= brightColor;
+            if(isSky && !isSun) {
+                brightColor *= brightColor * brightColor * brightColor * brightColor * brightColor;
+            }
+        }
     #endif
 }

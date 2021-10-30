@@ -31,7 +31,7 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 - [Foam function for water](https://www.shadertoy.com/view/ltfGD7) by Polyflare
 
 
-<!-- # Screenshots
+# Screenshots
 
-![screenshot 1](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/image1.png?raw=true)
-![screenshot 2](https://github.com/Poisoned-Honey/HoneyShaders/blob/main/images/image2.png?raw=true) -->
+![screenshot 1](https://cdn.discordapp.com/attachments/839653070622818337/903896724458856458/unknown.png)
+![screenshot 2](https://cdn.discordapp.com/attachments/903175815401975889/903891712311709706/unknown.png)

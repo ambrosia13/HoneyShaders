@@ -1,5 +1,7 @@
 #include honey:shaders/lib/common.glsl
 
+// unused
+
 void frx_materialFragment() {
     #ifdef INBUILT_MATERIALS
         vec3 warm = vec3(1.000,0.915,0.010);

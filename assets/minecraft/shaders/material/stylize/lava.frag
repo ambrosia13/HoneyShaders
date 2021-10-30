@@ -10,12 +10,12 @@ void frx_materialFragment() {
         float distortX = sin(frx_var0.y * 1.0 + frx_renderSeconds * 0.5) * 0.2;
         float distortY = cos(frx_var0.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
         vec2 distort = vec2(distortX, distortY);
-        float magma = snoise((uv + distort) * 0.5);
-        float magma1 = snoise((uv + distort) * 1.0);
-        float magma2 = snoise((uv + distort) * 2.0);
-        float magma3 = snoise((uv + distort) * 3.0);
-        float magma4 = snoise((uv + distort) * 4.0);
-        float magma5 = snoise((uv + distort) * 5.0);
+        float magma = snoise((uv + distort) * 0.25);
+        float magma1 = snoise((uv + distort) * 0.5);
+        float magma2 = snoise((uv + distort) * 1.0);
+        float magma3 = snoise((uv + distort) * 1.5);
+        float magma4 = snoise((uv + distort) * 2.0);
+        float magma5 = snoise((uv + distort) * 2.5);
         vec3 lava = lavaColor + vec3(
             (magma + magma1 + magma2 + magma3 + magma4 + magma5) / 2.0
             * vec3(0.995,0.415,0.084)

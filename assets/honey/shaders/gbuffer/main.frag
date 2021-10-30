@@ -10,7 +10,6 @@ in vec2 faceUV;
 in vec4 shadowPos;
 
 out vec4 fragColor;
-out vec4 fragEmissive;
 out vec4 fragData;
 
 void frx_pipelineFragment() {
@@ -76,7 +75,6 @@ void frx_pipelineFragment() {
 
     // outputs
     fragColor = color;
-    fragEmissive = emissive_color;
     fragData = vec4(frx_fragEmissive, diffuse, 0.0, 1.0); // data for other post shaders to access
 
     gl_FragDepth = gl_FragCoord.z;
