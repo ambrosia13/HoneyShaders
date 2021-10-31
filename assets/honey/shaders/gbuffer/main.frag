@@ -19,6 +19,11 @@ void frx_pipelineFragment() {
     // vanilla lighting
     #ifdef VANILLA_LIGHTING
         vec3 lightmap = texture2D(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
+
+        if(frx_distance < frx_heldLight.a * 15.0 && !frx_isGui) {
+            lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 31.0 / 32.0);
+        }
+
         if(frx_fragEnableAo) {
             lightmap *= frx_fragLight.z;
         }
