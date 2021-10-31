@@ -35,13 +35,13 @@ void frx_pipelineFragment() {
 
         #ifdef FIRE_RESISTANCE_TINT
             if(frx_effectFireResistance == 1) {
-            lightmap.r *= 1.5;
+                lightmap.r *= 1.5;
             }
         #endif
 
         #ifdef WATER_BREATHING_TINT
             if(frx_effectWaterBreathing == 1) {
-            lightmap.b *= 1.5;
+                lightmap.b *= 1.5;
             }
         #endif
     #endif
@@ -68,10 +68,15 @@ void frx_pipelineFragment() {
     emissive_color *= frx_fragEmissive;
 
     #ifdef BRIGHT_BLOOM
-    if(frx_luminance(color.rgb) > 1.0) {
-        frx_fragEmissive += frx_luminance(color.rgb) * frx_smootherstep(0.9, 1.5, frx_luminance(color.rgb));
-    }
+        if(frx_luminance(color.rgb) > 1.0) {
+            frx_fragEmissive += frx_luminance(color.rgb) * frx_smootherstep(0.9, 1.5, frx_luminance(color.rgb));
+        }
     #endif
+
+    if(frx_fogEnabled == 1) {
+        float fog = frx_smootherstep(frx_fogStart, frx_fogEnd, frx_distance);
+        color.rgb = mix(color.rgb, frx_fogColor.rgb, fog); 
+    }
 
     // outputs
     fragColor = color;

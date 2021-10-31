@@ -9,7 +9,7 @@ out vec4 blurColor;
 void main() {
     vec4 color = texture2D(u_color_input, texcoord);
 
-    color = blur(u_color_input, texcoord, BLOOM_BASE_AMT * 4.0);
+    color = blur(u_color_input, texcoord, BLOOM_BASE_AMT * 2.0);
 
     blurColor = color;
 }

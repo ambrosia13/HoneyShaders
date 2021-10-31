@@ -14,6 +14,8 @@ void frx_pipelineVertex() {
         frx_vertex += frx_modelToCamera();
         gl_Position = frx_viewProjectionMatrix * frx_vertex;
     }
+    
+    frx_distance = length(frx_vertex.xyz);
 
     shadowPos = (frx_shadowViewMatrix * frx_vertex);
 
