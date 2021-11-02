@@ -121,12 +121,6 @@ void main() {
         color.rgb += (drunk1 * drunk2);
     #endif
 
-    vec3 screenPos = vec3(texcoord, depth);
-    Ray ray;
-    ray.origin = frx_cameraPos;
-    ray.direction = screenPos;
-    //color.rgb = cloudsPlane(ray, color.rgb);
-
     #ifdef TONE_MAPPING
         color.rgb = frx_toneMap(color.rgb);
     #endif
