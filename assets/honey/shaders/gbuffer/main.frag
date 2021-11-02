@@ -1,5 +1,5 @@
 #include honey:shaders/lib/common.glsl 
-#include canvas:shaders/pipeline/shadow.glsl
+//#include canvas:shaders/pipeline/shadow.glsl
 
 uniform sampler2D u_glint;
 
@@ -20,6 +20,11 @@ void frx_pipelineFragment() {
     #ifdef VANILLA_LIGHTING
         vec3 lightmap = texture2D(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
 
+        #ifdef RED_MOOD_TINT
+            lightmap.rgb = mix(lightmap.rgb, vec3(1.0, 0.0, 0.0), frx_smootherstep(0.9, 1.0, frx_playerMood)); // red lightmap when spooky sound
+        #endif
+
+        // handheld light
         if(frx_distance < frx_heldLight.a * 15.0 && !frx_isGui) {
             lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 31.0 / 32.0);
         }
@@ -68,9 +73,8 @@ void frx_pipelineFragment() {
         color += flash / 3.0;
     }
 
-    // emissive color
+    // emissivity
     color.rgb = mix(color.rgb, emissive_color.rgb * 1.0, frx_fragEmissive);
-    emissive_color *= frx_fragEmissive;
 
     #ifdef BRIGHT_BLOOM
         if(frx_luminance(color.rgb) > 1.0) {
@@ -78,14 +82,46 @@ void frx_pipelineFragment() {
         }
     #endif
 
-    if(frx_fogEnabled == 1) {
-        float fog = frx_smootherstep(frx_fogStart, frx_fogEnd, frx_distance);
-        color.rgb = mix(color.rgb, frx_fogColor.rgb, fog); 
-    }
+    // fog
+    #if FOG_STYLE == 0
+        if(frx_fogEnabled == 1) {
+            float fogEnd = frx_fogEnd;
+            if(frx_worldIsNether == 1) {
+                fogEnd += 100.0;
+            }
+            float vanillaFogFactor = frx_smootherstep(frx_fogStart, fogEnd, frx_distance);
+            color.rgb = mix(color.rgb, frx_fogColor.rgb, vanillaFogFactor); 
+
+            frx_fragEmissive *= 1.0 - vanillaFogFactor;
+        }
+    #elif FOG_STYLE == 1
+        float expFogFactor = frx_distance / frx_viewDistance;
+        if(frx_worldIsNether == 0) expFogFactor *= expFogFactor;
+        expFogFactor = 1.0 - exp(-expFogFactor);
+        color.rgb = mix(color.rgb, max(frx_fogColor.rgb, vec3(0.0)), expFogFactor);
+        frx_fragEmissive *= 1.0 - expFogFactor;
+    #else // both
+        float expFogFactor = frx_distance / frx_viewDistance;
+        if(frx_worldIsNether == 0) expFogFactor *= expFogFactor;
+        expFogFactor = 1.0 - exp(-expFogFactor);
+        color.rgb = mix(color.rgb, max(frx_fogColor.rgb, vec3(0.0)), expFogFactor);
+        if(frx_fogEnabled == 1) {
+            float fogStart = frx_fogStart;
+            float fogEnd = frx_fogEnd;
+            if(frx_worldIsNether == 1) {
+                fogStart = frx_viewDistance * 0.5;
+                fogEnd = frx_viewDistance;
+            }
+            float vanillaFogFactor = frx_smootherstep(fogStart, fogEnd, frx_distance);
+            color.rgb = mix(color.rgb, frx_fogColor.rgb, vanillaFogFactor); 
+
+            frx_fragEmissive *= 1.0 - max(expFogFactor, vanillaFogFactor);
+        }
+    #endif
 
     // outputs
     fragColor = color;
-    fragData = vec4(frx_fragEmissive, diffuse, 0.0, 1.0); // data for other post shaders to access
+    fragData = vec4(frx_fragEmissive, diffuse, frx_distance, 1.0); // data for other post shaders to access
 
     gl_FragDepth = gl_FragCoord.z;
 }

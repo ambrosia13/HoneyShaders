@@ -375,7 +375,8 @@
                 "u_bloom",
                 "u_bloom_boosted",
                 "u_translucent_depth",
-                "u_translucent_only"
+                "u_translucent_only",
+                "u_pipeline_data"
             ]
         },
         {
@@ -624,7 +625,8 @@
                     "bloom_composite",
                     "bloom_composite2",
                     "translucent_depth",
-                    "translucent_only"
+                    "translucent_only",
+                    "pipeline_data"
                 ]
             }
         ]

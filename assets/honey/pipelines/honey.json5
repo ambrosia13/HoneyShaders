@@ -186,9 +186,18 @@
                     default: true,
                     nameKey: "config.honey.name.inbuilt_materials",
                     descriptionKey: "config.honey.help.inbuilt_materials"
+                },
+                fog_style: {
+                    define: "FOG_STYLE",
+                    default: "both",
+                    choices: ["vanilla", "foggier_fog", "both"],
+                    enum: true,
+                    prefix: "STYLE_",
+                    nameKey: "config.honey.name.fog_style",
+                    descriptionKey: "config.honey.help.fog_style"
                 }
             }
-        }
+        },
         {
             includeToken: "honey:bloom",
             categoryKey: "config.honey.category.bloom",
@@ -204,13 +213,13 @@
                     descriptionKey: "config.honey.help.boosted_bloom"
                 },
                 bloom_style: {
-                define: "BLOOM_STYLE",
-                default: "emissivity",
-                choices: ["emissivity", "luminance", "both"],
-                enum: true,
-                prefix: "STYLE_",
-                nameKey: "config.honey.name.bloom_style",
-                descriptionKey: "config.honey.help.bloom_style"
+                    define: "BLOOM_STYLE",
+                    default: "emissivity",
+                    choices: ["emissivity", "luminance", "both"],
+                    enum: true,
+                    prefix: "STYLE_",
+                    nameKey: "config.honey.name.bloom_style",
+                    descriptionKey: "config.honey.help.bloom_style"
                 },
                 bright_bloom: {
                     default: false,
@@ -334,6 +343,11 @@
                     default: false,
                     nameKey: "config.honey.name.drunk_shaders",
                     descriptionKey: "config.honey.help.drunk_shaders"
+                },
+                red_mood_tint: {
+                    default: true,
+                    nameKey: "config.honey.name.red_mood_tint",
+                    descriptionKey: "config.honey.help.red_mood_tint"
                 }
             }
         }

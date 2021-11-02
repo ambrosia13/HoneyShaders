@@ -5,6 +5,7 @@ uniform sampler2D u_bloom;
 uniform sampler2D u_bloom_boosted;
 uniform sampler2D u_translucent_depth;
 uniform sampler2D u_translucent_only;
+uniform sampler2D u_pipeline_data;
 
 in vec2 texcoord;
 
@@ -119,6 +120,12 @@ void main() {
         vec3 drunk2 = texture2D(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
         color.rgb += (drunk1 * drunk2);
     #endif
+
+    vec3 screenPos = vec3(texcoord, depth);
+    Ray ray;
+    ray.origin = frx_cameraPos;
+    ray.direction = screenPos;
+    //color.rgb = cloudsPlane(ray, color.rgb);
 
     #ifdef TONE_MAPPING
         color.rgb = frx_toneMap(color.rgb);

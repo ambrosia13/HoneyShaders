@@ -11,8 +11,10 @@
     "config.honey.help.stylized_lava": "When true, uses a custom noise generated lava texture instead of the default.",
     "config.honey.name.inbuilt_materials": "Inbuilt Materials",
     "config.honey.help.inbuilt_materials": "Enables built in material shaders included in the pack. If you want to use your own material shaders, ;disable this option and put your resource pack above Honey Shaders in resource pack selection screen.",
+    "config.honey.name.fog_style": "Fog Style",
+    "config.honey.help.fog_style": "Controls the fog style. Foggier fog has an exponential fog factor based on the distance from the player. ;Foggier fog looks a bit more natural, but Both will hide chunk borders by combining vanilla fog and foggier fog.",
 
-    "config.honey.category.bloom": "Bloom Configuration",
+    "config.honey.category.bloom": "Bloom",
     "config.honey.name.enable_bloom": "Enable Bloom",
     "config.honey.help.enable_bloom": "Whether or not bloom is enabled. ;Medium performance cost.",
     "config.honey.name.boosted_bloom": "Boosted Bloom",
@@ -49,11 +51,13 @@
     "config.honey.help.translucent_blur": "When true, blurs objects behind translucents.",
     "config.honey.name.translucent_blur_amt": "Translucent Blur Amount",
     "config.honey.help.translucent_blur_amt": "The amount at which the screen is blurred behind translucents.",
-    "config.honey.category.misc": "Misc Configuration",
+    "config.honey.category.misc": "Misc & Fun",
     "config.honey.name.among_us": "Among Us Overlay",
     "config.honey.help.among_us": "When true, adds among us overlay to the screen.",
     "config.honey.name.trans_sky": "Trans Sky",
     "config.honey.help.trans_sky": "When true, adds trans flag overlay to the sky.",
     "config.honey.name.drunk_shaders": "Drunk Shaders",
-    "config.honey.help.drunk_shaders": "When true, adds some extra crazy. Don't use this if you get dizzy or epileptic!"
+    "config.honey.help.drunk_shaders": "When true, adds some extra crazy. Don't use this if you get dizzy or epileptic!",
+    "config.honey.name.red_mood_tint": "Red Mood Tint",
+    "config.honey.help.red_mood_tint": "When true, tints the lightmap and emissive color red the longer the player is underground, ;becoming more and more red and peaking when a spooky cave sound plays. ;Added during Halloween."
 }
