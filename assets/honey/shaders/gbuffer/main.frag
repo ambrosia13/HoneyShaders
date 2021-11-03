@@ -84,6 +84,7 @@ void frx_pipelineFragment() {
 
     // fog
     #if FOG_STYLE == 0
+
         if(frx_fogEnabled == 1) {
             float fogEnd = frx_fogEnd;
             if(frx_worldIsNether == 1) {
@@ -94,17 +95,41 @@ void frx_pipelineFragment() {
 
             frx_fragEmissive *= 1.0 - vanillaFogFactor;
         }
+
     #elif FOG_STYLE == 1
+    
         float expFogFactor = frx_distance / frx_viewDistance;
         if(frx_worldIsNether == 0) expFogFactor *= expFogFactor;
         expFogFactor = 1.0 - exp(-expFogFactor);
-        color.rgb = mix(color.rgb, max(frx_fogColor.rgb, vec3(0.0)), expFogFactor);
+
+        #ifdef RAINBOW_FOG
+            vec3 fogCol = frx_fogColor.rgb;
+            fogCol = rgb2hsv(fogCol);
+            fogCol.r = sin(frx_renderSeconds) * 0.5 + 0.5;
+            fogCol = hsv2rgb(fogCol);
+        #else
+            vec3 fogCol = frx_fogColor.rgb;
+        #endif
+
+        color.rgb = mix(color.rgb, max(fogCol.rgb, vec3(0.0)), expFogFactor);
         frx_fragEmissive *= 1.0 - expFogFactor;
+
     #else // both
+
         float expFogFactor = frx_distance / frx_viewDistance;
         if(frx_worldIsNether == 0) expFogFactor *= expFogFactor;
         expFogFactor = 1.0 - exp(-expFogFactor);
-        color.rgb = mix(color.rgb, max(frx_fogColor.rgb, vec3(0.0)), expFogFactor);
+
+        #ifdef RAINBOW_FOG
+            vec3 fogCol = frx_fogColor.rgb;
+            fogCol = rgb2hsv(fogCol);
+            fogCol.r = sin(frx_renderSeconds) * 0.5 + 0.5;
+            fogCol = hsv2rgb(fogCol);
+        #else
+            vec3 fogCol = frx_fogColor.rgb;
+        #endif
+
+        color.rgb = mix(color.rgb, max(fogCol.rgb, vec3(0.0)), expFogFactor);
         if(frx_fogEnabled == 1) {
             float fogStart = frx_fogStart;
             float fogEnd = frx_fogEnd;
@@ -117,6 +142,7 @@ void frx_pipelineFragment() {
 
             frx_fragEmissive *= 1.0 - max(expFogFactor, vanillaFogFactor);
         }
+
     #endif
 
     // outputs

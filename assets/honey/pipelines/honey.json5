@@ -348,6 +348,11 @@
                     default: true,
                     nameKey: "config.honey.name.red_mood_tint",
                     descriptionKey: "config.honey.help.red_mood_tint"
+                },
+                rainbow_fog: {
+                    default: false,
+                    nameKey: "config.honey.name.rainbow_fog",
+                    descriptionKey: "config.honey.help.rainbow_fog"
                 }
             }
         }
