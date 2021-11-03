@@ -24,6 +24,8 @@ void frx_pipelineFragment() {
             lightmap.rgb = mix(lightmap.rgb, vec3(1.0, 0.0, 0.0), frx_smootherstep(0.9, 1.0, frx_playerMood)); // red lightmap when spooky sound
         #endif
 
+        //if(!frx_isGui || frx_isHand) lightmap *= vec3(1.8, 1.5, 1.0) * max(diffuse, 0.8);
+
         // handheld light
         if(frx_distance < frx_heldLight.a * 15.0 && !frx_isGui) {
             lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 31.0 / 32.0);
@@ -86,14 +88,16 @@ void frx_pipelineFragment() {
     #if FOG_STYLE == 0
 
         if(frx_fogEnabled == 1) {
+            float fogStart = frx_fogStart;
             float fogEnd = frx_fogEnd;
             if(frx_worldIsNether == 1) {
-                fogEnd += 100.0;
+                fogStart = frx_viewDistance * 0.5;
+                fogEnd = frx_viewDistance;
             }
-            float vanillaFogFactor = frx_smootherstep(frx_fogStart, fogEnd, frx_distance);
+            float vanillaFogFactor = frx_smootherstep(fogStart, fogEnd, frx_distance);
             color.rgb = mix(color.rgb, frx_fogColor.rgb, vanillaFogFactor); 
 
-            frx_fragEmissive *= 1.0 - vanillaFogFactor;
+            frx_fragEmissive *= 1.0 - max(expFogFactor, vanillaFogFactor);
         }
 
     #elif FOG_STYLE == 1
@@ -145,9 +149,12 @@ void frx_pipelineFragment() {
 
     #endif
 
+    float outDistance = frx_distance / frx_viewDistance; // effectively pack/normalize distance from camera by dividing by view distance
+                                                         // so color format can stay non-hdr.
+    
     // outputs
     fragColor = color;
-    fragData = vec4(frx_fragEmissive, diffuse, frx_distance, 1.0); // data for other post shaders to access
+    fragData = vec4(frx_fragEmissive, diffuse * frx_fragLight.z, outDistance, 1.0); // data for other post shaders to access
 
     gl_FragDepth = gl_FragCoord.z;
 }
