@@ -24,7 +24,7 @@ void frx_pipelineFragment() {
             lightmap.rgb = mix(lightmap.rgb, vec3(1.0, 0.0, 0.0), frx_smootherstep(0.9, 1.0, frx_playerMood)); // red lightmap when spooky sound
         #endif
 
-        //if(!frx_isGui || frx_isHand) lightmap *= vec3(1.8, 1.5, 1.0) * max(diffuse, 0.8);
+        if(!frx_isGui || frx_isHand) lightmap *= vec3(1.5, 1.5, 1.5) * max(diffuse, 0.8);
 
         // handheld light
         if(frx_distance < frx_heldLight.a * 15.0 && !frx_isGui) {
@@ -37,12 +37,15 @@ void frx_pipelineFragment() {
         color.rgb *= lightmap;
 
         // blocklight boost
-        if(!frx_isGui) {
+        if(!frx_isGui || frx_isHand) {
             color.rgb *= vec3(2.0, 1.8, 1.6) * max(frx_fragLight.x, 0.5);
+        }
+        if(!frx_isGui || frx_isHand) {
+            color.rgb *= vec3(1.8, 1.5, 1.2) * max(diffuse, 0.8);
         }
 
         if(frx_fragEnableDiffuse) {
-            color.rgb *= (diffuse);
+            color.rgb *= diffuse;
         }
 
         #ifdef FIRE_RESISTANCE_TINT
@@ -74,15 +77,8 @@ void frx_pipelineFragment() {
     if(frx_matFlash()) {
         color += flash / 3.0;
     }
-
     // emissivity
     color.rgb = mix(color.rgb, emissive_color.rgb * 1.0, frx_fragEmissive);
-
-    #ifdef BRIGHT_BLOOM
-        if(frx_luminance(color.rgb) > 1.0) {
-            frx_fragEmissive += frx_luminance(color.rgb) * frx_smootherstep(0.9, 1.5, frx_luminance(color.rgb));
-        }
-    #endif
 
     // fog
     #if FOG_STYLE == 0

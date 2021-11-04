@@ -221,11 +221,6 @@
                     nameKey: "config.honey.name.bloom_style",
                     descriptionKey: "config.honey.help.bloom_style"
                 },
-                bright_bloom: {
-                    default: false,
-                    nameKey: "config.honey.name.bright_bloom",
-                    descriptionKey: "config.honey.help.bright_bloom"
-                },
                 bloom_base_amt: {
                     default: 4.0,
                     min: 0.0,
@@ -234,17 +229,12 @@
                     descriptionKey: "config.honey.help.bloom_base_amt"
                 },
                 bloom_opacity: {
-                    default: 0.7,
+                    default: 1.0,
                     min: 0.0,
                     max: 5.0,
                     nameKey: "config.honey.name.bloom_opacity",
                     descriptionKey: "config.honey.help.bloom_opacity"
                 },
-                // tonemap_bloom: {
-                //     default: true,
-                //     nameKey: "config.honey.name.tonemap_bloom",
-                //     descriptionKey: "config.honey.help.tonemap_bloom"
-                // },
                 sunlight_emissivity: {
                     default: 5,
                     min: 0,
@@ -259,18 +249,6 @@
                     nameKey: "config.honey.name.moonlight_emissivity",
                     descriptionKey: "config.honey.help.moonlight_emissivity"
                 },
-                // smart_sunlight_bloom: {
-                //     default: true,
-                //     nameKey: "config.honey.name.smart_sunlight_bloom",
-                //     descriptionKey: "config.honey.help.smart_sunlight_bloom"
-                // },
-                // auto_exposure_quality: {
-                //     default: 0,
-                //     min: 0,
-                //     max: 4,
-                //     nameKey: "config.honey.name.auto_exposure",
-                //     descriptionKey: "config.honey.help.auto_exposure"
-                // },
                 bloom_quality: {
                     default: 5,
                     min: 3,

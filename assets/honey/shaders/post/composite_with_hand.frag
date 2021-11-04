@@ -21,7 +21,7 @@ void main() {
 
     handDepth = 1.0 - handDepth;
 
-    composite -= handDepth;
+    composite -= handDepth * 100.0;
     composite.rgb = max(vec3(0.0), composite.rgb);
 
     color -= (1.0 - handDepth);

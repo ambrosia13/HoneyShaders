@@ -46,34 +46,30 @@ void main() {
     }
 
     #if BLOOM_STYLE == 0
+
         float emissivity = texture2D(u_pipeline_data, texcoord).r;
         vec4 emissive = color * emissivity;
         brightColor += emissive;
+
     #elif BLOOM_STYLE == 1
-        brightColor.rgb += color.rgb * frx_luminance(color.rgb);
 
-        brightColor *= brightColor;
-
-        if(!isSun && frx_worldIsNether != 1.0) {
-            brightColor *= brightColor;
-            if(isSky && !isSun) {
-                brightColor *= brightColor * brightColor * brightColor * brightColor * brightColor;
-            }
+        if(!isSky) {
+            vec4 luminance = color * frx_smootherstep(0.0, 2.0, frx_luminance(color.rgb));
+            luminance *= 0.25;
+            brightColor += luminance;
         }
+
     #else // both - kind of ugly
+
         float emissivity = texture2D(u_pipeline_data, texcoord).r;
         vec4 emissive = color * emissivity;
         brightColor += emissive;
 
-        brightColor.rgb += color.rgb * frx_luminance(color.rgb);
-
-        brightColor *= brightColor;
-
-        if(!isSun && frx_worldIsNether != 1.0) {
-            brightColor *= brightColor;
-            if(isSky && !isSun) {
-                brightColor *= brightColor * brightColor * brightColor * brightColor * brightColor;
-            }
+        if(!isSky) {
+            vec4 luminance = color * frx_smootherstep(0.0, 2.0, frx_luminance(color.rgb));
+            luminance *= 0.25;
+            brightColor += luminance;
         }
+        
     #endif
 }
