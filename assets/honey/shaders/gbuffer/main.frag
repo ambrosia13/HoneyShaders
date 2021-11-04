@@ -28,12 +28,13 @@ void frx_pipelineFragment() {
 
         // handheld light
         if(frx_distance < frx_heldLight.a * 15.0 && !frx_isGui) {
-            lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 31.0 / 32.0);
+            lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 1.0) * 0.5;
         }
 
         if(frx_fragEnableAo) {
             lightmap *= frx_fragLight.z;
         }
+        
         color.rgb *= lightmap;
 
         // blocklight boost

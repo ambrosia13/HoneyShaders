@@ -67,7 +67,7 @@ void main() {
 
         if(!isSky) {
             vec4 luminance = color * frx_smootherstep(0.0, 2.0, frx_luminance(color.rgb));
-            luminance *= 0.25;
+            luminance *= 0.1;
             brightColor += luminance;
         }
         

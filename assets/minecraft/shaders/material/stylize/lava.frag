@@ -9,13 +9,21 @@ void frx_materialFragment() {
         );
         float distortX = sin(frx_var0.y * 1.0 + frx_renderSeconds * 0.5) * 0.2;
         float distortY = cos(frx_var0.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
-        vec2 distort = vec2(distortX, distortY);
+        vec2 distort = vec2(distortX * cos(frx_renderSeconds * 0.5), distortY * sin(frx_renderSeconds * 0.5));
         float magma = snoise((uv + distort) * 0.25);
         float magma1 = snoise((uv + distort) * 0.5);
         float magma2 = snoise((uv + distort) * 1.0);
         float magma3 = snoise((uv + distort) * 1.5);
         float magma4 = snoise((uv + distort) * 2.0);
         float magma5 = snoise((uv + distort) * 2.5);
+
+        float proportionalDistance = frx_distance / frx_viewDistance; // lower detail lava based on distance
+        if(proportionalDistance > 30 / frx_viewDistance) magma5 = 0.0;
+        if(proportionalDistance > 50 / frx_viewDistance) magma4 = 0.0;
+        if(proportionalDistance > 75 / frx_viewDistance) magma3 = 0.0;
+        if(proportionalDistance > 105 / frx_viewDistance) magma2 = 0.0;
+        if(proportionalDistance > 140 / frx_viewDistance) magma1 = 0.0;
+        
         vec3 lava = lavaColor + vec3(
             (magma + magma1 + magma2 + magma3 + magma4 + magma5) / 2.0
             * vec3(0.995,0.415,0.084)

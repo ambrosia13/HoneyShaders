@@ -123,7 +123,7 @@ void main() {
 
     #ifdef TONE_MAPPING
         color.rgb = frx_toneMap(color.rgb);
-    #endif
+    #endif 
 
     finalColor = vec4((color.rgb), 1.0);
 }
