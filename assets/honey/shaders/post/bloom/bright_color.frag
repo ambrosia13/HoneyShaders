@@ -1,15 +1,16 @@
 #include honey:shaders/lib/common.glsl
 
-uniform sampler2D u_pipeline_data;
+uniform sampler2D u_fragment_data;
 uniform sampler2D u_particles_depth;
 uniform sampler2D u_translucent_depth;
 uniform sampler2D u_main_depth;
 uniform sampler2D u_clouds_depth;
 uniform sampler2D u_color;
+uniform sampler2D u_lut;
 
 in vec2 texcoord;
 
-out vec4 brightColor;
+layout(location = 0) out vec4 brightColor;
 
 void main() {
     vec4 color = texture2D(u_color, texcoord);
@@ -40,6 +41,10 @@ void main() {
             brightColor *= moonLightEmissivity * frx_skyLightTransitionFactor;
         }
 
+        // WIP LUT - bad
+        // vec4 lut = texture2D(u_lut, vec2(frx_worldTime, 0.5));
+        // brightColor += lut * sunLightEmissivity;
+
         if(frx_luminance(brightColor.rgb) > 1.0) {
             isSun = true;
         }
@@ -47,7 +52,7 @@ void main() {
 
     #if BLOOM_STYLE == 0
 
-        float emissivity = texture2D(u_pipeline_data, texcoord).r;
+        float emissivity = texture2D(u_fragment_data, texcoord).r;
         vec4 emissive = color * emissivity;
         brightColor += emissive;
 
@@ -61,7 +66,7 @@ void main() {
 
     #else // both - kind of ugly
 
-        float emissivity = texture2D(u_pipeline_data, texcoord).r;
+        float emissivity = texture2D(u_fragment_data, texcoord).r;
         vec4 emissive = color * emissivity;
         brightColor += emissive;
 

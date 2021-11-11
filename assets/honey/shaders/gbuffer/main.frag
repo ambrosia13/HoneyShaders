@@ -1,7 +1,8 @@
 #include honey:shaders/lib/common.glsl 
-//#include canvas:shaders/pipeline/shadow.glsl
+#include canvas:shaders/pipeline/shadow.glsl
 
 uniform sampler2D u_glint;
+uniform sampler2D u_shadowmap;
 
 #ifdef VANILLA_LIGHTING
 in float diffuse;
@@ -9,8 +10,11 @@ in float diffuse;
 in vec2 faceUV;
 in vec4 shadowPos;
 
-out vec4 fragColor;
-out vec4 fragData;
+layout(location = 0) out vec4 fragColor;
+layout(location = 1) out vec4 fragData;
+layout(location = 2) out vec4 fragLight;
+
+#include honey:shaders/lib/shadow.glsl
 
 void frx_pipelineFragment() {
     vec4 color = frx_fragColor;
@@ -18,6 +22,10 @@ void frx_pipelineFragment() {
 
     // vanilla lighting
     #ifdef VANILLA_LIGHTING
+        vec4 shadowcoord = frx_shadowProjectionMatrix(selectShadowCascade()) * shadowPos;
+        shadowcoord.xy = shadowcoord.xy * 0.5 + 0.5;
+        float shadowFactor = sampleShadowPCF(shadowcoord.xyz, float(selectShadowCascade()));
+
         vec3 lightmap = texture2D(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
 
         #ifdef RED_MOOD_TINT
@@ -28,7 +36,8 @@ void frx_pipelineFragment() {
 
         // handheld light
         if(frx_distance < frx_heldLight.a * 15.0 && !frx_isGui) {
-            lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 1.0) * 0.5;
+            lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 1.0) * 0.75;
+            //lightmap = clamp(lightmap, 0.0, 1.0);
         }
 
         if(frx_fragEnableAo) {
@@ -36,13 +45,12 @@ void frx_pipelineFragment() {
         }
         
         color.rgb *= lightmap;
+        //color.rgb *= max(frx_fragLight.x, frx_fragLight.y);
+        //color.rgb *= frx_fragLight.z;
 
         // blocklight boost
         if(!frx_isGui || frx_isHand) {
-            color.rgb *= vec3(2.0, 1.8, 1.6) * max(frx_fragLight.x, 0.5);
-        }
-        if(!frx_isGui || frx_isHand) {
-            color.rgb *= vec3(1.8, 1.5, 1.2) * max(diffuse, 0.8);
+            color.rgb *= vec3(0.990,0.882,0.833) * (1.0 + frx_fragLight.x);
         }
 
         if(frx_fragEnableDiffuse) {
@@ -94,7 +102,7 @@ void frx_pipelineFragment() {
             float vanillaFogFactor = frx_smootherstep(fogStart, fogEnd, frx_distance);
             color.rgb = mix(color.rgb, frx_fogColor.rgb, vanillaFogFactor); 
 
-            frx_fragEmissive *= 1.0 - max(expFogFactor, vanillaFogFactor);
+            frx_fragEmissive *= 1.0 - vanillaFogFactor;
         }
 
     #elif FOG_STYLE == 1
@@ -151,7 +159,8 @@ void frx_pipelineFragment() {
     
     // outputs
     fragColor = color;
-    fragData = vec4(frx_fragEmissive, diffuse * frx_fragLight.z, outDistance, 1.0); // data for other post shaders to access
+    fragData = vec4(frx_fragEmissive, 0.0, outDistance, 1.0); // data for other post shaders to access
+    fragLight = vec4(frx_fragLight, diffuse);
 
     gl_FragDepth = gl_FragCoord.z;
 }

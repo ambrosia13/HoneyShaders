@@ -2,7 +2,7 @@
 
 void frx_materialFragment() {
     #ifdef STYLIZED_LAVA
-        vec3 lavaColor = vec3(0.525,0.110,0.105);
+        vec3 lavaColor = vec3(0.320,0.025,0.005);
         vec2 uv = vec2(
             frx_var0.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
             frx_var0.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 10.0)
@@ -17,12 +17,12 @@ void frx_materialFragment() {
         float magma4 = snoise((uv + distort) * 2.0);
         float magma5 = snoise((uv + distort) * 2.5);
 
-        float proportionalDistance = frx_distance / frx_viewDistance; // lower detail lava based on distance
-        if(proportionalDistance > 30 / frx_viewDistance) magma5 = 0.0;
-        if(proportionalDistance > 50 / frx_viewDistance) magma4 = 0.0;
-        if(proportionalDistance > 75 / frx_viewDistance) magma3 = 0.0;
-        if(proportionalDistance > 105 / frx_viewDistance) magma2 = 0.0;
-        if(proportionalDistance > 140 / frx_viewDistance) magma1 = 0.0;
+        // lower detail lava based on distance
+        magma5 *= 1.0 - frx_smootherstep(25, 35, frx_distance);
+        magma4 *= 1.0 - frx_smootherstep(45, 55, frx_distance);
+        magma3 *= 1.0 - frx_smootherstep(70, 80, frx_distance);
+        magma2 *= 1.0 - frx_smootherstep(100, 110, frx_distance);
+        magma1 *= 1.0 - frx_smootherstep(135, 145, frx_distance);
         
         vec3 lava = lavaColor + vec3(
             (magma + magma1 + magma2 + magma3 + magma4 + magma5) / 2.0

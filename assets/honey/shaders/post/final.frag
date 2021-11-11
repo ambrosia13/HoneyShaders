@@ -5,11 +5,11 @@ uniform sampler2D u_bloom;
 uniform sampler2D u_bloom_boosted;
 uniform sampler2D u_translucent_depth;
 uniform sampler2D u_translucent_only;
-uniform sampler2D u_pipeline_data;
+uniform sampler2D u_fragment_data;
 
 in vec2 texcoord;
 
-out vec4 finalColor;
+layout(location = 0) out vec4 finalColor;
 
 void main() {
     vec4 color = texture2D(u_main_color, texcoord);

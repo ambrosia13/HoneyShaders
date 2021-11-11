@@ -10,7 +10,7 @@ uniform sampler2D u_bloom4;
 
 in vec2 texcoord;
 
-out vec4 bloomComposite;
+layout(location = 0) out vec4 bloomComposite;
 
 void main() {
     vec4 bloom0 = texture2D(u_bloom0, texcoord);

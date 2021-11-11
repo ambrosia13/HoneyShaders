@@ -276,6 +276,14 @@
             ]
         },
         {
+            name: "copy_to_composite",
+            colorAttachments: [
+                {
+                    image: "composite_with_hand"
+                }
+            ]
+        },
+        {
             name: "bright_color",
             colorAttachments: [
                 {
@@ -376,7 +384,7 @@
                 "u_bloom_boosted",
                 "u_translucent_depth",
                 "u_translucent_only",
-                "u_pipeline_data"
+                "u_fragment_data"
             ]
         },
         {
@@ -406,12 +414,13 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/bloom/bright_color.frag",
             samplers: [
-                "u_pipeline_data",
+                "u_fragment_data",
                 "u_particles_depth",
                 "u_translucent_depth",
                 "u_main_depth",
                 "u_clouds_depth",
-                "u_color"
+                "u_color",
+                "u_lut"
             ]
         },
         {
@@ -509,12 +518,13 @@
                 program: "bright_color",
                 framebuffer: "bright_color",
                 samplerImages: [
-                    "pipeline_data",
+                    "fragment_data",
                     "particles_depth"
                     "translucent_depth",
                     "main_depth",
                     "clouds_depth",
-                    "composite_with_hand"
+                    "composite_with_hand",
+                    "honey:textures/lookup/skylight_bloom.png"
                 ],
                 toggleConfig: "enable_bloom"
             },
@@ -626,7 +636,7 @@
                     "bloom_composite2",
                     "translucent_depth",
                     "translucent_only",
-                    "pipeline_data"
+                    "fragment_data"
                 ]
             }
         ]

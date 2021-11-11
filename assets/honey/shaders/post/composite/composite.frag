@@ -15,8 +15,8 @@ uniform sampler2D u_particles_depth;
 
 in vec2 texcoord;
 
-out vec4 compositeColor;
-out vec4 translucentOnly;
+layout(location = 0) out vec4 compositeColor;
+layout(location = 1) out vec4 translucentOnly;
 
 //Sorting function for fabulous layers used from transparency.fsh in vanilla shaders
 

@@ -6,7 +6,7 @@ uniform sampler2D u_main_color;
 
 in vec2 texcoord;
 
-out vec4 compositeHand;
+layout(location = 0) out vec4 compositeHand;
 
 void main() {
     vec4 composite = texture2D(u_composite, texcoord);

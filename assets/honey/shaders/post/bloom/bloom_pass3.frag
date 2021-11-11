@@ -4,7 +4,7 @@ uniform sampler2D u_color_input;
 
 in vec2 texcoord;
 
-out vec4 blurColor;
+layout(location = 0) out vec4 blurColor;
 
 void main() {
     vec4 color = texture2D(u_color_input, texcoord);

@@ -36,3 +36,24 @@ vec4 blur(sampler2D texture, vec2 c, float radius)
 	}
     return color/weight;//+hash1(c-radius)/128.;
 }
+
+// float getGaussianWeights(float val, float center, float height, float width) {
+//     float n = -1.0 * (val - center) * (val - center);
+//     float d = 2.0 * width * width;
+//     float a = height * exp(n / d);
+//     return a;
+// }
+
+// vec4 blur(sampler2D texture, vec2 uv, float radius) {
+//     vec2 pixel = 1.0 / vec2(frx_viewWidth, frx_viewHeight);
+//     vec4 color;
+//     float weight = getGaussianWeights(uv.y, 0.0, 1.0, 1.0);
+
+//     for(int i = 0; i < BLOOM_QUALITY; i++) {
+//         color += texture2D(texture, uv + pixel * radius) * weight;
+//         color += texture2D(texture, uv - pixel * radius) * weight;
+//         color / float(i);
+//     }
+
+//     return color / weight;
+// }
