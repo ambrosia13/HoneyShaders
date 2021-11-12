@@ -28,46 +28,36 @@ void frx_pipelineFragment() {
 
         vec3 lightmap = texture2D(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
 
+        // handheld light
+        vec3 heldLightColor = frx_heldLight.rgb;
+        float heldLightDist = frx_heldLight.a * 15.0;
+        if(frx_distance <= heldLightDist && !frx_isGui || frx_isHand) {
+            vec3 heldLightTemp = heldLightColor * 1.0 - frx_smootherstep(10.0, 15.0, frx_distance);
+            lightmap = mix(lightmap, max(heldLightTemp, frx_fragLight.yyy), 1.0 - frx_smootherstep(0.0, 15.0, frx_distance));
+        }
+
+        if(frx_fragEnableAo) lightmap.rgb *= frx_fragLight.z;
+        if(frx_fragEnableDiffuse) lightmap.rgb *= diffuse;
+
         #ifdef RED_MOOD_TINT
-            lightmap.rgb = mix(lightmap.rgb, vec3(1.0, 0.0, 0.0), frx_smootherstep(0.9, 1.0, frx_playerMood)); // red lightmap when spooky sound
+            lightmap.rgb = mix(lightmap.rgb, vec3(lightmap.r * 0.8, 0.0, 0.0), frx_smootherstep(0.9, 1.0, frx_playerMood)); // red lightmap when spooky sound
         #endif
 
-        if(!frx_isGui || frx_isHand) lightmap *= vec3(1.5, 1.5, 1.5) * max(diffuse, 0.8);
-
-        // handheld light
-        if(frx_distance < frx_heldLight.a * 15.0 && !frx_isGui) {
-            lightmap += min(frx_heldLight.rgb * frx_smootherstep(0.0, 7.5, abs(frx_distance - frx_heldLight.a * 15.0)), 1.0) * 0.75;
-            //lightmap = clamp(lightmap, 0.0, 1.0);
-        }
-
-        if(frx_fragEnableAo) {
-            lightmap *= frx_fragLight.z;
-        }
-        
-        color.rgb *= lightmap;
-        //color.rgb *= max(frx_fragLight.x, frx_fragLight.y);
-        //color.rgb *= frx_fragLight.z;
-
-        // blocklight boost
-        if(!frx_isGui || frx_isHand) {
-            color.rgb *= vec3(0.990,0.882,0.833) * (1.0 + frx_fragLight.x);
-        }
-
-        if(frx_fragEnableDiffuse) {
-            color.rgb *= diffuse;
-        }
-
         #ifdef FIRE_RESISTANCE_TINT
-            if(frx_effectFireResistance == 1) {
+            if(frx_effectFireResistance == 1 && !frx_isGui) {
                 lightmap.r *= 1.5;
             }
         #endif
 
         #ifdef WATER_BREATHING_TINT
-            if(frx_effectWaterBreathing == 1) {
+            if(frx_effectWaterBreathing == 1 && !frx_isGui) {
                 lightmap.b *= 1.5;
             }
         #endif
+
+        if(!frx_isGui || frx_isHand) lightmap *= vec3(1.8, 1.5, 1.2);
+
+        color.rgb *= lightmap;
     #endif
 
     // vanilla effects
@@ -136,6 +126,11 @@ void frx_pipelineFragment() {
             fogCol = hsv2rgb(fogCol);
         #else
             vec3 fogCol = frx_fogColor.rgb;
+
+            // if(frx_effectBlindness == 1) {
+            //     fogCol = vec3(1.0, 0.5, 1.0) * frx_smootherstep(0.0, 5.0, frx_distance);
+            //     fogCol *= frx_fogColor.rgb * frx_smootherstep(7.0, 10.0, frx_distance);
+            // }
         #endif
 
         color.rgb = mix(color.rgb, max(fogCol.rgb, vec3(0.0)), expFogFactor);
@@ -147,7 +142,7 @@ void frx_pipelineFragment() {
                 fogEnd = frx_viewDistance;
             }
             float vanillaFogFactor = frx_smootherstep(fogStart, fogEnd, frx_distance);
-            color.rgb = mix(color.rgb, frx_fogColor.rgb, vanillaFogFactor); 
+            color.rgb = mix(color.rgb, fogCol.rgb, vanillaFogFactor); 
 
             frx_fragEmissive *= 1.0 - max(expFogFactor, vanillaFogFactor);
         }
