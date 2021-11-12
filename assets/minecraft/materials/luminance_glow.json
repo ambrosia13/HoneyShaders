@@ -1,7 +1,0 @@
-{
-	"layers": [
-		{
-			"fragmentSource": "minecraft:shaders/material/emissivity/luminance_emissivity.frag"
-        }
-	]
-}
