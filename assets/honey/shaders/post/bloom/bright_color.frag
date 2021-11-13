@@ -36,7 +36,7 @@ void main() {
 
             //brightColor += color * frx_smootherstep(0.89, 0.9, frx_luminance(color.rgb)) * (1.0 - frx_skyLightTransitionFactor);
         }
-
+ 
         // lower threshold during night
         if(frx_worldIsMoonlit == 1.0) {
             brightColor += vec4(0.3, 0.8, 1.8, 1.1) * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb));
