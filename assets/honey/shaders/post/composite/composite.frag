@@ -78,7 +78,7 @@ void main() {
     try_insert(translucent_color, translucent_depth);
     try_insert(entity_color, entity_depth);
     try_insert(weather_color, weather_depth);
-    //try_insert(clouds_color, clouds_depth);
+    try_insert(clouds_color, clouds_depth);
     try_insert(particles_color, particles_depth);
 
     vec3 composite = color_layers[0].rgb;

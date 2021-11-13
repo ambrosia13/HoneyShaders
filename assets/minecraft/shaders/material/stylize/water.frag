@@ -17,4 +17,11 @@ void frx_materialFragment() {
 
         frx_fragColor.rgb = water;
     #endif
+
+    #if LUMI_PBR_API >= 6
+    	pbr_f0 = 0.02;
+	    pbr_roughness = 0.05;
+	    pbr_isWater = true;
+	    pbr_tangent = l2_tangent;
+    #endif
 }

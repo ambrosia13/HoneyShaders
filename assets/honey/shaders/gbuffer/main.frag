@@ -66,7 +66,7 @@ void frx_pipelineFragment() {
     vec4 flash = vec4(1.0, 1.0, 1.0, 0.1);
 
     if(frx_matGlint() == 1.0) {
-        color += glint;
+        color.rgb += glint.rgb;
     }
 
     if(frx_matHurt()) {
@@ -76,8 +76,8 @@ void frx_pipelineFragment() {
     if(frx_matFlash()) {
         color += flash / 3.0;
     }
-    // emissivity
-    color.rgb = mix(color.rgb, emissive_color.rgb * 1.0, frx_fragEmissive);
+    // apply emissivity
+    color.rgb = mix(color.rgb, emissive_color.rgb, frx_fragEmissive);
 
     // fog
     #if FOG_STYLE == 0
@@ -151,6 +151,8 @@ void frx_pipelineFragment() {
 
     float outDistance = frx_distance / frx_viewDistance; // effectively pack/normalize distance from camera by dividing by view distance
                                                          // so color format can stay non-hdr.
+
+    if(frx_renderTargetSolid) color.a = 1.0;
     
     // outputs
     fragColor = color;

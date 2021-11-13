@@ -33,13 +33,19 @@ void main() {
         if(frx_worldIsMoonlit == 0.0) {
             brightColor += vec4(1.8, 1.2, 0.4, 1.1) * frx_smootherstep(0.89, 0.9, frx_luminance(color.rgb));
             brightColor *= sunLightEmissivity * frx_skyLightTransitionFactor;
+
+            //brightColor += color * frx_smootherstep(0.89, 0.9, frx_luminance(color.rgb)) * (1.0 - frx_skyLightTransitionFactor);
         }
 
         // lower threshold during night
         if(frx_worldIsMoonlit == 1.0) {
             brightColor += vec4(0.3, 0.8, 1.8, 1.1) * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb));
             brightColor *= moonLightEmissivity * frx_skyLightTransitionFactor;
+
         }
+
+        brightColor += color * frx_smootherstep(0.4, 0.6, frx_luminance(color.rgb)) * (1.0 - frx_skyLightTransitionFactor);
+
 
         // WIP LUT - bad
         // vec4 lut = texture2D(u_lut, vec2(frx_worldTime, 0.5));
