@@ -1,0 +1,10 @@
+{
+    "defaultMap": {
+      "spriteMap": [
+        {
+          "sprite": "minecraft:block/soul_campfire_fire",
+          "material": "minecraft:full_emissive"
+        }
+      ]
+    }
+}

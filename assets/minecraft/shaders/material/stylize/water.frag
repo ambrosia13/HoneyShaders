@@ -1,7 +1,7 @@
 #include honey:shaders/lib/common.glsl
 
 void frx_materialFragment() {
-    #ifdef STYLIZED_WATER
+    //#ifdef STYLIZED_WATER
         // Foam function taken from https://www.shadertoy.com/view/ltfGD7
         // - see comment in common.glsl for proper credit
         vec3 waterColor = vec3(0.179,0.350,0.590);
@@ -16,7 +16,7 @@ void frx_materialFragment() {
         vec3 water = (waterColor + foam / 4.5);
 
         frx_fragColor.rgb = water;
-    #endif
+    //#endif
 
     #if LUMI_PBR_API >= 6
     	pbr_f0 = 0.02;
