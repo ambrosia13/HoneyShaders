@@ -67,6 +67,7 @@ void frx_pipelineFragment() {
 
     if(frx_matGlint() == 1.0) {
         color.rgb += glint.rgb;
+        frx_fragEmissive += frx_luminance(glint.rgb) * 0.5;
     }
 
     if(frx_matHurt()) {
@@ -152,7 +153,7 @@ void frx_pipelineFragment() {
     float outDistance = frx_distance / frx_viewDistance; // effectively pack/normalize distance from camera by dividing by view distance
                                                          // so color format can stay non-hdr.
 
-    if(frx_renderTargetSolid) color.a = 1.0;
+    //if(frx_renderTargetSolid) color.a = 1.0;
     
     // outputs
     fragColor = color;

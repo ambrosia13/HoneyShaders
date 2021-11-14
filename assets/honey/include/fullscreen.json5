@@ -499,6 +499,16 @@
                 "u_bloom4"
             ]
         }
+        {
+            name: "bloom_merge",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/bloom/bloom_merge.frag",
+            samplers: [
+                "u_bloom_composite1",
+                "u_bloom_composite2",
+                "u_composite"
+            ]
+        }
     ],
 
     afterRenderHand: {
@@ -625,6 +635,17 @@
                     "bloom_pass8"
                 ],
                 toggleConfig: "hq_bloom"
+            },
+            {
+                name: "bloom_merge",
+                program: "bloom_merge",
+                framebuffer: "copy_to_composite",
+                samplerImages: [
+                    "bloom_composite",
+                    "bloom_composite2",
+                    "composite_with_hand"
+                ],
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "final",

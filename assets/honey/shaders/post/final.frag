@@ -21,28 +21,12 @@ void main() {
         }
     #endif
     float depth = texture2D(u_translucent_depth, texcoord).r;
-    #ifdef ENABLE_BLOOM
-        #ifdef HQ_BLOOM
-            vec4 bloom = texture2D(u_bloom_boosted, texcoord);
-        #else
-            vec4 bloom = texture2D(u_bloom, texcoord);
-        #endif
-
-        float opacity = BLOOM_OPACITY;
-        #ifdef HQ_BLOOM
-            opacity *= 0.5;
-        #endif
-
-        color += bloom * opacity;
-    #endif
     
     if(frx_cameraInWater == 1) {
         #ifdef UNDERWATER_BLUR
             color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
         #endif
-        #ifdef ENABLE_BLOOM
-            color += bloom * BLOOM_OPACITY;
-        #endif
+
         color *= vec4(0.8, 0.8, 1.5, 1.0) / 1.0;
     }
 
@@ -50,9 +34,7 @@ void main() {
         #ifdef UNDERWATER_BLUR
             color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
         #endif
-        #ifdef ENABLE_BLOOM
-            color += bloom * BLOOM_OPACITY * vec4(1.5, 0.8, 0.8, 1.0);
-        #endif
+
         color *= vec4(1.5, 0.8, 0.8, 1.0) / 1.0;
     }
 
