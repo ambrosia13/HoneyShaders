@@ -9,9 +9,9 @@ in vec2 texcoord;
 layout(location = 0) out vec4 compositeHand;
 
 void main() {
-    vec4 composite = texture2D(u_composite, texcoord);
-    float handDepth = texture2D(u_main_depth, texcoord).r * 1.0;
-    vec4 color = texture2D(u_main_color, texcoord);
+    vec4 composite = texture(u_composite, texcoord);
+    float handDepth = texture(u_main_depth, texcoord).r * 1.0;
+    vec4 color = texture(u_main_color, texcoord);
 
     // combining the composite color with hand color for other programs to sample
 

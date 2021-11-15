@@ -12,15 +12,15 @@ in vec2 texcoord;
 layout(location = 0) out vec4 finalColor;
 
 void main() {
-    vec4 color = texture2D(u_main_color, texcoord);
+    vec4 color = texture(u_main_color, texcoord);
     #ifdef TRANSLUCENT_BLUR
-        vec4 translucent = texture2D(u_translucent_only, texcoord);
+        vec4 translucent = texture(u_translucent_only, texcoord);
 
         if(frx_luminance(translucent.rgb) > 0.0) {
             color = blur(u_main_color, texcoord, TRANSLUCENT_BLUR_AMT);
         }
     #endif
-    float depth = texture2D(u_translucent_depth, texcoord).r;
+    float depth = texture(u_translucent_depth, texcoord).r;
     
     if(frx_cameraInWater == 1) {
         #ifdef UNDERWATER_BLUR
@@ -98,8 +98,8 @@ void main() {
     #endif
 
     #ifdef DRUNK_SHADER
-        vec3 drunk1 = texture2D(u_main_color, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
-        vec3 drunk2 = texture2D(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
+        vec3 drunk1 = texture(u_main_color, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
+        vec3 drunk2 = texture(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
         color.rgb += (drunk1 * drunk2);
     #endif
 

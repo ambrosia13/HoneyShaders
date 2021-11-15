@@ -54,18 +54,18 @@ vec3 blend( vec3 dst, vec4 src ) {
 }
 
 void main() {
-    vec4  main_color = texture2D(u_main_color, texcoord);
-    float main_depth = texture2D(u_main_depth, texcoord).r;
-    vec4  translucent_color = texture2D(u_translucent_color, texcoord);
-    float translucent_depth = texture2D(u_translucent_depth, texcoord).r;
-    vec4  entity_color = texture2D(u_entity_color, texcoord);
-    float entity_depth = texture2D(u_entity_depth, texcoord).r;
-    vec4  weather_color = texture2D(u_weather_color, texcoord);
-    float weather_depth = texture2D(u_weather_depth, texcoord).r;
-    vec4  clouds_color = texture2D(u_clouds_color, texcoord);
-    float clouds_depth = texture2D(u_clouds_depth, texcoord).r;
-    vec4  particles_color = texture2D(u_particles_color, texcoord);
-    float particles_depth = texture2D(u_particles_depth, texcoord).r;
+    vec4  main_color = texture(u_main_color, texcoord);
+    float main_depth = texture(u_main_depth, texcoord).r;
+    vec4  translucent_color = texture(u_translucent_color, texcoord);
+    float translucent_depth = texture(u_translucent_depth, texcoord).r;
+    vec4  entity_color = texture(u_entity_color, texcoord);
+    float entity_depth = texture(u_entity_depth, texcoord).r;
+    vec4  weather_color = texture(u_weather_color, texcoord);
+    float weather_depth = texture(u_weather_depth, texcoord).r;
+    vec4  clouds_color = texture(u_clouds_color, texcoord);
+    float clouds_depth = texture(u_clouds_depth, texcoord).r;
+    vec4  particles_color = texture(u_particles_color, texcoord);
+    float particles_depth = texture(u_particles_depth, texcoord).r;
 
     if(frx_luminance(clouds_color.rgb) > 0.0) {
         clouds_color.a = 1.0;

@@ -13,11 +13,11 @@ in vec2 texcoord;
 layout(location = 0) out vec4 brightColor;
 
 void main() {
-    vec4 color = texture2D(u_color, texcoord);
+    vec4 color = texture(u_color, texcoord);
 
-    float particlesDepth = texture2D(u_particles_depth, texcoord).r;
-    float translucentDepth = texture2D(u_translucent_depth, texcoord).r;
-    float handDepth = texture2D(u_main_depth, texcoord).r;
+    float particlesDepth = texture(u_particles_depth, texcoord).r;
+    float translucentDepth = texture(u_translucent_depth, texcoord).r;
+    float handDepth = texture(u_main_depth, texcoord).r;
     
     // skylight emissivity - same behaviour as material shaders but controlled by a threshold
     float sunLightEmissivity = SUNLIGHT_EMISSIVITY;
@@ -48,7 +48,7 @@ void main() {
 
 
         // WIP LUT - bad
-        // vec4 lut = texture2D(u_lut, vec2(frx_worldTime, 0.5));
+        // vec4 lut = texture(u_lut, vec2(frx_worldTime, 0.5));
         // brightColor += lut * sunLightEmissivity;
 
         if(frx_luminance(brightColor.rgb) > 1.0) {
@@ -58,7 +58,7 @@ void main() {
 
     #if BLOOM_STYLE == 0
 
-        float emissivity = texture2D(u_fragment_data, texcoord).r;
+        float emissivity = texture(u_fragment_data, texcoord).r;
         vec4 emissive = color * emissivity;
         brightColor += emissive;
 
@@ -72,7 +72,7 @@ void main() {
 
     #else // both - kind of ugly
 
-        float emissivity = texture2D(u_fragment_data, texcoord).r;
+        float emissivity = texture(u_fragment_data, texcoord).r;
         vec4 emissive = color * emissivity;
         brightColor += emissive;
 

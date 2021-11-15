@@ -26,7 +26,7 @@ void frx_pipelineFragment() {
         shadowcoord.xy = shadowcoord.xy * 0.5 + 0.5;
         float shadowFactor = sampleShadowPCF(shadowcoord.xyz, float(selectShadowCascade()));
 
-        vec3 lightmap = texture2D(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
+        vec3 lightmap = texture(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
 
         // handheld light
         vec3 heldLightColor = frx_heldLight.rgb;
@@ -61,7 +61,7 @@ void frx_pipelineFragment() {
     #endif
 
     // vanilla effects
-    vec4 glint = texture2D(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5);
+    vec4 glint = texture(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5);
     vec4 hurt = vec4(1.5, 0.6, 0.6, 1.0);
     vec4 flash = vec4(1.0, 1.0, 1.0, 0.1);
 

@@ -9,10 +9,10 @@ in vec2 texcoord;
 layout(location = 0) out vec4 fragColor;
 
 void main() {
-    vec4 comp = texture2D(u_composite, texcoord);
+    vec4 comp = texture(u_composite, texcoord);
     #ifdef HQ_BLOOM
-        fragColor = texture2D(u_bloom_composite2, texcoord) + comp;
+        fragColor = texture(u_bloom_composite2, texcoord) + comp;
     #else
-        fragColor = texture2D(u_bloom_composite1, texcoord) + comp;
+        fragColor = texture(u_bloom_composite1, texcoord) + comp;
     #endif
 }
