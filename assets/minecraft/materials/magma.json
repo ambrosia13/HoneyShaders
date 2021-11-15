@@ -2,7 +2,7 @@
 	"layers": [
 		{
             "vertexSource": "minecraft:shaders/material/stylize/varying.vert",
-			"fragmentSource": "minecraft:shaders/material/stylize/water.frag"
+			"fragmentSource": "minecraft:shaders/material/stylize/magma.frag"
         }
 	]
 }
