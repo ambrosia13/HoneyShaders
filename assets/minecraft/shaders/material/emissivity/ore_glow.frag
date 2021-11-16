@@ -10,7 +10,7 @@ void frx_materialFragment() {
     bool diamondCheck = frx_fragColor.b > frx_fragColor.r && frx_fragColor.b > frx_fragColor.r && frx_fragColor.b > 0.8;
     bool lapisCheck = frx_fragColor.b > frx_fragColor.g && frx_fragColor.b / frx_fragColor.r > 3.2;
     bool emeraldCheck = frx_fragColor.g > 0.95 || (frx_fragColor.g > frx_fragColor.r && frx_fragColor.g > frx_fragColor.b && frx_fragColor.g > 0.45 && frx_fragColor.g / frx_fragColor.r > 3.5);
-    bool redstoneCheck = frx_fragColor.r > frx_fragColor.g && frx_fragColor.r > frx_fragColor.b && frx_fragColor.r > 0.58 && frx_fragColor.r / frx_fragColor.b >= 20;
+    bool redstoneCheck = frx_fragColor.r > frx_fragColor.g && frx_fragColor.r > frx_fragColor.b && frx_fragColor.r > 0.58 && frx_fragColor.r / frx_fragColor.b >= 20.0;
     bool ironCheck = frx_fragColor.r > frx_fragColor.g && frx_fragColor.r > frx_fragColor.b && frx_fragColor.g > frx_fragColor.b && frx_fragColor.r > 0.45 && frx_fragColor.g > 0.4 && frx_fragColor.b > 0.3 && frx_fragColor.r / frx_fragColor.b >= 1.4;
     bool copperCheck = (frx_fragColor.r > frx_fragColor.g && frx_fragColor.r > frx_fragColor.b && frx_fragColor.r > 0.75 && frx_fragColor.b > 0.25) // orange spots
         || (frx_fragColor.g > frx_fragColor.r && frx_fragColor.g > frx_fragColor.b && frx_fragColor.b > 0.35 && frx_fragColor.g > 0.4 && frx_fragColor.r < 0.36); // green spots
@@ -24,7 +24,7 @@ void frx_materialFragment() {
         }
         else
         {
-            luminance = brightness / 3;
+            luminance = brightness / 3.0;
         }
     }
 
