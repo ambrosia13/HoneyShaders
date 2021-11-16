@@ -2,7 +2,7 @@
 
 void frx_materialFragment() {
     //float luminance = frx_luminance(frx_fragColor.rgb);
-    float luminance = 0;
+    float luminance = 0.0;
 
     // lapis and diamond check have a lot of overlaps but whatever lol
 
