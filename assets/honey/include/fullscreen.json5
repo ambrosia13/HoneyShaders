@@ -380,11 +380,10 @@
             fragmentSource: "honey:shaders/post/final.frag",
             samplers: [
                 "u_main_color",
-                "u_bloom",
-                "u_bloom_boosted",
                 "u_translucent_depth",
                 "u_translucent_only",
-                "u_fragment_data"
+                "u_fragment_data",
+                "u_hand_depth"
             ]
         },
         {
@@ -653,11 +652,10 @@
                 framebuffer: "copy_to_main",
                 samplerImages: [
                     "composite_with_hand",
-                    "bloom_composite",
-                    "bloom_composite2",
                     "translucent_depth",
                     "translucent_only",
-                    "fragment_data"
+                    "fragment_data",
+                    "main_depth"
                 ]
             }
         ]

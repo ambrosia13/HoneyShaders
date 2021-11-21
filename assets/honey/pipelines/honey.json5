@@ -7,11 +7,13 @@
         fragmentSource: "honey:shaders/gbuffer/main.frag",
         samplers: [
             "u_glint",
-            "u_shadowmap"
+            "u_shadowmap",
+            "u_fog_density"
         ],
         samplerImages: [
             "minecraft:textures/misc/enchanted_item_glint.png",
-            "shadow_map"
+            "shadow_map",
+            "honey:textures/lookup/fog_density.png"
         ]
     },
 

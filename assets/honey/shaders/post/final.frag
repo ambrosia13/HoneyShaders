@@ -1,11 +1,10 @@
 #include honey:shaders/lib/common.glsl
 
 uniform sampler2D u_main_color;
-uniform sampler2D u_bloom;
-uniform sampler2D u_bloom_boosted;
 uniform sampler2D u_translucent_depth;
 uniform sampler2D u_translucent_only;
 uniform sampler2D u_fragment_data;
+uniform sampler2D u_hand_depth;
 
 in vec2 texcoord;
 
@@ -16,7 +15,7 @@ void main() {
     #ifdef TRANSLUCENT_BLUR
         vec4 translucent = texture(u_translucent_only, texcoord);
 
-        if(frx_luminance(translucent.rgb) > 0.0) {
+        if(frx_luminance(translucent.rgb) > 0.0 && texture(u_hand_depth, texcoord).r == 1.0) {
             color = blur(u_main_color, texcoord, TRANSLUCENT_BLUR_AMT);
         }
     #endif
