@@ -106,5 +106,5 @@ void main() {
         color.rgb = frx_toneMap(color.rgb);
     #endif 
 
-    finalColor = vec4((color.rgb), 1.0);
+    finalColor = vec4(color.rgb, 1.0);
 }

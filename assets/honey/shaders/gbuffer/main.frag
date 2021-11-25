@@ -37,6 +37,8 @@ void frx_pipelineFragment() {
             lightmap = mix(lightmap, max(heldLightTemp, frx_fragLight.y), 1.0 - frx_smootherstep(0.0, 15.0, frx_distance));
         }
 
+        lightmap = max(lightmap, 0.3);
+
         if(frx_fragEnableAo) lightmap.rgb *= frx_fragLight.z;
         if(frx_fragEnableDiffuse) lightmap.rgb *= diffuse;
 
@@ -84,7 +86,7 @@ void frx_pipelineFragment() {
     // fog
     #ifdef FOG_STYLE
 
-        float fogDensity = texture(u_fog_density, vec2(frx_worldTime, 0.5)).r;
+        vec3 fogCol;
 
         #if FOG_STYLE == 0
 
@@ -108,12 +110,12 @@ void frx_pipelineFragment() {
             expFogFactor = 1.0 - exp(-expFogFactor);
 
             #ifdef RAINBOW_FOG
-                vec3 fogCol = frx_fogColor.rgb;
+                fogCol = frx_fogColor.rgb;
                 fogCol = rgb2hsv(fogCol);
                 fogCol.r = sin(frx_renderSeconds) * 0.5 + 0.5;
                 fogCol = hsv2rgb(fogCol);
             #else
-                vec3 fogCol = frx_fogColor.rgb;
+                fogCol = frx_fogColor.rgb;
             #endif
 
             color.rgb = mix(color.rgb, max(fogCol.rgb, vec3(0.0)), expFogFactor + fogDensity);
@@ -126,12 +128,12 @@ void frx_pipelineFragment() {
             expFogFactor = 1.0 - exp(-expFogFactor);
 
             #ifdef RAINBOW_FOG
-                vec3 fogCol = frx_fogColor.rgb;
+                fogCol = frx_fogColor.rgb;
                 fogCol = rgb2hsv(fogCol);
                 fogCol.r = sin(frx_renderSeconds) * 0.5 + 0.5;
                 fogCol = hsv2rgb(fogCol);
             #else
-                vec3 fogCol = frx_fogColor.rgb;
+                fogCol = frx_fogColor.rgb;
             #endif
 
         color.rgb = mix(color.rgb, max(fogCol.rgb, vec3(0.0)), expFogFactor);
@@ -143,7 +145,7 @@ void frx_pipelineFragment() {
                 fogEnd = frx_viewDistance;
             }
             float vanillaFogFactor = frx_smootherstep(fogStart, fogEnd, frx_distance);
-            color.rgb = mix(color.rgb, fogCol.rgb, vanillaFogFactor); 
+            color.rgb = mix(color.rgb, frx_fogColor.rgb, vanillaFogFactor); 
 
             frx_fragEmissive *= 1.0 - max(expFogFactor, vanillaFogFactor);
         }

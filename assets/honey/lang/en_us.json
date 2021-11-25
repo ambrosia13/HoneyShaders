@@ -20,7 +20,7 @@
     "config.honey.name.boosted_bloom": "Boosted Bloom",
     "config.honey.help.boosted_bloom": "When enabled, basically does bloom twice in a row, doubling the amount of passes but making things glow much more intensely.;For those who like intense glow. ;High performance cost.",
     "config.honey.name.bloom_style": "Bloom Style",
-    "config.honey.help.bloom_style": "Emissivity is based on the blocklight's emissive value, luminance is based on the brightness of pixels on the screen. ;No performance cost.",
+    "config.honey.help.bloom_style": "Emissivity is based on the blocklight's emissive value, luminance is based on the brightness of pixels on the screen and is WIP. ;No performance cost.",
     "config.honey.name.bright_bloom": "Bright Color Bloom",
     "config.honey.help.bright_bloom": "When true, applies bloom to color values that are too bright to show on the screen. ;Not needed when bloom style is set to luminance, but can help when set to emissivity.",
     "config.honey.name.bloom_base_amt": "Bloom Amount",

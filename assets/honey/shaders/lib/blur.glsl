@@ -7,34 +7,32 @@ https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc
 #define BLOOM_QUALITY 5 // define bloom quality in case pipeline is not loaded
 #endif
 
-vec4 blur(sampler2D tex, vec2 c, float radius)
-{
-	vec2 texel = 1./vec2(frx_viewWidth,frx_viewHeight);
+vec4 blur(sampler2D tex, vec2 c, float radius) {
+	vec2 texel = 1.0 / vec2(frx_viewWidth, frx_viewHeight);
 
-    float weight = 0.;
-    vec4 color = vec4(0);
+    float weight = 0.0;
+    vec4 color = vec4(0.0);
 
-    float d = 1.;
+    float d = 1.0 ;
     vec2 samp = vec2(radius,radius)/float(BLOOM_QUALITY);
 
 	#ifdef X_Bloom
-	mat2 ang = mat2(0,1,-1,0);
+	mat2 ang = mat2(0.0, 1.0, -1.0, 0.0);
 	#else
-	mat2 ang = mat2(.73736882209777832,-.67549037933349609,.67549037933349609,.73736882209777832);
+	mat2 ang = mat2(0.73736882209777832, -0.67549037933349609, 0.67549037933349609, 0.73736882209777832);
 	#endif
 
-	for(int i = 0;i<BLOOM_QUALITY*BLOOM_QUALITY;i++)
-	{
-        d += 1./d;
+	for(int i = 0; i<BLOOM_QUALITY * BLOOM_QUALITY; i++) {
+        d += 1.0 / d;
         samp *= ang;
 
-        float w = 1./(d-1.);
-        vec2 uv = c+ samp*(d-1.)*texel;
+        float w = 1.0 / (d - 1.0);
+        vec2 uv = c + samp * (d - 1.0) * texel;
 
-		color += texture(tex,uv)*w;
+		color += texture(tex, uv) * w;
         weight += w;
 	}
-    return color/weight;//+hash1(c-radius)/128.;
+    return color / weight;//+hash1(c-radius)/128.;
 }
 
 // float getGaussianWeights(float val, float center, float height, float width) {
