@@ -22,13 +22,14 @@ void main() {
     vec3 skyCol = max(frx_fogColor.rgb, vec3(0.2));
 
     float sun = dot((viewPos), frx_skyLightVector) * 0.5 + 0.5;
-    //sun += dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5;
-    sun = step(0.9995, sun) * 10.0;
+    float sunOpposite = dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5;
+    sun = step(0.9995, sun) * 5.0 + step(0.9995, sunOpposite) * 2.5;
     //sun += smoothstep(0.8, 1.2, dot((viewPos), frx_skyLightVector) * 0.5 + 0.5);
     if(depth == 1.0) {
         skyColor.rgb = mix(skyCol.rgb, skyCol.rgb * skyCol.rgb * skyCol.rgb, dot(viewPos * 0.5 + 0.5, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5);
-        skyColor.rgb = mix(skyColor.rgb, frx_fogColor.rgb, 1.0 - frx_smootherstep(-0.5, 0.5, viewPos.y));
+        skyColor.rgb = mix(skyColor.rgb, skyCol.rgb, 1.0 - frx_smootherstep(-0.5, 0.5, viewPos.y));
         skyColor.rgb += sun;
+        skyColor.rgb += vec3(frx_noise2d(plane * 20.0)) / 50.0;
     } else {
         skyColor.rgb = texture(u_composite, texcoord).rgb;
     }
