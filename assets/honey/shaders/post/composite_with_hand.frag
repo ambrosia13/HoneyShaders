@@ -38,7 +38,18 @@ void main() {
     vec4 skyCol = min(texture(u_sky, texcoord), vec4(1.0));
     float dist = texture(u_fragment_data, texcoord).b;
 
-    float fogFactor = smoothstep(0.0, 1.0, dist);
+    float nightFactor = frx_worldIsMoonlit == 1.0 ? 1.0 : 0.0;
+    nightFactor *= frx_skyLightTransitionFactor;
+    float dayFactor = frx_worldIsMoonlit == 0.0 ? 1.0 : 0.0;
+    dayFactor *= frx_skyLightTransitionFactor;
+    float sunsetFactor = 1.0 - frx_skyLightTransitionFactor;
+
+    float fogFactor = frx_smootherstep(0.0, 1.0, dist);
+    fogFactor += 0.5 * frx_smootherstep(0.0, 1.0, nightFactor); // denser fog at night
+    fogFactor += 0.75 * frx_smootherstep(0.0, 1.0, sunsetFactor); // denser fog at sunrise/sunset
+    fogFactor += -0.3 * frx_smootherstep(0.0, 1.0, dayFactor);
+    fogFactor = max(fogFactor, 0.0);
+
     if(depth != 1.0) composite.rgb = mix(composite.rgb, skyCol.rgb, 1.0 - exp(-fogFactor));
 
     vec3 screenPos = vec3(texcoord, depth);
