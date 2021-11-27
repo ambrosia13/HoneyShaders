@@ -12,6 +12,7 @@ uniform sampler2D u_clouds_color;
 uniform sampler2D u_clouds_depth;
 uniform sampler2D u_particles_color;
 uniform sampler2D u_particles_depth;
+uniform sampler2D u_sky;
 
 in vec2 texcoord;
 
@@ -66,10 +67,9 @@ void main() {
     float clouds_depth = texture(u_clouds_depth, texcoord).r;
     vec4  particles_color = texture(u_particles_color, texcoord);
     float particles_depth = texture(u_particles_depth, texcoord).r;
+    vec4 sky = texture(u_sky, texcoord);
 
-    if(frx_luminance(clouds_color.rgb) > 0.0) {
-        clouds_color.a = 1.0;
-    }
+    if(min(translucent_depth, particles_depth) == 1.0) main_color = sky;
 
     color_layers[0] = main_color;
     depth_layers[0] = main_depth;

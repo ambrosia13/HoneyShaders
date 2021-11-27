@@ -1,8 +1,38 @@
 {
     images: [
+        {
+            name: "sky",
+            lod: 0,
+            internalFormat: "R11F_G11F_B10F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
+        }
     ],
 
     framebuffers: [
+        {
+            name: "sky",
+            colorAttachments: [
+                {
+                    image: "sky"
+                }
+            ]
+        }
     ],
 
     programs: [
@@ -12,15 +42,22 @@
             fragmentSource: "honey:shaders/post/sky.frag",
             samplers: [
                 "u_translucent_depth",
-                "u_particles_depth",
-                "u_main_depth",
-                "u_composite"
+                "u_particles_depth"
             ]
         }
     ],
 
     fabulous: {
         passes: [
+            {
+                name: "sky",
+                program: "sky",
+                framebuffer: "sky",
+                samplerImages: [
+                    "translucent_depth",
+                    "particles_depth"
+                ]
+            },
             {
                 name: "composite",
                 program: "composite",
@@ -37,7 +74,8 @@
                     "clouds_color",
                     "clouds_depth",
                     "particles_color",
-                    "particles_depth"
+                    "particles_depth",
+                    "sky"
                 ]
             },
             {
@@ -45,17 +83,6 @@
                 program: "copy",
                 framebuffer: "copy_to_main",
                 samplerImages: [
-                    "composite"
-                ]
-            },
-            {
-                name: "sky",
-                program: "sky",
-                framebuffer: "composite",
-                samplerImages: [
-                    "translucent_depth",
-                    "particles_depth",
-                    "main_depth",
                     "composite"
                 ]
             }

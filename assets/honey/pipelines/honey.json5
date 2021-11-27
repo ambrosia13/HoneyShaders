@@ -7,13 +7,11 @@
         fragmentSource: "honey:shaders/gbuffer/main.frag",
         samplers: [
             "u_glint",
-            "u_shadowmap",
-            "u_fog_density"
+            "u_shadowmap"
         ],
         samplerImages: [
             "minecraft:textures/misc/enchanted_item_glint.png",
-            "shadow_map",
-            "honey:textures/lookup/fog_density.png"
+            "shadow_map"
         ]
     },
 
@@ -149,7 +147,7 @@
     ],
 
     sky: {
-        defaultZenithAngle: -40
+        defaultZenithAngle: -45
     },
 
     include: [
@@ -173,30 +171,6 @@
                     default: true,
                     nameKey: "config.honey.name.tone_mapping",
                     descriptionKey: "config.honey.help.tone_mapping"
-                },
-                stylized_water: {
-                    default: true,
-                    nameKey: "config.honey.name.stylized_water",
-                    descriptionKey: "config.honey.help.stylized_water"
-                },
-                stylized_lava: {
-                    default: true,
-                    nameKey: "config.honey.name.stylized_lava",
-                    descriptionKey: "config.honey.help.stylized_lava"
-                },
-                inbuilt_materials: {
-                    default: true,
-                    nameKey: "config.honey.name.inbuilt_materials",
-                    descriptionKey: "config.honey.help.inbuilt_materials"
-                },
-                fog_style: {
-                    define: "FOG_STYLE",
-                    default: "both",
-                    choices: ["vanilla", "foggier_fog", "both"],
-                    enum: true,
-                    prefix: "STYLE_",
-                    nameKey: "config.honey.name.fog_style",
-                    descriptionKey: "config.honey.help.fog_style"
                 }
             }
         },
@@ -257,7 +231,7 @@
                     max: 10,
                     nameKey: "config.honey.name.bloom_quality",
                     descriptionKey: "config.honey.help.bloom_quality"
-                },
+                }
             }
         },
         {

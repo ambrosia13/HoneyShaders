@@ -276,14 +276,6 @@
             ]
         },
         {
-            name: "copy_to_composite",
-            colorAttachments: [
-                {
-                    image: "composite_with_hand"
-                }
-            ]
-        },
-        {
             name: "bright_color",
             colorAttachments: [
                 {
@@ -387,13 +379,26 @@
             ]
         },
         {
+            name: "fog",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/fog.frag",
+            samplers: [
+                "u_composite_with_hand",
+                "u_sky"
+            ]
+        },
+        {
             name: "composite_with_hand",
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/composite_with_hand.frag",
             samplers: [
                 "u_composite",
                 "u_main_depth",
-                "u_main_color"
+                "u_main_color",
+                "u_sky",
+                "u_fragment_data",
+                "u_translucent_depth",
+                "u_particles_depth"
             ]
         },
         {
@@ -519,7 +524,20 @@
                 samplerImages: [
                     "composite",
                     "main_depth",
-                    "main_color"
+                    "main_color",
+                    "sky",
+                    "fragment_data",
+                    "translucent_depth",
+                    "particles_depth"
+                ]
+            },
+            {
+                name: "fog",
+                program: "fog",
+                framebuffer: "copy_to_main",
+                samplerImages: [
+                    "composite_with_hand",
+                    "sky"
                 ]
             },
             {
@@ -638,7 +656,7 @@
             {
                 name: "bloom_merge",
                 program: "bloom_merge",
-                framebuffer: "copy_to_composite",
+                framebuffer: "composite_with_hand",
                 samplerImages: [
                     "bloom_composite",
                     "bloom_composite2",

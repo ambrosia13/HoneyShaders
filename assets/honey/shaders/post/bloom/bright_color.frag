@@ -30,10 +30,12 @@ void main() {
 
     if(isSky) {
         vec4 skyBloomColor;
-        if(frx_worldIsMoonlit == 1.0) {
-            skyBloomColor = vec4(0.3, 0.8, 1.8, 1.1) * moonLightEmissivity;
-        } else skyBloomColor = vec4(1.8, 1.2, 0.4, 1.1) * sunLightEmissivity;
-        skyBloomColor *= frx_skyLightTransitionFactor;
+        //if(frx_worldIsMoonlit == 1.0) {
+            //skyBloomColor = vec4(0.3, 0.8, 1.8, 1.1) * moonLightEmissivity;
+        //} else skyBloomColor = vec4(1.8, 1.2, 0.4, 1.1) * sunLightEmissivity;
+        //skyBloomColor *= frx_skyLightTransitionFactor;
+        //skyBloomColor = mix(skyBloomColor, color, frx_skyLightTransitionFactor);
+            skyBloomColor = color;
 
         if(frx_luminance(color.rgb) > 1.0) {
             brightColor += skyBloomColor;

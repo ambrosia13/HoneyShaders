@@ -1,5 +1,4 @@
 {
-	"emissive": true,
 	"layers": [
 		{
             "vertexSource": "minecraft:shaders/material/stylize/varying.vert",

@@ -4,7 +4,6 @@
 out float diffuse;
 #endif
 out vec2 faceUV;
-out vec4 shadowPos;
 
 void frx_pipelineVertex() {
     // vertex stuff
@@ -17,10 +16,6 @@ void frx_pipelineVertex() {
         frx_distance = length(frx_vertex.xyz);
     }
     
-    //frx_distance = length(frx_vertex.xyz);
-
-    shadowPos = (frx_shadowViewMatrix * frx_vertex);
-
     // diffuse shading
     #ifdef VANILLA_LIGHTING
         float lightSource = dot(frx_vertexNormal.rgb, frx_skyLightVector);
