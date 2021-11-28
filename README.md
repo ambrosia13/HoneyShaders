@@ -17,6 +17,7 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 - Poorly optimized
 - Fire overlay doesn't appear when the player is on fire
+- Many things are incomplete
 
 # Credits
 

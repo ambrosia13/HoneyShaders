@@ -609,7 +609,7 @@
                 program: "bloom_pass5",
                 framebuffer: "bloom_pass5",
                 samplerImages: [
-                    "bloom_composite"
+                    "bloom_pass4"
                 ],
                 toggleConfig: "hq_bloom"
             },
