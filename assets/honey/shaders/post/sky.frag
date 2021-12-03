@@ -12,12 +12,12 @@ void main() {
 
     vec3 screenPos = vec3(texcoord, depth);
     vec3 clipPos = screenPos * 2.0 - 1.0;
-    vec4 tmp = frx_inverseViewProjectionMatrix * vec4(clipPos, 1.0);
-    vec3 viewPos = normalize(tmp.xyz / tmp.w);
+    vec4 temp = frx_inverseViewProjectionMatrix * vec4(clipPos, 1.0);
+    vec3 viewPos = normalize(temp.xyz / temp.w);
 
     vec2 plane = viewPos.xz / (viewPos.y / 2.0);
 
-    vec3 skyCol = max(frx_fogColor.rgb, vec3(0.2));
+    vec3 skyCol = max(frx_fogColor.rgb * 1.2, vec3(0.2));
 
     float nightFactor = frx_worldIsMoonlit == 1.0 ? 1.0 : 0.0;
     nightFactor *= frx_skyLightTransitionFactor;
@@ -25,7 +25,14 @@ void main() {
     dayFactor *= frx_skyLightTransitionFactor;
     float sunsetFactor = 1.0 - frx_skyLightTransitionFactor;
 
+    vec3 sunColor = vec3(2.0, 1.6, 0.4) * 1.0;
+    sunColor = mix(sunColor, vec3(0.3, 0.8, 1.8) * 1.5, nightFactor);
+    sunColor = mix(sunColor, skyCol, sunsetFactor);
+
     skyCol = mix(skyCol, vec3(0.1, 0.4, 0.7), nightFactor);
+    vec3 skyColNight = skyCol * skyCol;
+    vec3 skyColDay = skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb - 0.2;
+    vec3 upSkyCol = mix(skyColNight, skyColDay, dayFactor);
 
     float sun = frx_worldIsMoonlit == 0.0 ? dot((viewPos), frx_skyLightVector) * 0.5 + 0.5 : dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5;
     float moon = frx_worldIsMoonlit == 0.0 ? dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5 : dot((viewPos), frx_skyLightVector) * 0.5 + 0.5;
@@ -33,11 +40,11 @@ void main() {
     sun = smoothstep(0.8, 2.0, sun);
     moon = smoothstep(0.8, 2.0, moon);
     
-    skyColor.rgb = mix(skyCol.rgb * skyCol.rgb, skyCol.rgb * skyCol.rgb * skyCol.rgb * skyCol.rgb, dot(viewPos, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5);
+    skyColor.rgb = mix(skyCol.rgb, upSkyCol.rgb, dot(viewPos, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5);
 
     // horizon
     skyColor.rgb = mix(skyColor.rgb, skyCol.rgb, 1.0 - frx_smootherstep(-0.5, 0.5, viewPos.y));
-    skyColor.rgb = mix(skyColor.rgb, skyCol.rgb, smoothstep(0.8, 1.3, dot((viewPos), frx_skyLightVector) * 0.5 + 0.5) + smoothstep(0.8, 1.3, dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5));
+    skyColor.rgb = mix(skyColor.rgb, sunColor.rgb, smoothstep(0.8, 1.3, dot((viewPos), frx_skyLightVector) * 0.5 + 0.5));
 
     skyColor.rgb += sun * vec3(0.970,0.846,0.289);
     skyColor.rgb += moon * vec3(0.010,0.495,0.970);

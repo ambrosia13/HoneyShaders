@@ -44,13 +44,18 @@ void main() {
     dayFactor *= frx_skyLightTransitionFactor;
     float sunsetFactor = 1.0 - frx_skyLightTransitionFactor;
 
-    float fogFactor = frx_smootherstep(0.0, 1.0, dist);
-    fogFactor += 0.5 * frx_smootherstep(0.0, 1.0, nightFactor); // denser fog at night
-    fogFactor += 0.75 * frx_smootherstep(0.0, 1.0, sunsetFactor); // denser fog at sunrise/sunset
-    fogFactor += -0.3 * frx_smootherstep(0.0, 1.0, dayFactor);
-    fogFactor = max(fogFactor, 0.0);
+    float fogStartMin = 10.0;
+    //dist *= frx_viewDistance;
+    float fogFactor = frx_smootherstep(fogStartMin, frx_viewDistance, dist * frx_viewDistance);
 
-    if(depth != 1.0) composite.rgb = mix(composite.rgb, skyCol.rgb, 1.0 - exp(-fogFactor));
+    //fogFactor = frx_smootherstep(0.0, 1.0, dist);
+    fogFactor += 0.25 * frx_smootherstep(0.0, 1.0, nightFactor); // denser fog at night
+    fogFactor += 0.5 * frx_smootherstep(0.0, 1.0, sunsetFactor); // denser fog at sunrise/sunset
+    fogFactor += -0.3 * frx_smootherstep(0.0, 1.0, dayFactor);
+    fogFactor = (1.0 - exp(-fogFactor));
+    fogFactor = clamp(fogFactor, 0.0, 1.0);
+
+    if(depth != 1.0) composite.rgb = mix(composite.rgb, skyCol.rgb, fogFactor);
 
     vec3 screenPos = vec3(texcoord, depth);
     vec3 clipPos = screenPos * 2.0 - 1.0;
@@ -70,7 +75,7 @@ void main() {
     //sun = step(0.9995, sun) * 5.0 + step(0.9995, moon) * 2.5;
     sun = step(0.9995, sun);
     moon = step(0.9996, moon);
-    vec3 sunCol = sun * vec3(1.8, 1.2, 0.4) * SUNLIGHT_EMISSIVITY;
+    vec3 sunCol = sun * vec3(2.0, 1.6, 0.4) * SUNLIGHT_EMISSIVITY;
     vec3 moonCol = moon * vec3(0.3, 0.8, 1.8) * MOONLIGHT_EMISSIVITY;
 
     if(depth == 1.0 && frx_worldIsOverworld == 1) composite.rgb += sunCol + moonCol;

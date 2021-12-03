@@ -24,11 +24,6 @@ void frx_pipelineFragment() {
         // handheld light
         vec3 heldLightColor = frx_heldLight.rgb;
         float heldLightDist = frx_heldLight.a * 15.0;
-        // if(frx_distance <= heldLightDist && !frx_isGui || frx_isHand) {
-        //     vec3 heldLightTemp = heldLightColor * 1.0 - frx_smootherstep(10.0, 15.0, frx_distance);
-        //     lightmap = mix(lightmap, max(heldLightTemp, frx_fragLight.y), 1.0 - frx_smootherstep(0.0, 15.0, frx_distance));
-        // }
-        //lightmap = mix(lightmap, heldLightColor, 1.0 - smoothstep(heldLightDist / 2.0, heldLightDist, frx_distance));
         vec3 heldLightTemp = (heldLightColor * (1.0 - smoothstep(heldLightDist / 2.0, heldLightDist, frx_distance)));
         if(!frx_isGui || frx_isHand) lightmap += heldLightTemp / 2.0;
 

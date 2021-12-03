@@ -1,3 +1,8 @@
+// uniforms
+uniform int frxu_cascade;
+uniform ivec2 frxu_size;
+uniform int frxu_lod;
+
 // includes
 #include frex:shaders/api/fog.glsl
 #ifndef VERTEX_SHADER
@@ -24,11 +29,6 @@
 #include honey:shaders/lib/config.glsl
 #include honey:shaders/lib/blur.glsl
 #include honey:shaders/lib/raytrace.glsl
-
-// uniforms
-uniform int frxu_cascade;
-uniform ivec2 frxu_size;
-uniform int frxu_lod;
 
 // from https://gist.github.com/sugi-cho/6a01cae436acddd72bdf
 // - used for saturation effects

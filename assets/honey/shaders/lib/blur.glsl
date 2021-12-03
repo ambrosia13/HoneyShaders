@@ -29,7 +29,7 @@ vec4 blur(sampler2D tex, vec2 c, float radius) {
         float w = 1.0 / (d - 1.0);
         vec2 uv = c + samp * (d - 1.0) * texel;
 
-		color += texture(tex, uv) * w;
+		color += textureLod(tex, uv, frxu_lod) * w;
         weight += w;
 	}
     return color / weight;//+hash1(c-radius)/128.;

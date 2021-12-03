@@ -37,7 +37,7 @@ void main() {
         //skyBloomColor = mix(skyBloomColor, color, frx_skyLightTransitionFactor);
             skyBloomColor = color;
 
-        if(frx_luminance(color.rgb) > 1.0) {
+        if(frx_luminance(color.rgb) > 1.5) {
             brightColor += skyBloomColor;
             isSun = true;
         }
