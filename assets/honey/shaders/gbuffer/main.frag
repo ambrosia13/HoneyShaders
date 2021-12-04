@@ -25,7 +25,7 @@ void frx_pipelineFragment() {
         vec3 heldLightColor = frx_heldLight.rgb;
         float heldLightDist = frx_heldLight.a * 15.0;
         vec3 heldLightTemp = (heldLightColor * (1.0 - smoothstep(heldLightDist / 2.0, heldLightDist, frx_distance)));
-        if(!frx_isGui || frx_isHand) lightmap += heldLightTemp / 2.0;
+        if(!frx_isGui || frx_isHand) lightmap += (heldLightTemp * (dot(normalize(frx_vertex.xyz), normalize(-frx_vertexNormal)) * 0.5 + 0.5));
 
         lightmap = max(lightmap, 0.3);
 
@@ -76,6 +76,10 @@ void frx_pipelineFragment() {
 
     float outDistance = frx_distance / frx_viewDistance; // normalize block distance
     
+    if(color.a == 0.0) discard;
+    // vec3 a = frx_vertexColor.rgb;
+    // if((a.r + a.g + a.b) / 3.0 < 1.0 && a.g > a.r && a.g > a.b && frx_renderTargetSolid) color.a = 1.0;
+
     // outputs
     fragColor = color;
     fragData = vec4(frx_fragEmissive, 0.0, outDistance, 1.0); // data for other post shaders to access
