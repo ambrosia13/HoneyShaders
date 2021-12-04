@@ -307,6 +307,11 @@
                     default: false,
                     nameKey: "config.honey.name.rainbow_fog",
                     descriptionKey: "config.honey.help.rainbow_fog"
+                },
+                highlight_powder_snow: {
+                    default: true,
+                    nameKey: "config.honey.name.highlight_snow",
+                    descriptionKey: "config.honey.help.highlight_snow"
                 }
             }
         }
