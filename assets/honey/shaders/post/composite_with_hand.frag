@@ -55,7 +55,10 @@ void main() {
     fogFactor = (1.0 - exp(-fogFactor));
     fogFactor = clamp(fogFactor, 0.0, 1.0);
 
-    if(depth != 1.0) composite.rgb = mix(composite.rgb, skyCol.rgb, fogFactor);
+    if(depth != 1.0) {
+        composite.rgb = mix(composite.rgb, skyCol.rgb, fogFactor);
+        //composite.rgb = mix(composite.rgb, skyCol.rgb, frx_smootherstep(0.8, 0.9, dist));
+    }
 
     vec3 screenPos = vec3(texcoord, depth);
     vec3 clipPos = screenPos * 2.0 - 1.0;
@@ -72,9 +75,8 @@ void main() {
         moon = dot((viewPos), frx_skyLightVector) * 0.5 + 0.5;
     } else moon = dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5;
     
-    //sun = step(0.9995, sun) * 5.0 + step(0.9995, moon) * 2.5;
-    sun = step(0.9995, sun);
-    moon = step(0.9996, moon);
+    sun = frx_smootherstep(0.9993, 0.9997, sun);
+    moon = frx_smootherstep(0.99955, 0.99965, moon);
     vec3 sunCol = sun * vec3(2.0, 1.6, 0.4) * SUNLIGHT_EMISSIVITY;
     vec3 moonCol = moon * vec3(0.3, 0.8, 1.8) * MOONLIGHT_EMISSIVITY;
 
