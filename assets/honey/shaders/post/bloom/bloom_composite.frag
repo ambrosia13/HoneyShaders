@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl
+#include honey:shaders/lib/includes.glsl
 
 //#define AUTO_EXPOSURE_QUALITY 4 //config not working (bug probably) so this is temporary
 

@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl
+#include honey:shaders/lib/includes.glsl
 
 void frx_materialFragment() {
     float luminance = 0.0;

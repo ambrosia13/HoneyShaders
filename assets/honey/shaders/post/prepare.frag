@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl
+#include honey:shaders/lib/includes.glsl
 
 uniform sampler2D u_composite;
 uniform sampler2D u_main_depth;
@@ -45,10 +45,8 @@ void main() {
     float sunsetFactor = 1.0 - frx_skyLightTransitionFactor;
 
     float fogStartMin = 10.0;
-    //dist *= frx_viewDistance;
     float fogFactor = frx_smootherstep(fogStartMin, frx_viewDistance, dist * frx_viewDistance);
 
-    //fogFactor = frx_smootherstep(0.0, 1.0, dist);
     fogFactor += 0.25 * frx_smootherstep(0.0, 1.0, nightFactor); // denser fog at night
     fogFactor += 0.5 * frx_smootherstep(0.0, 1.0, sunsetFactor); // denser fog at sunrise/sunset
     fogFactor += -0.3 * frx_smootherstep(0.0, 1.0, dayFactor);
@@ -57,23 +55,20 @@ void main() {
 
     if(depth != 1.0) {
         composite.rgb = mix(composite.rgb, skyCol.rgb, fogFactor);
-        //composite.rgb = mix(composite.rgb, skyCol.rgb, frx_smootherstep(0.8, 0.9, dist));
     }
 
-    vec3 screenPos = vec3(texcoord, depth);
-    vec3 clipPos = screenPos * 2.0 - 1.0;
-    vec4 tmp = frx_inverseViewProjectionMatrix * vec4(clipPos, 1.0);
-    vec3 viewPos = normalize(tmp.xyz / tmp.w);
+    vec3 viewSpacePos = setupViewSpacePos(texcoord, depth);
+    viewSpacePos = normalize(viewSpacePos);
 
     float sun;
     if(frx_worldIsMoonlit != 1.0) {
-        sun = dot((viewPos), frx_skyLightVector) * 0.5 + 0.5;
-    } else sun = dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5;
+        sun = dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
+    } else sun = dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
 
     float moon;
     if(frx_worldIsMoonlit == 1.0) {
-        moon = dot((viewPos), frx_skyLightVector) * 0.5 + 0.5;
-    } else moon = dot((viewPos), -frx_skyLightVector) * 0.5 + 0.5;
+        moon = dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
+    } else moon = dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
     
     sun = frx_smootherstep(0.9993, 0.9997, sun);
     moon = frx_smootherstep(0.99955, 0.99965, moon);

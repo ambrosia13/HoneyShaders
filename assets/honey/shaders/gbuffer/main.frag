@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl 
+#include honey:shaders/lib/includes.glsl 
 
 uniform sampler2D u_glint;
 uniform sampler2D u_shadowmap;
@@ -27,11 +27,13 @@ void frx_pipelineFragment() {
         vec3 heldLightTemp = (heldLightColor * (1.0 - smoothstep(heldLightDist / 2.0, heldLightDist, frx_distance)));
         if(!frx_isGui || frx_isHand) lightmap += (heldLightTemp * (dot(normalize(frx_vertex.xyz), normalize(-frx_vertexNormal)) * 0.5 + 0.5));
 
+        // lighting shouldn't be too dark
         lightmap = max(lightmap, 0.3);
 
         if(frx_fragEnableAo) lightmap.rgb *= frx_fragLight.z;
         if(frx_fragEnableDiffuse) lightmap.rgb *= diffuse;
 
+        // tint lightmap red when spooky cave sound plays
         #ifdef RED_MOOD_TINT
             lightmap.rgb = mix(lightmap.rgb, vec3(lightmap.r * 0.8, 0.0, 0.0), frx_smootherstep(0.9, 1.0, frx_playerMood)); // red lightmap when spooky sound
         #endif
@@ -48,6 +50,7 @@ void frx_pipelineFragment() {
             }
         #endif
 
+        // make lighting brighter
         if(!frx_isGui || frx_isHand) lightmap *= vec3(1.8, 1.5, 1.2);
 
         color.rgb *= lightmap;

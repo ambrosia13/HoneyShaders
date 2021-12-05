@@ -1,7 +1,7 @@
 {
     images: [
         {
-            name: "composite_with_hand",
+            name: "prepare",
             lod: 0,
             internalFormat: "RGBA16F",
             pixelFormat: "RGBA",
@@ -268,10 +268,10 @@
 
     framebuffers: [
         {
-            name: "composite_with_hand",
+            name: "prepare",
             colorAttachments: [
                 {
-                    image: "composite_with_hand"
+                    image: "prepare"
                 }
             ]
         },
@@ -383,14 +383,14 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/fog.frag",
             samplers: [
-                "u_composite_with_hand",
+                "u_prepare",
                 "u_sky"
             ]
         },
         {
-            name: "composite_with_hand",
+            name: "prepare",
             vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/composite_with_hand.frag",
+            fragmentSource: "honey:shaders/post/prepare.frag",
             samplers: [
                 "u_composite",
                 "u_main_depth",
@@ -518,9 +518,9 @@
     afterRenderHand: {
         passes: [
             {
-                name: "composite_with_hand",
-                program: "composite_with_hand",
-                framebuffer: "composite_with_hand",
+                name: "prepare",
+                program: "prepare",
+                framebuffer: "prepare",
                 samplerImages: [
                     "composite",
                     "main_depth",
@@ -536,7 +536,7 @@
                 program: "fog",
                 framebuffer: "copy_to_main",
                 samplerImages: [
-                    "composite_with_hand",
+                    "prepare",
                     "sky"
                 ]
             },
@@ -550,7 +550,7 @@
                     "translucent_depth",
                     "main_depth",
                     "clouds_depth",
-                    "composite_with_hand",
+                    "prepare",
                     "honey:textures/lookup/skylight_bloom.png"
                 ],
                 toggleConfig: "enable_bloom"
@@ -656,11 +656,11 @@
             {
                 name: "bloom_merge",
                 program: "bloom_merge",
-                framebuffer: "composite_with_hand",
+                framebuffer: "prepare",
                 samplerImages: [
                     "bloom_composite",
                     "bloom_composite2",
-                    "composite_with_hand"
+                    "prepare"
                 ],
                 toggleConfig: "enable_bloom"
             },
@@ -669,7 +669,7 @@
                 program: "final",
                 framebuffer: "copy_to_main",
                 samplerImages: [
-                    "composite_with_hand",
+                    "prepare",
                     "translucent_depth",
                     "translucent_only",
                     "fragment_data",

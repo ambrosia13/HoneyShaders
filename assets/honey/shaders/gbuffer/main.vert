@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl 
+#include honey:shaders/lib/includes.glsl 
 
 #ifdef VANILLA_LIGHTING
 out float diffuse;

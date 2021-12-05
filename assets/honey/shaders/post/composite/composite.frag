@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl
+#include honey:shaders/lib/includes.glsl
 
 uniform sampler2D u_main_color;
 uniform sampler2D u_main_depth;

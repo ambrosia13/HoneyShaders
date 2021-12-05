@@ -1,37 +1,6 @@
-// uniforms
-uniform int frxu_cascade;
-uniform ivec2 frxu_size;
-uniform int frxu_lod;
-
-// includes
-#include frex:shaders/api/fog.glsl
-#ifndef VERTEX_SHADER
-#include frex:shaders/api/fragment.glsl
-#elif
-#include frex:shaders/api/vertex.glsl 
-#endif
-#include frex:shaders/api/header.glsl
-#include frex:shaders/api/material.glsl
-#include frex:shaders/api/player.glsl
-#include frex:shaders/api/sampler.glsl
-#include frex:shaders/api/view.glsl
-#include frex:shaders/api/world.glsl
-
-#include frex:shaders/lib/bitwise.glsl
-#include frex:shaders/lib/color.glsl
-#include frex:shaders/lib/face.glsl
-#include frex:shaders/lib/math.glsl
-#include frex:shaders/lib/sample.glsl
-#include frex:shaders/lib/noise/noise2d.glsl
-#include frex:shaders/lib/noise/classicnoise2d.glsl
-#include frex:shaders/lib/noise/cellular2d.glsl
-
-#include honey:shaders/lib/config.glsl
-#include honey:shaders/lib/blur.glsl
-#include honey:shaders/lib/raytrace.glsl
-
-// from https://gist.github.com/sugi-cho/6a01cae436acddd72bdf
-// - used for saturation effects
+// --------------------------------------------------------------------------------------------------------
+// Taken from https://gist.github.com/sugi-cho/6a01cae436acddd72bdf
+// --------------------------------------------------------------------------------------------------------
 vec3 rgb2hsv(vec3 c)
 {
     vec4 _K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -50,10 +19,11 @@ vec3 hsv2rgb(vec3 c)
     return c.z * mix(_K.xxx, clamp(p - _K.xxx, 0.0, 1.0), c.y);
 }
 
-// -------------
+// --------------------------------------------------------------------------------------------------------
 // Water layer pattern function by Polyflare at https://www.shadertoy.com/view/ltfGD7, license CC BY 4.0
-// No changes were made other than changing #if FAST_CIRCLES to #ifdef FAST_CIRCLES.
-// -------------
+// No changes were made.
+// --------------------------------------------------------------------------------------------------------
+
 // Foam pattern for the water constructed out of a series of circles
 float circ(vec2 pos, vec2 c, float s)
 {
@@ -146,3 +116,43 @@ float waterlayer(vec2 uv)
     ret += circ(uv, vec2(0.159826, 0.528063), 0.00605293);
 	return max(ret, 0.0);
 }
+// --------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------
+// Taken with permission from Xordev's Ominous Shaderpack
+// Modified slightly to fit my usage.
+// https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc
+// --------------------------------------------------------------------------------------------------------
+
+#ifndef BLOOM_QUALITY
+    #define BLOOM_QUALITY 5 // define bloom quality in case pipeline is not loaded
+#endif
+
+vec4 blur(sampler2D tex, vec2 c, float radius) {
+	vec2 texel = 1.0 / vec2(frx_viewWidth, frx_viewHeight);
+
+    float weight = 0.0;
+    vec4 color = vec4(0.0);
+
+    float d = 1.0 ;
+    vec2 samp = vec2(radius,radius)/float(BLOOM_QUALITY);
+
+	#ifdef X_Bloom
+        mat2 ang = mat2(0.0, 1.0, -1.0, 0.0);
+	#else
+        mat2 ang = mat2(0.73736882209777832, -0.67549037933349609, 0.67549037933349609, 0.73736882209777832);
+	#endif
+
+	for(int i = 0; i<BLOOM_QUALITY * BLOOM_QUALITY; i++) {
+        d += 1.0 / d;
+        samp *= ang;
+
+        float w = 1.0 / (d - 1.0);
+        vec2 uv = c + samp * (d - 1.0) * texel;
+
+		color += textureLod(tex, uv, frxu_lod) * w;
+        weight += w;
+	}
+    return color / weight;//+hash1(c-radius)/128.;
+}
+// --------------------------------------------------------------------------------------------------------

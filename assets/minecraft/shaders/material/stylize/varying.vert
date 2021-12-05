@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl
+#include honey:shaders/lib/includes.glsl
 
 void frx_materialVertex() {
         frx_var0.xy = frx_faceUv(frx_vertex.xyz, frx_vertexNormal.xyz);

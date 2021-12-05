@@ -171,6 +171,11 @@
                     default: true,
                     nameKey: "config.honey.name.tone_mapping",
                     descriptionKey: "config.honey.help.tone_mapping"
+                },
+                enable_fog: {
+                    default: true,
+                    nameKey: "config.honey.name.fog_enabled",
+                    descriptionKey: "config.honey.help.fog_enabled"
                 }
             }
         },
@@ -253,11 +258,6 @@
                     nameKey: "config.honey.name.water_breathing_tint",
                     descriptionKey: "config.honey.help.water_breathing_tint"
                 },
-                underwater_blur: {
-                    default: true,
-                    nameKey: "config.honey.name.underwater_blur",
-                    descriptionKey: "config.honey.help.underwater_blur"
-                },
                 underwater_blur_amt: {
                     default: 3,
                     min: 0,
@@ -265,13 +265,8 @@
                     nameKey: "config.honey.name.underwater_blur_amt",
                     descriptionKey: "config.honey.help.underwater_blur_amt"
                 },
-                translucent_blur: {
-                    default: false,
-                    nameKey: "config.honey.name.translucent_blur",
-                    descriptionKey: "config.honey.help.translucent_blur"
-                },
                 translucent_blur_amt: {
-                    default: 2,
+                    default: 0,
                     min: 0,
                     max: 10,
                     nameKey: "config.honey.name.translucent_blur_amt",

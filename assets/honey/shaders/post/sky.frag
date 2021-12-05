@@ -1,4 +1,4 @@
-#include honey:shaders/lib/common.glsl
+#include honey:shaders/lib/includes.glsl
 
 uniform sampler2D u_translucent_depth;
 uniform sampler2D u_particles_depth;
@@ -9,11 +9,7 @@ layout(location = 0) out vec4 skyColor;
 
 void main() {
     float depth = min(texture(u_translucent_depth, texcoord).r, texture(u_particles_depth, texcoord).r);
-
-    vec3 screenSpacePos = vec3(texcoord, depth);
-    vec3 clipSpacePos = screenSpacePos * 2.0 - 1.0;
-    vec4 temp = frx_inverseViewProjectionMatrix * vec4(clipSpacePos, 1.0);
-    vec3 viewSpacePos = (temp.xyz / temp.w);
+    vec3 viewSpacePos = setupViewSpacePos(texcoord, depth);
 
     viewSpacePos = normalize(viewSpacePos);
 

@@ -1,9 +1,9 @@
-#include honey:shaders/lib/common.glsl
+#include honey:shaders/lib/includes.glsl
 
 void frx_materialFragment() {
     //#ifdef STYLIZED_WATER
         // Foam function taken from https://www.shadertoy.com/view/ltfGD7
-        // - see comment in common.glsl for proper credit
+        // - see comment in includes.glsl for proper credit
         vec3 waterColor = vec3(0.179,0.350,0.590);
         vec2 uv = vec2(
             frx_var0.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 10.0),
