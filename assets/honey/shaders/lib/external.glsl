@@ -18,6 +18,7 @@ vec3 hsv2rgb(vec3 c)
     vec3 p = abs(fract(c.xxx + _K.xyz) * 6.0 - _K.www);
     return c.z * mix(_K.xxx, clamp(p - _K.xxx, 0.0, 1.0), c.y);
 }
+// --------------------------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------------------------
 // Water layer pattern function by Polyflare at https://www.shadertoy.com/view/ltfGD7, license CC BY 4.0

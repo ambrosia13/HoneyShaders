@@ -1,6 +1,6 @@
 # Honey Shaders
 
-Shaderpack for the [Canvas Renderer](https://github.com/vram-guild/canvas). Adds a customizable pipeline to the game which works best with material shaders to accompany.
+Shaderpack for [Canvas Renderer](https://github.com/vram-guild/canvas). Adds a customizable shader pipeline to the game that has a stylized fantasy aesthetic.
 
 This is in early alpha at the moment, and may not look very pretty. It has several noticeable bugs and visual artifacts. However, it is playable for normal gameplay. Providing feedback and reporting bugs is greatly appreciated.
 
@@ -8,10 +8,10 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 - Bloom that supports realistic emissivity values
 - Tonemapping & HDR
-- Custom sky
+- Custom sky & fog
 - Support for vanilla effects
 - Fancy extra shader effects for various vanilla situations
-- Many misc & memey effects. For those that like fun!
+- Many misc & meme effects. For those that like fun!
 
 ## Known issues:
 
