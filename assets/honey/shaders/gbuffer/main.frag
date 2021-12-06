@@ -5,7 +5,7 @@ uniform sampler2D u_shadowmap;
 uniform sampler2D u_fog_density;
 
 #ifdef VANILLA_LIGHTING
-in float diffuse;
+    in float diffuse;
 #endif
 in vec2 faceUV;
 
@@ -19,7 +19,7 @@ void frx_pipelineFragment() {
 
     // vanilla lighting
     #ifdef VANILLA_LIGHTING
-        vec3 lightmap = texture(frxs_lightmap, vec2(frx_fragLight.x, frx_fragLight.y)).rgb;
+        vec3 lightmap = texture(frxs_lightmap, frx_fragLight.xy).rgb;
 
         // handheld light
         vec3 heldLightColor = frx_heldLight.rgb;
@@ -30,8 +30,8 @@ void frx_pipelineFragment() {
         // lighting shouldn't be too dark
         lightmap = max(lightmap, 0.3);
 
-        if(frx_fragEnableAo) lightmap.rgb *= frx_fragLight.z;
-        if(frx_fragEnableDiffuse) lightmap.rgb *= diffuse;
+        if(frx_matDisableAo == 0) lightmap.rgb *= frx_fragLight.z;
+        if(frx_matDisableDiffuse == 0) lightmap.rgb *= diffuse;
 
         // tint lightmap red when spooky cave sound plays
         #ifdef RED_MOOD_TINT
@@ -57,35 +57,28 @@ void frx_pipelineFragment() {
     #endif
 
     // vanilla effects
-    vec4 glint = texture(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5);
-    vec4 hurt = vec4(1.5, 0.6, 0.6, 1.0);
-    vec4 flash = vec4(1.0, 1.0, 1.0, 0.1);
-
-    if(frx_matGlint() == 1.0) {
-        color.rgb += glint.rgb;
-        frx_fragEmissive += frx_luminance(glint.rgb) * 0.5;
+    if(frx_matGlint == 1) {
+        vec3 glint = texture(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5).rgb;
+        color.rgb += glint;
+        frx_fragEmissive += frx_luminance(glint) * 0.5;
     }
 
-    if(frx_matHurt()) {
-        color *= hurt;
+    if(frx_matHurt == 1) {
+        color *= vec4(1.5, 0.6, 0.6, 1.0);
     }
 
-    if(frx_matFlash()) {
-        color += flash / 3.0;
+    if(frx_matFlash == 1) {
+        color += vec4(1.0, 1.0, 1.0, 0.1) / 3.0;
     }
 
     // apply emissivity
     color.rgb = mix(color.rgb, emissive_color.rgb, frx_fragEmissive);
-
-    float outDistance = frx_distance / frx_viewDistance; // normalize block distance
     
     if(color.a == 0.0) discard;
-    // vec3 a = frx_vertexColor.rgb;
-    // if((a.r + a.g + a.b) / 3.0 < 1.0 && a.g > a.r && a.g > a.b && frx_renderTargetSolid) color.a = 1.0;
 
     // outputs
     fragColor = color;
-    fragData = vec4(frx_fragEmissive, 0.0, outDistance, 1.0); // data for other post shaders to access
+    fragData = vec4(frx_fragEmissive, 0.0, frx_distance, 1.0); // data for other post shaders to access
     fragLight = vec4(frx_fragLight, diffuse);
 
     gl_FragDepth = gl_FragCoord.z;

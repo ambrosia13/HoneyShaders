@@ -1,6 +1,6 @@
 {
     "pipeline.honey.name": "Honey Shaders",
-    "pipeline.honey.desc": "",
+    "pipeline.honey.desc": "Stylized fantasy feel for Minecraft",
 
     "config.honey.category.general": "General",
     "config.honey.name.tone_mapping": "Tone Mapping",

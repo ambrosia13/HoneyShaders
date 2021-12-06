@@ -19,28 +19,12 @@ void main() {
     float translucentDepth = texture(u_translucent_depth, texcoord).r;
     float handDepth = texture(u_main_depth, texcoord).r;
     
-    // skylight emissivity - same behaviour as material shaders but controlled by a threshold
-    float sunLightEmissivity = SUNLIGHT_EMISSIVITY;
-    float moonLightEmissivity = MOONLIGHT_EMISSIVITY;
-
     // checks for emissivity bloom 
     bool isHand = handDepth != 1.0;
     bool isSky = translucentDepth == 1.0 && particlesDepth == 1.0 && frx_worldHasSkylight == 1 && !isHand;
-    bool isSun = false;
 
-    if(isSky) {
-        vec4 skyBloomColor;
-        //if(frx_worldIsMoonlit == 1.0) {
-            //skyBloomColor = vec4(0.3, 0.8, 1.8, 1.1) * moonLightEmissivity;
-        //} else skyBloomColor = vec4(1.8, 1.2, 0.4, 1.1) * sunLightEmissivity;
-        //skyBloomColor *= frx_skyLightTransitionFactor;
-        //skyBloomColor = mix(skyBloomColor, color, frx_skyLightTransitionFactor);
-            skyBloomColor = color;
-
-        if(frx_luminance(color.rgb) > 2.0) {
-            brightColor += skyBloomColor;
-            isSun = true;
-        }
+    if(isSky && frx_luminance(color.rgb) > 2.0) {
+        brightColor += color;
     }
 
     #if BLOOM_STYLE == 0

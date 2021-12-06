@@ -532,15 +532,6 @@
                 ]
             },
             {
-                name: "fog",
-                program: "fog",
-                framebuffer: "copy_to_main",
-                samplerImages: [
-                    "prepare",
-                    "sky"
-                ]
-            },
-            {
                 name: "bright_color",
                 program: "bright_color",
                 framebuffer: "bright_color",

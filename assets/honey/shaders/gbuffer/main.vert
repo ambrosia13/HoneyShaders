@@ -1,7 +1,7 @@
 #include honey:shaders/lib/includes.glsl 
 
 #ifdef VANILLA_LIGHTING
-out float diffuse;
+    out float diffuse;
 #endif
 out vec2 faceUV;
 
@@ -11,15 +11,13 @@ void frx_pipelineVertex() {
         gl_Position = frx_guiViewProjectionMatrix * frx_vertex;
         frx_distance = length(gl_Position.xyz);
     } else {
-        frx_vertex += frx_modelToCamera();
+        frx_vertex += frx_modelToCamera;
         gl_Position = frx_viewProjectionMatrix * frx_vertex;
         frx_distance = length(frx_vertex.xyz);
     }
     
     // diffuse shading
     #ifdef VANILLA_LIGHTING
-        float lightSource = dot(frx_vertexNormal.rgb, frx_skyLightVector);
-        lightSource = lightSource * 0.2 + 0.7;
-        diffuse = lightSource;
+        diffuse = dot(frx_vertexNormal.xyz, frx_skyLightVector) * 0.2 + 0.7;
     #endif
 }
