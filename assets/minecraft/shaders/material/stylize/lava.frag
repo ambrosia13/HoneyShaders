@@ -4,20 +4,20 @@ void frx_materialFragment() {
     //#ifdef STYLIZED_LAVA
         vec3 lavaColor = vec3(0.320,0.025,0.005);
         vec2 uv = vec2(
-            frx_var0.x + (sin(frx_renderSeconds / 10.0) / 20 + frx_renderSeconds / 20.0),
-            frx_var0.y + (sin(frx_renderSeconds / 10.0) / 2.0 + frx_renderSeconds / 20.0)
+            frx_var0.x + (sin(frx_renderSeconds / 15.0) / 20 + frx_renderSeconds / 20.0),
+            frx_var0.y + (sin(frx_renderSeconds / 5.0) / 2.0 + frx_renderSeconds / 20.0)
         );
 
         float distortX = sin(frx_var0.y * 1.0 + frx_renderSeconds * 0.25) * 0.2;
         float distortY = cos(frx_var0.x * 1.0 + frx_renderSeconds * 0.25) * 0.2;
         vec2 distort = vec2(distortX * cos(frx_renderSeconds * 0.25), distortY * sin(frx_renderSeconds * 0.25));
 
-        float magma = snoise((uv + distort) * 0.25);
-        float magma1 = snoise((uv + distort) * 0.5);
-        float magma2 = snoise((uv + distort) * 1.0);
-        float magma3 = snoise((uv + distort) * 1.5);
-        float magma4 = snoise((uv + distort) * 2.0);
-        float magma5 = snoise((uv + distort) * 2.5);
+        float magma = snoise((uv.xy + distort) * 0.25);
+        float magma1 = snoise((uv.yx + distort) * 0.5);
+        float magma2 = snoise((uv.xy + distort) * 1.0);
+        float magma3 = snoise((uv.yx + distort) * 1.5);
+        float magma4 = snoise((uv.xy + distort) * 2.0);
+        float magma5 = snoise((uv.yx + distort) * 2.5);
 
         // lower detail lava based on distance
         magma5 *= 1.0 - frx_smootherstep(25, 35, frx_distance);

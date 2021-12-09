@@ -34,28 +34,28 @@ void main() {
     // Lower sky color based on time of day
     // -------
     skyColLower = mix(skyColLower, vec3(0.1, 0.4, 0.7), nightFactor);
-    skyColLower = mix(skyColLower, vec3(0.752,0.894,0.970), dayFactor);
-    skyColLower = mix(skyColLower, vec3(0.970,0.896,0.648), sunsetFactor);
+    skyColLower = mix(skyColLower, vec3(0.852,0.994,1.070), dayFactor);
+    skyColLower = mix(skyColLower, vec3(0.970,0.696,0.248), sunsetFactor);
 
     // -------
     // Upper sky color based on time of day
     // -------
     vec3 skyColDayNight = pow(skyColLower, vec3(3.0));
-    vec3 skyColSunset = vec3(0.970,0.408,0.095);
+    vec3 skyColSunset = pow(vec3(0.8, 0.9, 1.0), vec3(5.0));
     vec3 skyColTime = mix(skyColDayNight, skyColSunset, sunsetFactor);
     skyColUpper.rgb = mix(skyColLower.rgb, skyColTime.rgb, dot(viewSpacePos, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5);
 
     // -------
     // Around the sun & moon, the sky will be tinted the skylight color
     // -------
-    float sun = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
-    float moon = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
+    float sunPos = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
+    float moonPos = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
 
-    sun = smoothstep(0.8, 1.2, sun);
-    moon = smoothstep(0.8, 1.2, moon);
+    sunPos = frx_smootherstep(0.85, 1.05, sunPos) * dayFactor;
+    moonPos = frx_smootherstep(0.85, 1.05, moonPos) * nightFactor;
 
-    skyColUpper.rgb += sun * vec3(0.970,0.846,0.289);
-    skyColUpper.rgb += moon * vec3(0.010,0.495,0.970);
+    skyColUpper.rgb += sunPos * vec3(0.970,0.846,0.289);
+    skyColUpper.rgb += moonPos * vec3(0.010,0.495,0.970);
     
     // -------
     // Mix upper and lower sky colors

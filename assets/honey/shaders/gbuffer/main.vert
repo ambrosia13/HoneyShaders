@@ -6,7 +6,6 @@
 out vec2 faceUV;
 
 void frx_pipelineVertex() {
-    // vertex stuff
     if (frx_modelOriginScreen) {
         gl_Position = frx_guiViewProjectionMatrix * frx_vertex;
         frx_distance = length(gl_Position.xyz);
@@ -16,7 +15,9 @@ void frx_pipelineVertex() {
         frx_distance = length(frx_vertex.xyz);
     }
     
-    // diffuse shading
+    // -------
+    // Diffuse shading
+    // -------
     #ifdef VANILLA_LIGHTING
         diffuse = dot(frx_vertexNormal.xyz, frx_skyLightVector) * 0.2 + 0.7;
     #endif

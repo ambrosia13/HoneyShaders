@@ -167,11 +167,6 @@
             includeToken: "honey:general",
             categoryKey: "config.honey.category.general",
             elements: {
-                tone_mapping: {
-                    default: true,
-                    nameKey: "config.honey.name.tone_mapping",
-                    descriptionKey: "config.honey.help.tone_mapping"
-                },
                 enable_fog: {
                     default: true,
                     nameKey: "config.honey.name.fog_enabled",
@@ -187,11 +182,6 @@
                     default: true,
                     nameKey: "config.honey.name.enable_bloom",
                     descriptionKey: "config.honey.help.enable_bloom"
-                },
-                hq_bloom: {
-                    default: false,
-                    nameKey: "config.honey.name.boosted_bloom",
-                    descriptionKey: "config.honey.help.boosted_bloom"
                 },
                 bloom_style: {
                     define: "BLOOM_STYLE",
@@ -215,20 +205,6 @@
                     max: 5.0,
                     nameKey: "config.honey.name.bloom_opacity",
                     descriptionKey: "config.honey.help.bloom_opacity"
-                },
-                sunlight_emissivity: {
-                    default: 5,
-                    min: 0,
-                    max: 50,
-                    nameKey: "config.honey.name.sunlight_emissivity",
-                    descriptionKey: "config.honey.help.sunlight_emissivity"
-                },
-                moonlight_emissivity: {
-                    default: 3,
-                    min: 0,
-                    max: 50,
-                    nameKey: "config.honey.name.moonlight_emissivity",
-                    descriptionKey: "config.honey.help.moonlight_emissivity"
                 },
                 bloom_quality: {
                     default: 5,

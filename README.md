@@ -32,6 +32,7 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 - [Blur function used for bloom](https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc) by XorDev
 - [RGB to HSV functions](https://gist.github.com/sugi-cho/6a01cae436acddd72bdf) by sugi-cho
 - [Foam function for water](https://www.shadertoy.com/view/ltfGD7) by Polyflare
+- Ore glow improvements by supsm
 
 
 # Screenshots

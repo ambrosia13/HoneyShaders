@@ -133,28 +133,6 @@
             ]
         },
         {
-            name: "bloom_composite",
-            lod: 0,
-            internalFormat: "R11F_G11F_B10F",
-            pixelFormat: "RGBA",
-            pixelDataType: "UNSIGNED_BYTE",
-            target: "TEXTURE_2D",
-            texParams: [
-                {
-                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
-                }, 
-                {
-                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
-                },
-                {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
-                }, 
-                {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
-                }
-            ]
-        },
-        {
             name: "bloom_pass5",
             lod: 0,
             internalFormat: "R11F_G11F_B10F",
@@ -199,51 +177,7 @@
             ]
         },
         {
-            name: "bloom_pass7",
-            lod: 0,
-            internalFormat: "R11F_G11F_B10F",
-            pixelFormat: "RGBA",
-            pixelDataType: "UNSIGNED_BYTE",
-            target: "TEXTURE_2D",
-            texParams: [
-                {
-                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
-                }, 
-                {
-                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
-                },
-                {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
-                }, 
-                {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
-                }
-            ]
-        },
-        {
-            name: "bloom_pass8",
-            lod: 0,
-            internalFormat: "R11F_G11F_B10F",
-            pixelFormat: "RGBA",
-            pixelDataType: "UNSIGNED_BYTE",
-            target: "TEXTURE_2D",
-            texParams: [
-                {
-                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
-                }, 
-                {
-                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
-                },
-                {
-                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
-                }, 
-                {
-                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
-                }
-            ]
-        },
-        {
-            name: "bloom_composite2",
+            name: "bloom_composite",
             lod: 0,
             internalFormat: "R11F_G11F_B10F",
             pixelFormat: "RGBA",
@@ -316,14 +250,6 @@
             ]
         },
         {
-            name: "bloom_composite",
-            colorAttachments: [
-                {
-                    image: "bloom_composite"
-                }
-            ]
-        }
-        {
             name: "bloom_pass5",
             colorAttachments: [
                 {
@@ -340,53 +266,16 @@
             ]
         },
         {
-            name: "bloom_pass7",
+            name: "bloom_composite",
             colorAttachments: [
                 {
-                    image: "bloom_pass7"
-                }
-            ]
-        },
-        {
-            name: "bloom_pass8",
-            colorAttachments: [
-                {
-                    image: "bloom_pass8"
-                }
-            ]
-        },
-        {
-            name: "bloom_composite2",
-            colorAttachments: [
-                {
-                    image: "bloom_composite2"
+                    image: "bloom_composite"
                 }
             ]
         }
     ],
 
     programs: [
-        {
-            name: "final",
-            vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/final.frag",
-            samplers: [
-                "u_main_color",
-                "u_translucent_depth",
-                "u_translucent_only",
-                "u_fragment_data",
-                "u_hand_depth"
-            ]
-        },
-        {
-            name: "fog",
-            vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/fog.frag",
-            samplers: [
-                "u_prepare",
-                "u_sky"
-            ]
-        },
         {
             name: "prepare",
             vertexSource: "honey:shaders/post/basic_frame.vert",
@@ -399,18 +288,6 @@
                 "u_fragment_data",
                 "u_translucent_depth",
                 "u_particles_depth"
-            ]
-        },
-        {
-            name: "bloom_composite",
-            vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/bloom/bloom_composite.frag",
-            samplers: [
-                "u_bloom0",
-                "u_bloom1",
-                "u_bloom2",
-                "u_bloom3",
-                "u_bloom4"
             ]
         },
         {
@@ -476,23 +353,16 @@
             ]
         },
         {
-            name: "bloom_pass7",
+            name: "bloom_merge",
             vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/bloom/bloom_pass7.frag",
+            fragmentSource: "honey:shaders/post/bloom/bloom_merge.frag",
             samplers: [
-                "u_color_input"
+                "u_bloom_composite1",
+                "u_composite"
             ]
         },
         {
-            name: "bloom_pass8",
-            vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/bloom/bloom_pass8.frag",
-            samplers: [
-                "u_color_input"
-            ]
-        },
-        {
-            name: "bloom_composite2",
+            name: "bloom_composite",
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/bloom/bloom_composite.frag",
             samplers: [
@@ -500,17 +370,21 @@
                 "u_bloom1",
                 "u_bloom2",
                 "u_bloom3",
-                "u_bloom4"
+                "u_bloom4",
+                "u_bloom5",
+                "u_bloom6"
             ]
-        }
+        },
         {
-            name: "bloom_merge",
+            name: "final",
             vertexSource: "honey:shaders/post/basic_frame.vert",
-            fragmentSource: "honey:shaders/post/bloom/bloom_merge.frag",
+            fragmentSource: "honey:shaders/post/final.frag",
             samplers: [
-                "u_bloom_composite1",
-                "u_bloom_composite2",
-                "u_composite"
+                "u_main_color",
+                "u_translucent_depth",
+                "u_translucent_only",
+                "u_fragment_data",
+                "u_hand_depth"
             ]
         }
     ],
@@ -583,26 +457,13 @@
                 toggleConfig: "enable_bloom"
             },
             {
-                name: "bloom_composite",
-                program: "bloom_composite",
-                framebuffer: "bloom_composite",
-                samplerImages: [
-                    "bright_color",
-                    "bloom_pass1",
-                    "bloom_pass2",
-                    "bloom_pass3",
-                    "bloom_pass4"
-                ],
-                toggleConfig: "enable_bloom"
-            },
-            {
                 name: "bloom_pass5",
                 program: "bloom_pass5",
                 framebuffer: "bloom_pass5",
                 samplerImages: [
                     "bloom_pass4"
                 ],
-                toggleConfig: "hq_bloom"
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bloom_pass6",
@@ -611,38 +472,22 @@
                 samplerImages: [
                     "bloom_pass5"
                 ],
-                toggleConfig: "hq_bloom"
+                toggleConfig: "enable_bloom"
             },
             {
-                name: "bloom_pass7",
-                program: "bloom_pass7",
-                framebuffer: "bloom_pass7",
+                name: "bloom_composite",
+                program: "bloom_composite",
+                framebuffer: "bloom_composite",
                 samplerImages: [
+                    "bright_color",
+                    "bloom_pass1",
+                    "bloom_pass2",
+                    "bloom_pass3",
+                    "bloom_pass4",
+                    "bloom_pass5",
                     "bloom_pass6"
                 ],
-                toggleConfig: "hq_bloom"
-            },
-            {
-                name: "bloom_pass8",
-                program: "bloom_pass8",
-                framebuffer: "bloom_pass8",
-                samplerImages: [
-                    "bloom_pass7"
-                ],
-                toggleConfig: "hq_bloom"
-            },
-            {
-                name: "bloom_composite2",
-                program: "bloom_composite2",
-                framebuffer: "bloom_composite2",
-                samplerImages: [
-                    "bloom_composite",
-                    "bloom_pass5",
-                    "bloom_pass6",
-                    "bloom_pass7",
-                    "bloom_pass8"
-                ],
-                toggleConfig: "hq_bloom"
+                toggleConfig: "enable_bloom"
             },
             {
                 name: "bloom_merge",
@@ -650,7 +495,6 @@
                 framebuffer: "prepare",
                 samplerImages: [
                     "bloom_composite",
-                    "bloom_composite2",
                     "prepare"
                 ],
                 toggleConfig: "enable_bloom"

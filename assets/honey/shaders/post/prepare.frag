@@ -53,16 +53,21 @@ void main() {
     float sunsetFactor = 1.0 - frx_skyLightTransitionFactor;
 
     float fogStartMin = 10.0;
-    float fogFactor = frx_smootherstep(fogStartMin, frx_viewDistance, dist * frx_viewDistance);
+    float fogFactor = frx_smootherstep(fogStartMin, frx_viewDistance, blockDist);
 
     fogFactor += 0.0 * frx_smootherstep(0.0, 1.0, nightFactor); // denser fog at night
     fogFactor += 0.2 * frx_smootherstep(0.0, 1.0, sunsetFactor); // denser fog at sunrise/sunset
     fogFactor += -0.3 * frx_smootherstep(0.0, 1.0, dayFactor);
     fogFactor = (1.0 - exp(-fogFactor));
+    fogFactor *= frx_smootherstep(40.0, 50.0, frx_eyePos.y);
     clamp01(fogFactor);
 
     #ifdef ENABLE_FOG
         if(compositeDepth != 1.0) {
+            #ifdef RAINBOW_FOG
+                vec3 rainbow = vec3(sin(frx_renderSeconds / 5.0) * sin(frx_renderSeconds / 5.0), 1.0, 0.75);
+                skyCol.rgb = hsv2rgb(rainbow.rgb);
+            #endif
             composite.rgb = mix(composite.rgb, skyCol.rgb, fogFactor);
         }
     #endif
@@ -80,6 +85,7 @@ void main() {
     vec2 planeGrid = floor(plane);
     float cloudNoise;
     cloudNoise = step(0.5 - frx_rainGradient * 0.2 - frx_thunderGradient * 0.2, snoise(planeGrid));
+    cloudNoise *= frx_smootherstep(0.0, 0.1, viewSpacePos.y);
 
     float sun;
     if(frx_worldIsMoonlit != 1.0) {
@@ -104,13 +110,12 @@ void main() {
     if(phase3 || phase5) moon -= step(0.9995, dot(viewSpacePos, vec3(frx_skyLightVector.xy, frx_skyLightVector.z - 0.01)) * 0.5 + 0.5);
     if(phase4) moon = 0.0;
     
-    sun = frx_smootherstep(0.9993, 0.9997, sun);
+    sun = frx_smootherstep(0.99945, 0.99985, sun);
     moon = frx_smootherstep(0.99955, 0.99965, moon);
-    vec4 sunCol = sun * vec4(2.0, 1.6, 0.4, 10.0) * SUNLIGHT_EMISSIVITY;
-    vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0) * MOONLIGHT_EMISSIVITY;
+    vec4 sunCol = sun * vec4(2.0, 1.6, 0.4, 10.0) * 3.0;
+    vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0) * 3.0;
 
-
-    if(texture(u_particles_depth, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += sunCol + moonCol;
+    if(texture(u_particles_depth, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += (sunCol + moonCol) * ((1.0 - cloudNoise * 0.75));
     if(compositeDepth == 1.0 && frx_worldIsOverworld == 1) composite.rgb = mix(composite.rgb, mix(composite.rgb, composite.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
 
     compositeHand = composite;

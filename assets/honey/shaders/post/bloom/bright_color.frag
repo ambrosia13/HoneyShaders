@@ -23,7 +23,8 @@ void main() {
     bool isHand = handDepth != 1.0;
     bool isSky = translucentDepth == 1.0 && particlesDepth == 1.0 && frx_worldHasSkylight == 1 && !isHand;
 
-    if(isSky && frx_luminance(color.rgb) > 2.0) {
+    //if(isSky && frx_luminance(color.rgb) > 2.0) {
+    if(color.a > 1.0) {
         brightColor += color;
     }
 
@@ -33,25 +34,19 @@ void main() {
         vec4 emissive = color * emissivity;
         brightColor += emissive;
 
-    #elif BLOOM_STYLE == 1
+    #elif BLOOM_STYLE >= 1
 
         if(!isSky) {
-            vec4 luminance = color * frx_smootherstep(0.0, 2.0, frx_luminance(color.rgb));
-            luminance *= 0.25;
+            float temp = pow(min(frx_luminance(color.rgb), 0.99), 1.0) / 4.0;
+            vec4 luminance = color * frx_smootherstep(0.0, 2.0, temp);
             brightColor += luminance;
         }
 
-    #else // both - kind of ugly
+    #elif BLOOM_STYLE == 2 // both - kind of ugly
 
         float emissivity = texture(u_fragment_data, texcoord).r;
         vec4 emissive = color * emissivity;
         brightColor += emissive;
 
-        if(!isSky) {
-            vec4 luminance = color * frx_smootherstep(0.0, 2.0, frx_luminance(color.rgb));
-            luminance *= 0.1;
-            brightColor += luminance;
-        }
-        
     #endif
 }
