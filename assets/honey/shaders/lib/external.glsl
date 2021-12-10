@@ -125,6 +125,7 @@ float waterlayer(vec2 uv)
 // https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc
 // --------------------------------------------------------------------------------------------------------
 
+// Define bloom quality in case pipeline is not loaded
 #ifndef BLOOM_QUALITY
     #define BLOOM_QUALITY 5 
 #endif
