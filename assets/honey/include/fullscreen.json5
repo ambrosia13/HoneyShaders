@@ -300,8 +300,7 @@
                 "u_translucent_depth",
                 "u_main_depth",
                 "u_clouds_depth",
-                "u_color",
-                "u_lut"
+                "u_color"
             ]
         },
         {
@@ -415,8 +414,7 @@
                     "translucent_depth",
                     "main_depth",
                     "clouds_depth",
-                    "prepare",
-                    "honey:textures/lookup/skylight_bloom.png"
+                    "prepare"
                 ],
                 toggleConfig: "enable_bloom"
             },
