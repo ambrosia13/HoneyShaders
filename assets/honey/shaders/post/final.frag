@@ -15,14 +15,18 @@ void main() {
 
     vec4 translucent = texture(u_translucent_only, texcoord);
 
-    if(frx_luminance(translucent.rgb) > 0.0 && texture(u_hand_depth, texcoord).r == 1.0) {
-        color = blur(u_main_color, texcoord, TRANSLUCENT_BLUR_AMT);
-    }
+    #if TRANSLUCENT_BLUR_AMT != 0
+        if(frx_luminance(translucent.rgb) > 0.0 && texture(u_hand_depth, texcoord).r == 1.0) {
+            color = blur(u_main_color, texcoord, TRANSLUCENT_BLUR_AMT);
+        }
+    #endif
 
     float depth = texture(u_translucent_depth, texcoord).r;
     
     if(frx_cameraInWater == 1) {
-        color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
+        #if UNDERWATER_BLUR_AMT != 0
+            color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
+        #endif
 
         color *= vec4(0.8, 0.8, 1.5, 1.0);
     }
