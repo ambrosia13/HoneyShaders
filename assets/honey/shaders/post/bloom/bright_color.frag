@@ -6,7 +6,6 @@ uniform sampler2D u_translucent_depth;
 uniform sampler2D u_main_depth;
 uniform sampler2D u_clouds_depth;
 uniform sampler2D u_color;
-uniform sampler2D u_lut;
 
 in vec2 texcoord;
 
