@@ -41,9 +41,12 @@ void main() {
     // -------
     // Fog
     // -------
+
+    vec3 viewSpacePos = setupViewSpacePos(texcoord, compositeDepth);
+
     vec4 skyCol = min(texture(u_sky, texcoord), vec4(1.0));
 
-    float blockDist = texture(u_fragment_data, texcoord).b;
+    float blockDist = length(viewSpacePos);
     float dist = blockDist / frx_viewDistance;
 
     float nightFactor = frx_worldIsMoonlit == 1.0 ? 1.0 : 0.0;
@@ -76,7 +79,6 @@ void main() {
     // Clouds & Sun/Moon
     // -------
 
-    vec3 viewSpacePos = setupViewSpacePos(texcoord, compositeDepth);
     viewSpacePos = normalize(viewSpacePos);
 
     vec2 plane = viewSpacePos.xz / (viewSpacePos.y / 2.0);

@@ -23,5 +23,5 @@ void main() {
 
     vec3 composite = bloom0.rgb + bloom1.rgb + bloom2.rgb + bloom3.rgb + bloom4.rgb + bloom5.rgb + bloom6.rgb;
 
-    bloomComposite = vec4((composite), 1.0);
+    bloomComposite = vec4(composite, 1.0);
 }

@@ -126,7 +126,7 @@ float waterlayer(vec2 uv)
 // --------------------------------------------------------------------------------------------------------
 
 #ifndef BLOOM_QUALITY
-    #define BLOOM_QUALITY 5 // define bloom quality in case pipeline is not loaded
+    #define BLOOM_QUALITY 5 
 #endif
 
 vec4 blur(sampler2D tex, vec2 c, float radius) {
@@ -135,18 +135,15 @@ vec4 blur(sampler2D tex, vec2 c, float radius) {
     float weight = 0.0;
     vec4 color = vec4(0.0);
 
-    float d = 1.0 ;
-    vec2 samp = vec2(radius,radius)/float(BLOOM_QUALITY);
+    float d = 1.0;
+    vec2 samp = vec2(radius) / float(BLOOM_QUALITY);
 
-	#ifdef X_Bloom
-        mat2 ang = mat2(0.0, 1.0, -1.0, 0.0);
-	#else
-        mat2 ang = mat2(0.73736882209777832, -0.67549037933349609, 0.67549037933349609, 0.73736882209777832);
-	#endif
+    mat2 ang = mat2(0.73736882209777832, -0.67549037933349609, 
+                    0.67549037933349609, 0.73736882209777832);
 
-	for(int i = 0; i<BLOOM_QUALITY * BLOOM_QUALITY; i++) {
+	for(int i = 0; i < BLOOM_QUALITY * BLOOM_QUALITY; i++) {
         d += 1.0 / d;
-        samp *= ang;
+        samp = ang * samp;
 
         float w = 1.0 / (d - 1.0);
         vec2 uv = c + samp * (d - 1.0) * texel;
@@ -154,6 +151,7 @@ vec4 blur(sampler2D tex, vec2 c, float radius) {
 		color += textureLod(tex, uv, frxu_lod) * w;
         weight += w;
 	}
-    return color / weight;//+hash1(c-radius)/128.;
+
+    return color / weight;
 }
 // --------------------------------------------------------------------------------------------------------
