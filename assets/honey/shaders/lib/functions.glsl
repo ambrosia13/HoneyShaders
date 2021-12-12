@@ -11,7 +11,7 @@ void clamp01(inout float a) {
     a = clamp(a, 0.0, 1.0);
 }
 
-float getGaussianWeights(float val, float center, float height, float width) {
+float getGaussianWeights(in float val, in float center, in float height, in float width) {
     float n = -1.0 * (val - center) * (val - center);
     float d = 2.0 * width * width;
     float a = height * exp(n / d);

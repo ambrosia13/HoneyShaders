@@ -46,7 +46,8 @@ void main() {
 
     vec4 skyCol = min(texture(u_sky, texcoord), vec4(1.0));
 
-    float blockDist = length(viewSpacePos);
+    float blockDist = texture(u_fragment_data, texcoord).b;
+    blockDist = length(viewSpacePos);
     float dist = blockDist / frx_viewDistance;
 
     float nightFactor = frx_worldIsMoonlit == 1.0 ? 1.0 : 0.0;
@@ -76,7 +77,7 @@ void main() {
     #endif
 
     // -------
-    // Clouds & Sun/Moon
+    // Clouds
     // -------
 
     viewSpacePos = normalize(viewSpacePos);
@@ -89,6 +90,9 @@ void main() {
     cloudNoise = step(0.5 - frx_rainGradient * 0.2 - frx_thunderGradient * 0.2, snoise(planeGrid));
     cloudNoise *= frx_smootherstep(0.0, 0.1, viewSpacePos.y);
 
+    // -------
+    // Sun/Moon
+    // -------
     float sun;
     if(frx_worldIsMoonlit != 1.0) {
         sun = dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
@@ -114,8 +118,8 @@ void main() {
     
     sun = frx_smootherstep(0.99945, 0.99985, sun);
     moon = frx_smootherstep(0.99955, 0.99965, moon);
-    vec4 sunCol = sun * vec4(2.0, 1.6, 0.4, 10.0) * 3.0;
-    vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0) * 3.0;
+    vec4 sunCol = sun * vec4(2.0, 1.4, 0.4, 10.0);
+    vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0);
 
     if(texture(u_particles_depth, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += (sunCol + moonCol) * ((1.0 - cloudNoise * 0.75));
     if(compositeDepth == 1.0 && frx_worldIsOverworld == 1) composite.rgb = mix(composite.rgb, mix(composite.rgb, composite.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));

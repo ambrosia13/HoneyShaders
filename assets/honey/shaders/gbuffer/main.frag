@@ -11,7 +11,7 @@ in vec2 faceUV;
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out vec4 fragData;
-layout(location = 2) out vec4 fragLight;
+//layout(location = 2) out vec4 fragLight;
 
 void frx_pipelineFragment() {
     vec4 color = frx_fragColor;
@@ -34,10 +34,15 @@ void frx_pipelineFragment() {
         // -------
         // Lighting shouldn't be too dark
         // -------
-        lightmap = max(lightmap, 0.3);
+        float minLight;
+        if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) { minLight = 0.5; } 
+        else minLight = 0.3;
+        lightmap = max(lightmap, minLight);
+
+        float fragDiffuse = diffuse * 0.3 + 0.7;
 
         if(frx_matDisableAo == 0) lightmap.rgb *= frx_fragLight.z;
-        if(frx_matDisableDiffuse == 0) lightmap.rgb *= diffuse;
+        if(frx_matDisableDiffuse == 0) lightmap.rgb *= fragDiffuse;
 
         // -------
         // Tint lightmap red when spooky cave sound plays
@@ -97,7 +102,7 @@ void frx_pipelineFragment() {
     // -------
     fragColor = color;
     fragData = vec4(frx_fragEmissive, 0.0, frx_distance, 1.0); // data for other post shaders to access
-    fragLight = vec4(frx_fragLight, diffuse);
+    //fragLight = vec4(frx_fragLight, diffuse);
 
     gl_FragDepth = gl_FragCoord.z;
 }

@@ -171,7 +171,22 @@
                     default: true,
                     nameKey: "config.honey.name.fog_enabled",
                     descriptionKey: "config.honey.help.fog_enabled"
-                }
+                },
+                // stylized_water: {
+                //     default: false,
+                //     nameKey: "config.honey.name.stylized_water",
+                //     descriptionKey: "config.honey.help.stylized_water"
+                // },
+                // stylized_lava: {
+                //     default: false,
+                //     nameKey: "config.honey.name.stylized_lava",
+                //     descriptionKey: "config.honey.help.stylized_lava"
+                // },
+                // inbuilt_materials: {
+                //     default: false,
+                //     nameKey: "config.honey.name.inbuilt_materials",
+                //     descriptionKey: "config.honey.help.inbuilt_materials"
+                // }
             }
         },
         {

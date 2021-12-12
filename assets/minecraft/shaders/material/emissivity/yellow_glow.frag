@@ -9,4 +9,5 @@ void frx_materialFragment() {
 
     frx_fragEmissive = step(0.6, luminance);
     frx_fragColor += frx_fragEmissive * 0.25;
+    frx_fragColor = mix(frx_fragColor, frx_fragColor * frx_fragColor, frx_fragEmissive);
 }

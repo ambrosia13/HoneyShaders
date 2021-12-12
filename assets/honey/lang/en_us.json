@@ -5,12 +5,12 @@
     "config.honey.category.general": "General",
     "config.honey.name.tone_mapping": "Tone Mapping",
     "config.honey.help.tone_mapping": "Enables tone mapping which brings out more detail in bright parts of the screen.",
-    "config.honey.name.stylized_water": "Stylized Water",
-    "config.honey.help.stylized_water": "When true, uses an animated and cartoony water texture instead of the default.",
-    "config.honey.name.stylized_lava": "Stylized Lava",
-    "config.honey.help.stylized_lava": "When true, uses a custom noise generated lava texture instead of the default.",
-    "config.honey.name.inbuilt_materials": "Inbuilt Materials",
-    "config.honey.help.inbuilt_materials": "Enables built in material shaders included in the pack. If you want to use your own material shaders, ;disable this option and put your resource pack above Honey Shaders in resource pack selection screen.",
+    "config.honey.name.stylized_water": "Disable Stylized Water",
+    "config.honey.help.stylized_water": "Whether to disable custom water.",
+    "config.honey.name.stylized_lava": "Disable Stylized Lava",
+    "config.honey.help.stylized_lava": "Whether to disable custom lava.",
+    "config.honey.name.inbuilt_materials": "Disable Inbuilt Materials",
+    "config.honey.help.inbuilt_materials": "Whether to disable built in material shaders. ;If you want to use your own material shaders, disable this option and put your material shader resource pack on top of Honey Shaders.",
     "config.honey.name.fog_enabled": "Enable Fog",
     "config.honey.help.fog_enabled": "Whether or not fog is enabled.",
 
@@ -57,7 +57,7 @@
     "config.honey.name.red_mood_tint": "Red Mood Tint",
     "config.honey.help.red_mood_tint": "When true, tints the lightmap and emissive color red the longer the player is underground, ;becoming more and more red and peaking when a spooky cave sound plays. ;Added during Halloween.",
     "config.honey.name.rainbow_fog": "Rainbow Fog",
-    "config.honey.help.rainbow_fog": "Changes the color of foggier fog to be animated rainbow color. Requires fog style to be set to either Foggier Fog or Both.",
+    "config.honey.help.rainbow_fog": "Changes the color of fog to be an animated rainbow color.",
     "config.honey.name.highlight_snow": "Highlight Powder Snow",
     "config.honey.help.highlight_snow": "Activates a material shader for Powder Snow which makes it easier to tell the difference from normal snow."
 }

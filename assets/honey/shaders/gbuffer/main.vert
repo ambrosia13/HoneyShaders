@@ -19,6 +19,6 @@ void frx_pipelineVertex() {
     // Diffuse shading
     // -------
     #ifdef VANILLA_LIGHTING
-        diffuse = dot(frx_vertexNormal.xyz, frx_skyLightVector) * 0.2 + 0.7;
+        diffuse = dot(frx_vertexNormal.xyz, frx_skyLightVector);
     #endif
 }
