@@ -1,7 +1,7 @@
 #include honey:shaders/lib/includes.glsl
 
-uniform sampler2D u_g_depth_translucent;
-uniform sampler2D u_g_depth_particles;
+uniform sampler2D u_geometry_depth_translucent;
+uniform sampler2D u_geometry_depth_particles;
 
 in vec2 texcoord;
 
@@ -11,7 +11,7 @@ void main() {
     // -------
     // Setup view space for sky
     // -------
-    float depth = min(texture(u_g_depth_translucent, texcoord).r, texture(u_g_depth_particles, texcoord).r);
+    float depth = min(texture(u_geometry_depth_translucent, texcoord).r, texture(u_geometry_depth_particles, texcoord).r);
     vec3 viewSpacePos = setupViewSpacePos(texcoord, depth);
     viewSpacePos = normalize(viewSpacePos);
 

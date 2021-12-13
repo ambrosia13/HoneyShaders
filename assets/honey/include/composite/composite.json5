@@ -62,7 +62,7 @@
             name: "copy_to_main",
             colorAttachments: [
                 {
-                    image: "g_solid", clearColor: 0x00000000
+                    image: "geometry_solid", clearColor: 0x00000000
                 }
             ]
         }
@@ -74,18 +74,18 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/composite/composite.frag",
             samplers: [
-                "u_g_solid",
-                "u_g_depth_solid",
-                "u_g_translucent",
-                "u_g_depth_translucent",
-                "u_g_entity",
-                "u_g_depth_entity",
-                "u_g_weather",
-                "u_g_depth_weather",
-                "u_g_clouds",
-                "u_g_depth_clouds",
-                "u_g_particles",
-                "u_g_depth_particles",
+                "u_geometry_solid",
+                "u_geometry_depth_solid",
+                "u_geometry_translucent",
+                "u_geometry_depth_translucent",
+                "u_geometry_entity",
+                "u_geometry_depth_entity",
+                "u_geometry_weather",
+                "u_geometry_depth_weather",
+                "u_geometry_clouds",
+                "u_geometry_depth_clouds",
+                "u_geometry_particles",
+                "u_geometry_depth_particles",
                 "u_sky"
             ]
         },

@@ -1,12 +1,12 @@
 #include honey:shaders/lib/includes.glsl
 
 uniform sampler2D u_composite;
-uniform sampler2D u_g_depth_solid;
-uniform sampler2D u_g_solid;
+uniform sampler2D u_geometry_depth_solid;
+uniform sampler2D u_geometry_solid;
 uniform sampler2D u_sky;
-uniform sampler2D u_g_data;
-uniform sampler2D u_g_depth_translucent;
-uniform sampler2D u_g_depth_particles;
+uniform sampler2D u_geometry_data;
+uniform sampler2D u_geometry_depth_translucent;
+uniform sampler2D u_geometry_depth_particles;
 
 in vec2 texcoord;
 
@@ -14,9 +14,9 @@ layout(location = 0) out vec4 compositeHand;
 
 void main() {
     vec4 composite = texture(u_composite, texcoord);
-    float handDepth = texture(u_g_depth_solid, texcoord).r;
-    vec4 color = texture(u_g_solid, texcoord);
-    float compositeDepth = min(texture(u_g_depth_particles, texcoord).r, texture(u_g_depth_translucent, texcoord).r);
+    float handDepth = texture(u_geometry_depth_solid, texcoord).r;
+    vec4 color = texture(u_geometry_solid, texcoord);
+    float compositeDepth = min(texture(u_geometry_depth_particles, texcoord).r, texture(u_geometry_depth_translucent, texcoord).r);
     compositeDepth = min(handDepth, compositeDepth);
 
     // -------
@@ -42,7 +42,7 @@ void main() {
     // -------
     vec4 skyCol = min(texture(u_sky, texcoord), vec4(1.0));
 
-    float blockDist = texture(u_g_data, texcoord).b;
+    float blockDist = texture(u_geometry_data, texcoord).b;
     float dist = blockDist / frx_viewDistance;
 
     vec3 timeFactors = getTimeOfDayFactors();
@@ -113,7 +113,7 @@ void main() {
     vec4 sunCol = sun * vec4(2.0, 1.4, 0.4, 10.0);
     vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0);
 
-    if(texture(u_g_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += (sunCol + moonCol) * ((1.0 - cloudNoise * 0.75));
+    if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += (sunCol + moonCol) * ((1.0 - cloudNoise * 0.75));
     if(compositeDepth == 1.0 && frx_worldIsOverworld == 1) composite.rgb = mix(composite.rgb, mix(composite.rgb, composite.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
 
     compositeHand = composite;

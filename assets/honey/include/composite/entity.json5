@@ -1,7 +1,7 @@
 {
     images: [
         {
-            name: "g_entity",
+            name: "geometry_entity",
             lod: 0,
             internalFormat: "RGBA8",
             pixelFormat: "RGBA",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            name: "g_depth_entity",
+            name: "geometry_depth_entity",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
             pixelFormat: "DEPTH_COMPONENT",
@@ -35,12 +35,12 @@
         {
             name: "entity_gbuffer",
             depthAttachment: {
-                image: "g_depth_entity", 
+                image: "geometry_depth_entity", 
                 clearDepth: 1.0
             },
             colorAttachments: [
                 {
-                    image: "g_entity",
+                    image: "geometry_entity",
                     clearColor: 0x00000000
                 }
             ]
@@ -48,11 +48,11 @@
         {
             name: "entity_unmanaged",
             depthAttachment: {
-                image: "g_depth_entity"
+                image: "geometry_depth_entity"
             },
             colorAttachments: [
                 {
-                    image: "g_entity"
+                    image: "geometry_entity"
                 }
             ]
         }

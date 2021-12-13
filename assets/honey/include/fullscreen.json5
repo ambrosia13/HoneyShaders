@@ -282,12 +282,12 @@
             fragmentSource: "honey:shaders/post/prepare.frag",
             samplers: [
                 "u_composite",
-                "u_g_depth_solid",
-                "u_g_solid",
+                "u_geometry_depth_solid",
+                "u_geometry_solid",
                 "u_sky",
-                "u_g_data",
-                "u_g_depth_translucent",
-                "u_g_depth_particles"
+                "u_geometry_data",
+                "u_geometry_depth_translucent",
+                "u_geometry_depth_particles"
             ]
         },
         {
@@ -295,11 +295,11 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/bloom/bright_color.frag",
             samplers: [
-                "u_g_data",
-                "u_g_depth_particles",
-                "u_g_depth_translucent",
-                "u_g_depth_solid",
-                "u_g_depth_clouds",
+                "u_geometry_data",
+                "u_geometry_depth_particles",
+                "u_geometry_depth_translucent",
+                "u_geometry_depth_solid",
+                "u_geometry_depth_clouds",
                 "u_color"
             ]
         },
@@ -379,10 +379,10 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/final.frag",
             samplers: [
-                "u_g_solid",
-                "u_g_depth_translucent",
+                "u_color",
+                "u_geometry_depth_translucent",
                 "u_behind_translucent",
-                "u_g_data",
+                "u_geometry_data",
                 "u_hand_depth"
             ]
         }
@@ -396,12 +396,12 @@
                 framebuffer: "prepare",
                 samplerImages: [
                     "composite",
-                    "g_depth_solid",
-                    "g_solid",
+                    "geometry_depth_solid",
+                    "geometry_solid",
                     "sky",
-                    "g_data",
-                    "g_depth_translucent",
-                    "g_depth_particles"
+                    "geometry_data",
+                    "geometry_depth_translucent",
+                    "geometry_depth_particles"
                 ]
             },
             {
@@ -409,11 +409,11 @@
                 program: "bright_color",
                 framebuffer: "bright_color",
                 samplerImages: [
-                    "g_data",
-                    "g_depth_particles"
-                    "g_depth_translucent",
-                    "g_depth_solid",
-                    "g_depth_clouds",
+                    "geometry_data",
+                    "geometry_depth_particles"
+                    "geometry_depth_translucent",
+                    "geometry_depth_solid",
+                    "geometry_depth_clouds",
                     "prepare"
                 ],
                 toggleConfig: "enable_bloom"
@@ -503,10 +503,10 @@
                 framebuffer: "copy_to_main",
                 samplerImages: [
                     "prepare",
-                    "g_depth_translucent",
+                    "geometry_depth_translucent",
                     "behind_translucent",
-                    "g_data",
-                    "g_depth_solid"
+                    "geometry_data",
+                    "geometry_depth_solid"
                 ]
             }
         ]
