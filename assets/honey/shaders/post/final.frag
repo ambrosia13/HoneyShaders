@@ -1,9 +1,9 @@
 #include honey:shaders/lib/includes.glsl
 
-uniform sampler2D u_main_color;
-uniform sampler2D u_translucent_depth;
-uniform sampler2D u_translucent_only;
-uniform sampler2D u_fragment_data;
+uniform sampler2D u_g_solid;
+uniform sampler2D u_g_depth_translucent;
+uniform sampler2D u_behind_translucent;
+uniform sampler2D u_g_data;
 uniform sampler2D u_hand_depth;
 
 in vec2 texcoord;
@@ -11,28 +11,28 @@ in vec2 texcoord;
 layout(location = 0) out vec4 finalColor;
 
 void main() {
-    vec4 color = texture(u_main_color, texcoord);
+    vec4 color = texture(u_g_solid, texcoord);
 
-    vec4 translucent = texture(u_translucent_only, texcoord);
+    vec4 translucent = texture(u_behind_translucent, texcoord);
 
     #if TRANSLUCENT_BLUR_AMT != 0
         if(frx_luminance(translucent.rgb) > 0.0 && texture(u_hand_depth, texcoord).r == 1.0) {
-            color = blur(u_main_color, texcoord, TRANSLUCENT_BLUR_AMT);
+            color = blur(u_g_solid, texcoord, TRANSLUCENT_BLUR_AMT);
         }
     #endif
 
-    float depth = texture(u_translucent_depth, texcoord).r;
+    float depth = texture(u_g_depth_translucent, texcoord).r;
     
     if(frx_cameraInWater == 1) {
         #if UNDERWATER_BLUR_AMT != 0
-            color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
+            color = blur(u_g_solid, texcoord, UNDERWATER_BLUR_AMT);
         #endif
 
         color *= vec4(0.8, 0.8, 1.5, 1.0);
     }
 
     if(frx_cameraInLava == 1) {
-        color = blur(u_main_color, texcoord, UNDERWATER_BLUR_AMT);
+        color = blur(u_g_solid, texcoord, UNDERWATER_BLUR_AMT);
 
         color *= vec4(1.5, 0.8, 0.8, 1.0);
     }
@@ -97,8 +97,8 @@ void main() {
     #endif
 
     #ifdef DRUNK_SHADER
-        vec3 drunk1 = texture(u_main_color, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
-        vec3 drunk2 = texture(u_main_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
+        vec3 drunk1 = texture(u_g_solid, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
+        vec3 drunk2 = texture(u_g_solid, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
         color.rgb += (drunk1 * drunk2);
     #endif
 

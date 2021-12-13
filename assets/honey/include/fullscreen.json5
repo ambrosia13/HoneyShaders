@@ -282,12 +282,12 @@
             fragmentSource: "honey:shaders/post/prepare.frag",
             samplers: [
                 "u_composite",
-                "u_main_depth",
-                "u_main_color",
+                "u_g_depth_solid",
+                "u_g_solid",
                 "u_sky",
-                "u_fragment_data",
-                "u_translucent_depth",
-                "u_particles_depth"
+                "u_g_data",
+                "u_g_depth_translucent",
+                "u_g_depth_particles"
             ]
         },
         {
@@ -295,11 +295,11 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/bloom/bright_color.frag",
             samplers: [
-                "u_fragment_data",
-                "u_particles_depth",
-                "u_translucent_depth",
-                "u_main_depth",
-                "u_clouds_depth",
+                "u_g_data",
+                "u_g_depth_particles",
+                "u_g_depth_translucent",
+                "u_g_depth_solid",
+                "u_g_depth_clouds",
                 "u_color"
             ]
         },
@@ -379,10 +379,10 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/final.frag",
             samplers: [
-                "u_main_color",
-                "u_translucent_depth",
-                "u_translucent_only",
-                "u_fragment_data",
+                "u_g_solid",
+                "u_g_depth_translucent",
+                "u_behind_translucent",
+                "u_g_data",
                 "u_hand_depth"
             ]
         }
@@ -396,12 +396,12 @@
                 framebuffer: "prepare",
                 samplerImages: [
                     "composite",
-                    "main_depth",
-                    "main_color",
+                    "g_depth_solid",
+                    "g_solid",
                     "sky",
-                    "fragment_data",
-                    "translucent_depth",
-                    "particles_depth"
+                    "g_data",
+                    "g_depth_translucent",
+                    "g_depth_particles"
                 ]
             },
             {
@@ -409,11 +409,11 @@
                 program: "bright_color",
                 framebuffer: "bright_color",
                 samplerImages: [
-                    "fragment_data",
-                    "particles_depth"
-                    "translucent_depth",
-                    "main_depth",
-                    "clouds_depth",
+                    "g_data",
+                    "g_depth_particles"
+                    "g_depth_translucent",
+                    "g_depth_solid",
+                    "g_depth_clouds",
                     "prepare"
                 ],
                 toggleConfig: "enable_bloom"
@@ -503,10 +503,10 @@
                 framebuffer: "copy_to_main",
                 samplerImages: [
                     "prepare",
-                    "translucent_depth",
-                    "translucent_only",
-                    "fragment_data",
-                    "main_depth"
+                    "g_depth_translucent",
+                    "behind_translucent",
+                    "g_data",
+                    "g_depth_solid"
                 ]
             }
         ]

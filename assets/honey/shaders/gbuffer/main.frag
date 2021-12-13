@@ -27,9 +27,9 @@ void frx_pipelineFragment() {
         // Handheld light cursed implementation (no spotlights yet)
         // -------
         vec3 heldLightColor = frx_heldLight.rgb;
-        float heldLightDist = frx_heldLight.a * 15.0;
+        float heldLightDist = frx_heldLight.a * 10.0;
         vec3 heldLightTemp = (heldLightColor * (1.0 - smoothstep(heldLightDist / 2.0, heldLightDist, frx_distance)));
-        if(!frx_isGui || frx_isHand) lightmap += (heldLightTemp * (dot(normalize(frx_vertex.xyz), normalize(-frx_vertexNormal)) * 0.5 + 0.5));
+        if(!frx_isGui || frx_isHand) lightmap += (heldLightTemp * (dot(normalize(frx_vertex.xyz), normalize(-frx_vertexNormal)) * 0.5 + 0.5)) / (2.0 - max(getTimeOfDayFactors().y, 1.0 - frx_fragLight.y));
 
         // -------
         // Lighting shouldn't be too dark
@@ -37,7 +37,7 @@ void frx_pipelineFragment() {
         float minLight;
         if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) { minLight = 0.5; } 
         else minLight = 0.3;
-        lightmap = max(lightmap, minLight);
+        lightmap = max(lightmap, vec3(minLight));
 
         float fragDiffuse = diffuse * 0.3 + 0.7;
 
@@ -63,10 +63,12 @@ void frx_pipelineFragment() {
             }
         #endif
 
-        // -------
-        // Make lighting brighter overall
-        // -------
-        if(!frx_isGui || frx_isHand) lightmap *= vec3(1.8, 1.5, 1.2);
+        #ifdef BRIGHT_LIGHTMAP
+            // -------
+            // Make lighting brighter overall
+            // -------
+            if(!frx_isGui || frx_isHand) lightmap *= vec3(1.8, 1.5, 1.2);
+        #endif
 
         lightmap += frx_noise2d(frx_texcoord) / 100.0;
 

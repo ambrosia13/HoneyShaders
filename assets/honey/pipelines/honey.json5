@@ -71,7 +71,7 @@
 
     images: [
         {
-            name: "main_color",
+            name: "g_solid",
             lod: 0,
             internalFormat: "RGBA16F",
             pixelFormat: "RGBA",
@@ -85,7 +85,7 @@
             ]
         },
         {
-            name: "fragment_data",
+            name: "g_data",
             lod: 0,
             internalFormat: "R11F_G11F_B10F",
             pixelFormat: "RGBA",
@@ -99,7 +99,7 @@
             ]
         },
         {
-            name: "main_depth",
+            name: "g_depth_solid",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
             pixelFormat: "DEPTH_COMPONENT",
@@ -119,16 +119,16 @@
         {
             name: "main_gbuffer",
             depthAttachment: {
-                image: "main_depth", 
+                image: "g_depth_solid", 
                 clearDepth: 1.0
             },
             colorAttachments: [
                 {
-                    image: "main_color",
+                    image: "g_solid",
                     clearColor: 0x00000000
                 },
                 {
-                    image: "fragment_data",
+                    image: "g_data",
                     clearColor: 0x00000000
                 }
             ]
@@ -136,11 +136,11 @@
         {
             name: "main_unmanaged",
             depthAttachment: {
-                image: "main_depth"
+                image: "g_depth_solid"
             },
             colorAttachments: [
                 {
-                    image: "main_color"
+                    image: "g_solid"
                 }
             ]
         }
@@ -171,6 +171,11 @@
                     default: true,
                     nameKey: "config.honey.name.fog_enabled",
                     descriptionKey: "config.honey.help.fog_enabled"
+                },
+                bright_lightmap: {
+                    default: true,
+                    nameKey: "config.honey.name.bright_lightmap",
+                    descriptionKey: "config.honey.help.bright_lightmap"
                 },
                 // stylized_water: {
                 //     default: false,

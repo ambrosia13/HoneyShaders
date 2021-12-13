@@ -23,7 +23,7 @@
             ]
         },
         {
-            name: "translucent_only",
+            name: "behind_translucent",
             lod: 0,
             internalFormat: "RGBA16F",
             pixelFormat: "RGBA",
@@ -54,7 +54,7 @@
                     image: "composite", clearColor: 0x00000000,
                 },
                 {
-                    image: "translucent_only", clearColor: 0x00000000,
+                    image: "behind_translucent", clearColor: 0x00000000,
                 }
             ]
         },
@@ -62,7 +62,7 @@
             name: "copy_to_main",
             colorAttachments: [
                 {
-                    image: "main_color", clearColor: 0x00000000
+                    image: "g_solid", clearColor: 0x00000000
                 }
             ]
         }
@@ -74,18 +74,18 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/composite/composite.frag",
             samplers: [
-                "u_main_color",
-                "u_main_depth",
-                "u_translucent_color",
-                "u_translucent_depth",
-                "u_entity_color",
-                "u_entity_depth",
-                "u_weather_color",
-                "u_weather_depth",
-                "u_clouds_color",
-                "u_clouds_depth",
-                "u_particles_color",
-                "u_particles_depth",
+                "u_g_solid",
+                "u_g_depth_solid",
+                "u_g_translucent",
+                "u_g_depth_translucent",
+                "u_g_entity",
+                "u_g_depth_entity",
+                "u_g_weather",
+                "u_g_depth_weather",
+                "u_g_clouds",
+                "u_g_depth_clouds",
+                "u_g_particles",
+                "u_g_depth_particles",
                 "u_sky"
             ]
         },

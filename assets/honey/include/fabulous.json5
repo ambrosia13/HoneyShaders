@@ -41,8 +41,8 @@
             vertexSource: "honey:shaders/post/basic_frame.vert",
             fragmentSource: "honey:shaders/post/sky.frag",
             samplers: [
-                "u_translucent_depth",
-                "u_particles_depth"
+                "u_g_depth_translucent",
+                "u_g_depth_particles"
             ]
         }
     ],
@@ -54,8 +54,8 @@
                 program: "sky",
                 framebuffer: "sky",
                 samplerImages: [
-                    "translucent_depth",
-                    "particles_depth"
+                    "g_depth_translucent",
+                    "g_depth_particles"
                 ]
             },
             {
@@ -63,18 +63,18 @@
                 program: "composite",
                 framebuffer: "composite",
                 samplerImages: [
-                    "main_color",
-                    "main_depth",
-                    "translucent_color",
-                    "translucent_depth",
-                    "entity_color",
-                    "entity_depth",
-                    "weather_color",
-                    "weather_depth",
-                    "clouds_color",
-                    "clouds_depth",
-                    "particles_color",
-                    "particles_depth",
+                    "g_solid",
+                    "g_depth_solid",
+                    "g_translucent",
+                    "g_depth_translucent",
+                    "g_entity",
+                    "g_depth_entity",
+                    "g_weather",
+                    "g_depth_weather",
+                    "g_clouds",
+                    "g_depth_clouds",
+                    "g_particles",
+                    "g_depth_particles",
                     "sky"
                 ]
             },

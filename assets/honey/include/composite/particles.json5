@@ -1,7 +1,7 @@
 {
     images: [
         {
-            name: "particles_color",
+            name: "g_particles",
             lod: 0,
             internalFormat: "RGBA8",
             pixelFormat: "RGBA",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            name: "particles_depth",
+            name: "g_depth_particles",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
             pixelFormat: "DEPTH_COMPONENT",
@@ -35,12 +35,12 @@
         {
             name: "particles_gbuffer",
             depthAttachment: {
-                image: "particles_depth", 
+                image: "g_depth_particles", 
                 clearDepth: 1.0
             },
             colorAttachments: [
                 {
-                    image: "particles_color",
+                    image: "g_particles",
                     clearColor: 0x00000000
                 }
             ]
@@ -48,11 +48,11 @@
         {
             name: "particles_unmanaged",
             depthAttachment: {
-                image: "particles_depth"
+                image: "g_depth_particles"
             },
             colorAttachments: [
                 {
-                    image: "particles_color"
+                    image: "g_particles"
                 }
             ]
         }

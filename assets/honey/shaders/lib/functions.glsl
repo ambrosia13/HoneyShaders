@@ -17,3 +17,13 @@ float getGaussianWeights(in float val, in float center, in float height, in floa
     float a = height * exp(n / d);
     return a;
 }
+
+vec3 getTimeOfDayFactors() {
+    float nightFactor = frx_worldIsMoonlit == 1.0 ? 1.0 : 0.0;
+    nightFactor *= frx_skyLightTransitionFactor;
+    float dayFactor = frx_worldIsMoonlit == 0.0 ? 1.0 : 0.0;
+    dayFactor *= frx_skyLightTransitionFactor;
+    float sunsetFactor = 1.0 - frx_skyLightTransitionFactor;
+
+    return vec3(dayFactor, nightFactor, sunsetFactor);
+}

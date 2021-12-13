@@ -1,7 +1,7 @@
 {
     images: [
         {
-            name: "clouds_color",
+            name: "g_clouds",
             lod: 0,
             internalFormat: "RGBA8",
             pixelFormat: "RGBA",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            name: "clouds_depth",
+            name: "g_depth_clouds",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
             pixelFormat: "DEPTH_COMPONENT",
@@ -35,12 +35,12 @@
         {
             name: "clouds_gbuffer",
             depthAttachment: {
-                image: "clouds_depth", 
+                image: "g_depth_clouds", 
                 clearDepth: 1.0
             },
             colorAttachments: [
                 {
-                    image: "clouds_color",
+                    image: "g_clouds",
                     clearColor: 0x00000000
                 }
             ]
@@ -48,11 +48,11 @@
         {
             name: "clouds_unmanaged",
             depthAttachment: {
-                image: "clouds_depth"
+                image: "g_depth_clouds"
             },
             colorAttachments: [
                 {
-                    image: "clouds_color"
+                    image: "g_clouds"
                 }
             ]
         }

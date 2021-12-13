@@ -1,17 +1,17 @@
 #include honey:shaders/lib/includes.glsl
 
-uniform sampler2D u_main_color;
-uniform sampler2D u_main_depth;
-uniform sampler2D u_translucent_color;
-uniform sampler2D u_translucent_depth;
-uniform sampler2D u_entity_color;
-uniform sampler2D u_entity_depth;
-uniform sampler2D u_weather_color;
-uniform sampler2D u_weather_depth;
-uniform sampler2D u_clouds_color;
-uniform sampler2D u_clouds_depth;
-uniform sampler2D u_particles_color;
-uniform sampler2D u_particles_depth;
+uniform sampler2D u_g_solid;
+uniform sampler2D u_g_depth_solid;
+uniform sampler2D u_g_translucent;
+uniform sampler2D u_g_depth_translucent;
+uniform sampler2D u_g_entity;
+uniform sampler2D u_g_depth_entity;
+uniform sampler2D u_g_weather;
+uniform sampler2D u_g_depth_weather;
+uniform sampler2D u_g_clouds;
+uniform sampler2D u_g_depth_clouds;
+uniform sampler2D u_g_particles;
+uniform sampler2D u_g_depth_particles;
 uniform sampler2D u_sky;
 
 in vec2 texcoord;
@@ -55,33 +55,33 @@ vec3 blend( vec3 dst, vec4 src ) {
 }
 
 void main() {
-    vec4  main_color = texture(u_main_color, texcoord);
-    float main_depth = texture(u_main_depth, texcoord).r;
-    vec4  translucent_color = texture(u_translucent_color, texcoord);
-    float translucent_depth = texture(u_translucent_depth, texcoord).r;
-    vec4  entity_color = texture(u_entity_color, texcoord);
-    float entity_depth = texture(u_entity_depth, texcoord).r;
-    vec4  weather_color = texture(u_weather_color, texcoord);
-    float weather_depth = texture(u_weather_depth, texcoord).r;
-    vec4  clouds_color = texture(u_clouds_color, texcoord);
-    float clouds_depth = texture(u_clouds_depth, texcoord).r;
-    vec4  particles_color = texture(u_particles_color, texcoord);
-    float particles_depth = texture(u_particles_depth, texcoord).r;
+    vec4  g_solid = texture(u_g_solid, texcoord);
+    float g_depth_solid = texture(u_g_depth_solid, texcoord).r;
+    vec4  g_translucent = texture(u_g_translucent, texcoord);
+    float g_depth_translucent = texture(u_g_depth_translucent, texcoord).r;
+    vec4  g_entity = texture(u_g_entity, texcoord);
+    float g_depth_entity = texture(u_g_depth_entity, texcoord).r;
+    vec4  g_weather = texture(u_g_weather, texcoord);
+    float g_depth_weather = texture(u_g_depth_weather, texcoord).r;
+    vec4  g_clouds = texture(u_g_clouds, texcoord);
+    float g_depth_clouds = texture(u_g_depth_clouds, texcoord).r;
+    vec4  g_particles = texture(u_g_particles, texcoord);
+    float g_depth_particles = texture(u_g_depth_particles, texcoord).r;
     
     vec4 sky = texture(u_sky, texcoord);
-    if(particles_depth == 1.0) { 
-        main_color = sky;
+    if(g_depth_particles == 1.0) { 
+        g_solid = sky;
     }
 
-    color_layers[0] = main_color;
-    depth_layers[0] = main_depth;
+    color_layers[0] = g_solid;
+    depth_layers[0] = g_depth_solid;
     active_layers = 1;
 
-    try_insert(translucent_color, translucent_depth);
-    try_insert(entity_color, entity_depth);
-    try_insert(weather_color, weather_depth);
-    //try_insert(clouds_color, clouds_depth);
-    try_insert(particles_color, particles_depth);
+    try_insert(g_translucent, g_depth_translucent);
+    try_insert(g_entity, g_depth_entity);
+    try_insert(g_weather, g_depth_weather);
+    //try_insert(g_clouds, g_depth_clouds);
+    try_insert(g_particles, g_depth_particles);
 
     vec3 composite = color_layers[0].rgb;
     for (int ii = 1; ii < active_layers; ++ii) {
@@ -89,12 +89,12 @@ void main() {
     }
 
     vec3 b;
-    if(frx_luminance(translucent_color.rgb) != 0.0) {
-        b = max(translucent_color.rgb, 1.0);
+    if(frx_luminance(g_translucent.rgb) != 0.0) {
+        b = max(g_translucent.rgb, 1.0);
     }
     bool isTranslucent = frx_luminance(b) >= 1.0;
     if(isTranslucent) {
-        b = main_color.rgb;
+        b = g_solid.rgb;
     }
 
     compositeColor = vec4(composite, 1.0);

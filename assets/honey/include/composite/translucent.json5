@@ -1,7 +1,7 @@
 {
     images: [
         {
-            name: "translucent_color",
+            name: "g_translucent",
             lod: 0,
             internalFormat: "RGBA8",
             pixelFormat: "RGBA",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            name: "translucent_depth",
+            name: "g_depth_translucent",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
             pixelFormat: "DEPTH_COMPONENT",
@@ -35,12 +35,12 @@
         {
             name: "translucent_gbuffer",
             depthAttachment: {
-                image: "translucent_depth", 
+                image: "g_depth_translucent", 
                 clearDepth: 1.0
             },
             colorAttachments: [
                 {
-                    image: "translucent_color",
+                    image: "g_translucent",
                     clearColor: 0x00000000
                 }
             ]
@@ -48,11 +48,11 @@
         {
             name: "translucent_unmanaged",
             depthAttachment: {
-                image: "translucent_depth"
+                image: "g_depth_translucent"
             },
             colorAttachments: [
                 {
-                    image: "translucent_color"
+                    image: "g_translucent"
                 }
             ]
         }

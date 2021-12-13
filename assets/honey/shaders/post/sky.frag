@@ -1,7 +1,7 @@
 #include honey:shaders/lib/includes.glsl
 
-uniform sampler2D u_translucent_depth;
-uniform sampler2D u_particles_depth;
+uniform sampler2D u_g_depth_translucent;
+uniform sampler2D u_g_depth_particles;
 
 in vec2 texcoord;
 
@@ -11,7 +11,7 @@ void main() {
     // -------
     // Setup view space for sky
     // -------
-    float depth = min(texture(u_translucent_depth, texcoord).r, texture(u_particles_depth, texcoord).r);
+    float depth = min(texture(u_g_depth_translucent, texcoord).r, texture(u_g_depth_particles, texcoord).r);
     vec3 viewSpacePos = setupViewSpacePos(texcoord, depth);
     viewSpacePos = normalize(viewSpacePos);
 
@@ -24,18 +24,17 @@ void main() {
     // -------
     // Time of day factors
     // -------
-    float nightFactor = frx_worldIsMoonlit == 1.0 ? 1.0 : 0.0;
-    nightFactor *= frx_skyLightTransitionFactor;
-    float dayFactor = frx_worldIsMoonlit == 0.0 ? 1.0 : 0.0;
-    dayFactor *= frx_skyLightTransitionFactor;
-    float sunsetFactor = 1.0 - frx_skyLightTransitionFactor;
+    vec3 timeFactors = getTimeOfDayFactors();
+    float dayFactor = timeFactors.x;
+    float nightFactor = timeFactors.y;
+    float sunsetFactor = timeFactors.z;
 
     // -------
     // Lower sky color based on time of day
     // -------
     skyColLower = mix(skyColLower, vec3(0.1, 0.4, 0.7), nightFactor);
     skyColLower = mix(skyColLower, vec3(0.852,0.994,1.070), dayFactor);
-    skyColLower = mix(skyColLower, vec3(0.970,0.696,0.248), sunsetFactor);
+    skyColLower = mix(skyColLower, vec3(0.970,0.596,0.248), sunsetFactor);
 
     // -------
     // Upper sky color based on time of day

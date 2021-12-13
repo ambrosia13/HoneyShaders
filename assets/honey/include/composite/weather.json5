@@ -1,7 +1,7 @@
 {
     images: [
         {
-            name: "weather_color",
+            name: "g_weather",
             lod: 0,
             internalFormat: "RGBA8",
             pixelFormat: "RGBA",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            name: "weather_depth",
+            name: "g_depth_weather",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
             pixelFormat: "DEPTH_COMPONENT",
@@ -35,12 +35,12 @@
         {
             name: "weather_gbuffer",
             depthAttachment: {
-                image: "weather_depth", 
+                image: "g_depth_weather", 
                 clearDepth: 1.0
             },
             colorAttachments: [
                 {
-                    image: "weather_color",
+                    image: "g_weather",
                     clearColor: 0x00000000
                 }
             ]
@@ -48,11 +48,11 @@
         {
             name: "weather_unmanaged",
             depthAttachment: {
-                image: "weather_depth"
+                image: "g_depth_weather"
             },
             colorAttachments: [
                 {
-                    image: "weather_color"
+                    image: "g_weather"
                 }
             ]
         }
