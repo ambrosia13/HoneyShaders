@@ -85,6 +85,20 @@
             ]
         },
         {
+            name: "geometry_normal_solid",
+            lod: 0,
+            internalFormat: "RGBA16F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {name: "TEXTURE_MIN_FILTER", val: "NEAREST"},
+                {name: "TEXTURE_MAG_FILTER", val: "NEAREST"},
+                {name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"}, 
+                {name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"}
+            ]
+        },
+        {
             name: "geometry_data",
             lod: 0,
             internalFormat: "R11F_G11F_B10F",
@@ -127,6 +141,10 @@
                     image: "geometry_solid",
                     clearColor: 0x00000000
                 },
+                {
+                    image: "geometry_normal_solid",
+                    clearColor: 0x00000000
+                }, 
                 {
                     image: "geometry_data",
                     clearColor: 0x00000000

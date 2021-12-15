@@ -7,17 +7,20 @@ uniform sampler2D u_sky;
 uniform sampler2D u_geometry_data;
 uniform sampler2D u_geometry_depth_translucent;
 uniform sampler2D u_geometry_depth_particles;
+uniform sampler2D u_geometry_normal_solid;
 
 in vec2 texcoord;
 
 layout(location = 0) out vec4 compositeHand;
 
 void main() {
-    vec4 composite = texture(u_composite, texcoord);
     float handDepth = texture(u_geometry_depth_solid, texcoord).r;
     vec4 color = texture(u_geometry_solid, texcoord);
+    vec3 normal = texture(u_geometry_normal_solid, texcoord).xyz;
     float compositeDepth = min(texture(u_geometry_depth_particles, texcoord).r, texture(u_geometry_depth_translucent, texcoord).r);
     compositeDepth = min(handDepth, compositeDepth);
+    vec4 composite = texture(u_composite, texcoord);
+    
 
     // -------
     // Composite image + hand
@@ -40,6 +43,9 @@ void main() {
     // -------
     // Fog
     // -------
+
+    vec3 viewSpacePos = setupViewSpacePos(texcoord, compositeDepth);
+
     vec4 skyCol = min(texture(u_sky, texcoord), vec4(1.0));
 
     float blockDist = texture(u_geometry_data, texcoord).b;
@@ -70,8 +76,6 @@ void main() {
     // -------
     // Clouds
     // -------
-
-    vec3 viewSpacePos = setupViewSpacePos(texcoord, compositeDepth);
     viewSpacePos = normalize(viewSpacePos);
 
     vec2 plane = viewSpacePos.xz / (viewSpacePos.y / 2.0);

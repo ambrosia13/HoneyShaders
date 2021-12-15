@@ -10,7 +10,9 @@ uniform sampler2D u_fog_density;
 in vec2 faceUV;
 
 layout(location = 0) out vec4 fragColor;
-layout(location = 1) out vec4 fragData;
+layout(location = 1) out vec4 fragNormal;
+layout(location = 2) out vec4 fragData;
+
 //layout(location = 2) out vec4 fragLight;
 
 void frx_pipelineFragment() {
@@ -103,6 +105,7 @@ void frx_pipelineFragment() {
     // Outputs
     // -------
     fragColor = color;
+    fragNormal = vec4((frx_vertexNormal * 0.5 + 0.5), 1.0);
     fragData = vec4(frx_fragEmissive, 0.0, frx_distance, 1.0); // data for other post shaders to access
     //fragLight = vec4(frx_fragLight, diffuse);
 

@@ -133,7 +133,7 @@ float waterlayer(vec2 uv)
 vec4 blur(sampler2D tex, vec2 c, float radius) {
 	vec2 texel = 1.0 / vec2(frx_viewWidth, frx_viewHeight);
 
-    float weight = 0.0;
+    float weight = 0.01;
     vec4 color = vec4(0.0);
 
     float d = 1.0;
