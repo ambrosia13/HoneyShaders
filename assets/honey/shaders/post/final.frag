@@ -102,7 +102,7 @@ void main() {
         color.rgb += (drunk1 * drunk2);
     #endif
 
-    color.rgb = reinhard2(color.rgb);
+    color.rgb = frx_toneMap(color.rgb);
 
     finalColor = vec4(color.rgb, 1.0);
 }
