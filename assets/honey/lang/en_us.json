@@ -8,7 +8,7 @@
     "config.honey.name.bright_lightmap": "Bright Lightmap",
     "config.honey.help.bright_lightmap": "When enabled, makes all lighting brighter.",
 
-    "config.honey.category.colors": "Lighting",
+    "config.honey.category.colors": "Colors",
     "config.honey.name.saturation_boost": "Saturation Boost",
     "config.honey.help.saturation_boost": "Slightly increases the saturation of the image after tone mapping.",
 
