@@ -38,5 +38,5 @@ This is in early alpha at the moment, and may not look very pretty. It has sever
 
 # Screenshots
 
-![screenshot 1](https://cdn.discordapp.com/attachments/914139324122013747/916636147260727316/unknown.png)
-![screenshot 2](https://cdn.discordapp.com/attachments/903175815401975889/916637597923680296/unknown.png)
+![screenshot 1](https://cdn.discordapp.com/attachments/734161464184799296/921904485939417159/unknown.png)
+![screenshot 2](https://cdn.discordapp.com/attachments/620849662680629248/921957825641578516/unknown.png)
