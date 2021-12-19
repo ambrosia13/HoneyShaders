@@ -119,51 +119,42 @@ float waterlayer(vec2 uv)
 }
 // --------------------------------------------------------------------------------------------------------
 
-// --------------------------------------------------------------------------------------------------------
-// Taken with permission from Xordev's Ominous Shaderpack
-// Modified slightly to fit my usage.
-// https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc
-// --------------------------------------------------------------------------------------------------------
+#ifndef VERTEX_SHADER 
+    // --------------------------------------------------------------------------------------------------------
+    // Taken with permission from Xordev's Ominous Shaderpack
+    // Modified slightly to fit my usage.
+    // https://github.com/XorDev/Ominous-Shaderpack/blob/main/shaders/lib/Blur.inc
+    // --------------------------------------------------------------------------------------------------------
 
-// Define bloom quality in case pipeline is not loaded
-#ifndef BLOOM_QUALITY
-    #define BLOOM_QUALITY 5 
+    // Define bloom quality in case pipeline is not loaded
+    #ifndef BLOOM_QUALITY
+        #define BLOOM_QUALITY 5 
+    #endif
+
+    vec4 blur(sampler2D tex, vec2 c, float radius) {
+        vec2 texel = 1.0 / vec2(frx_viewWidth, frx_viewHeight);
+
+        float weight = 0.01;
+        vec4 color = vec4(0.0);
+
+        float d = 1.0;
+        vec2 samp = vec2(radius) / float(BLOOM_QUALITY);
+
+        mat2 ang = mat2(0.73736882209777832, -0.67549037933349609, 
+                        0.67549037933349609, 0.73736882209777832);
+
+        for(int i = 0; i < BLOOM_QUALITY * BLOOM_QUALITY; i++) {
+            d += 1.0 / d;
+            samp = ang * samp;
+
+            float w = 1.0 / (d - 1.0);
+            vec2 uv = c + samp * (d - 1.0) * texel;
+
+            color += textureLod(tex, uv, frxu_lod) * w;
+            weight += w;
+        }
+
+        return color / weight;
+    }
+    // --------------------------------------------------------------------------------------------------------
 #endif
-
-vec4 blur(sampler2D tex, vec2 c, float radius) {
-	vec2 texel = 1.0 / vec2(frx_viewWidth, frx_viewHeight);
-
-    float weight = 0.01;
-    vec4 color = vec4(0.0);
-
-    float d = 1.0;
-    vec2 samp = vec2(radius) / float(BLOOM_QUALITY);
-
-    mat2 ang = mat2(0.73736882209777832, -0.67549037933349609, 
-                    0.67549037933349609, 0.73736882209777832);
-
-	for(int i = 0; i < BLOOM_QUALITY * BLOOM_QUALITY; i++) {
-        d += 1.0 / d;
-        samp = ang * samp;
-
-        float w = 1.0 / (d - 1.0);
-        vec2 uv = c + samp * (d - 1.0) * texel;
-
-		color += textureLod(tex, uv, frxu_lod) * w;
-        weight += w;
-	}
-
-    return color / weight;
-}
-// --------------------------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------------------------
-// Tone mapping function. Taken from https://github.com/dmnsgn/glsl-tone-map, MIT License
-// Changed white point. 
-// --------------------------------------------------------------------------------------------------------
-vec3 reinhard2(vec3 x) {
-  const float L_white = 5.0;
-
-  return (x * (1.0 + x / (L_white * L_white))) / (1.0 + x);
-}
-// --------------------------------------------------------------------------------------------------------

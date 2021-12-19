@@ -288,7 +288,7 @@
                 "u_geometry_data",
                 "u_geometry_depth_translucent",
                 "u_geometry_depth_particles",
-                "u_geometry_normal_solid"
+                "u_geometry_normal"
             ]
         },
         {
@@ -403,7 +403,7 @@
                     "geometry_data",
                     "geometry_depth_translucent",
                     "geometry_depth_particles",
-                    "geometry_normal_solid"
+                    "geometry_normal"
                 ]
             },
             {

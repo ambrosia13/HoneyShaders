@@ -27,3 +27,5 @@ vec3 getTimeOfDayFactors() {
 
     return vec3(dayFactor, nightFactor, sunsetFactor);
 }
+
+#include honey:shaders/lib/fog.glsl 

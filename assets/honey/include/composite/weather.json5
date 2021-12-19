@@ -42,6 +42,14 @@
                 {
                     image: "geometry_weather",
                     clearColor: 0x00000000
+                },
+                {
+                    image: "geometry_normal",
+                    clearColor: 0x00000000
+                }, 
+                {
+                    image: "geometry_data",
+                    clearColor: 0x00000000
                 }
             ]
         },

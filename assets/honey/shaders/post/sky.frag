@@ -30,26 +30,35 @@ void main() {
     float sunsetFactor = timeFactors.z;
 
     // -------
-    // Lower sky color based on time of day
-    // -------
-    skyColLower = mix(skyColLower, vec3(0.1, 0.4, 0.7), nightFactor);
-    skyColLower = mix(skyColLower, vec3(0.852,0.994,1.070), dayFactor);
-    skyColLower = mix(skyColLower, vec3(0.970,0.596,0.248), sunsetFactor);
-
-    // -------
-    // Upper sky color based on time of day
-    // -------
-    vec3 skyColDayNight = pow(skyColLower, vec3(3.0));
-    vec3 skyColSunset = pow(vec3(0.8, 0.9, 1.0), vec3(5.0));
-    vec3 skyColTime = mix(skyColDayNight, skyColSunset, sunsetFactor);
-    skyColUpper.rgb = mix(skyColLower.rgb, skyColTime.rgb, dot(viewSpacePos, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5);
-
-    // -------
-    // Around the sun & moon, the sky will be tinted the skylight color
+    // Sun & Moon position
     // -------
     float sunPos = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
     float moonPos = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
 
+    // -------
+    // Lower sky color based on time of day
+    // -------
+    skyColLower = mix(skyColLower, vec3(0.1, 0.4, 0.7), nightFactor);
+    skyColLower = mix(skyColLower, vec3(0.652,0.994,1.070), dayFactor);
+    skyColLower = mix(skyColLower, vec3(0.970,0.496,0.248), sunsetFactor);
+    
+    skyColLower = mix(skyColLower, vec3(0.0, 0.5, 1.0), moonPos * moonPos * sunsetFactor);
+    skyColLower = mix(skyColLower, vec3(1.0, 0.5, 0.0), sunPos * sunPos * sunsetFactor);
+
+    // -------
+    // Upper sky color based on time of day
+    // -------
+    vec3 skyColDay = pow(skyColLower, vec3(9.0));
+    vec3 skyColNight = pow(skyColLower, vec3(2.0));
+    vec3 skyColDayNight = mix(skyColDay, skyColNight, nightFactor);
+    vec3 skyColSunset = pow(vec3(0.8, 0.9, 1.0), vec3(5.0));
+    vec3 skyColTime = mix(skyColDayNight, skyColSunset, sunsetFactor);
+    skyColUpper.rgb = mix(skyColLower.rgb, skyColTime.rgb, dot(viewSpacePos, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5);
+    skyColUpper.rgb = max(skyColUpper.rgb, vec3(0.25, 0.25, 0.5));
+
+    // -------
+    // Around the sun & moon, the sky will be tinted the skylight color
+    // -------
     sunPos = frx_smootherstep(0.85, 1.05, sunPos) * dayFactor;
     moonPos = frx_smootherstep(0.85, 1.05, moonPos) * nightFactor;
 

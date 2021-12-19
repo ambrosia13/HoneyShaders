@@ -23,7 +23,7 @@ void main() {
     bool isSky = translucentDepth == 1.0 && particlesDepth == 1.0 && frx_worldHasSkylight == 1 && !isHand;
 
     //if(isSky && frx_luminance(color.rgb) > 2.0) {
-    if(color.a > 2.0) {
+    if(color.a > 10.0) {
         brightColor += color;
     }
 
@@ -49,4 +49,9 @@ void main() {
         brightColor += emissive;
 
     #endif
+
+    vec3 viewSpacePos = setupViewSpacePos(texcoord, min(handDepth, min(translucentDepth, particlesDepth)));
+    float dist = length(viewSpacePos) / frx_viewDistance;
+
+    //if(frx_worldIsNether == 1) brightColor *= getNetherFogDensity(dist, true);
 }

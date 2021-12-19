@@ -63,13 +63,13 @@ void main() {
     float geometry_depth_entity = texture(u_geometry_depth_entity, texcoord).r;
     vec4  geometry_weather = texture(u_geometry_weather, texcoord);
     float geometry_depth_weather = texture(u_geometry_depth_weather, texcoord).r;
-    vec4  geometry_clouds = texture(u_geometry_clouds, texcoord);
-    float geometry_depth_clouds = texture(u_geometry_depth_clouds, texcoord).r;
+    // vec4  geometry_clouds = texture(u_geometry_clouds, texcoord);
+    // float geometry_depth_clouds = texture(u_geometry_depth_clouds, texcoord).r;
     vec4  geometry_particles = texture(u_geometry_particles, texcoord);
     float geometry_depth_particles = texture(u_geometry_depth_particles, texcoord).r;
     
     vec4 sky = texture(u_sky, texcoord);
-    if(geometry_depth_particles == 1.0) { 
+    if(max(geometry_depth_translucent, geometry_depth_particles) == 1.0) { 
         geometry_solid = sky;
     }
 

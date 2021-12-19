@@ -85,7 +85,7 @@
             ]
         },
         {
-            name: "geometry_normal_solid",
+            name: "geometry_normal",
             lod: 0,
             internalFormat: "RGBA16F",
             pixelFormat: "RGBA",
@@ -142,7 +142,7 @@
                     clearColor: 0x00000000
                 },
                 {
-                    image: "geometry_normal_solid",
+                    image: "geometry_normal",
                     clearColor: 0x00000000
                 }, 
                 {
@@ -210,6 +210,17 @@
                 //     nameKey: "config.honey.name.inbuilt_materials",
                 //     descriptionKey: "config.honey.help.inbuilt_materials"
                 // }
+            }
+        },
+        {
+            includeToken: "honey:colors",
+            categoryKey: "config.honey.category.colors",
+            elements: {
+                saturation_boost: {
+                    default: true,
+                    nameKey: "config.honey.name.saturation_boost",
+                    descriptionKey: "config.honey.help.saturation_boost"
+                }
             }
         },
         {

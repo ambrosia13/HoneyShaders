@@ -7,16 +7,20 @@ uniform sampler2D u_sky;
 uniform sampler2D u_geometry_data;
 uniform sampler2D u_geometry_depth_translucent;
 uniform sampler2D u_geometry_depth_particles;
-uniform sampler2D u_geometry_normal_solid;
+uniform sampler2D u_geometry_normal;
 
 in vec2 texcoord;
 
 layout(location = 0) out vec4 compositeHand;
 
+float frx_noise3d(vec3 st) {
+	return fract(sin(dot(st.xyz, vec3(12.9898, 78.233, 78.233)))*43758.5453123);
+}
+
 void main() {
     float handDepth = texture(u_geometry_depth_solid, texcoord).r;
     vec4 color = texture(u_geometry_solid, texcoord);
-    vec3 normal = texture(u_geometry_normal_solid, texcoord).xyz;
+    vec3 normal = texture(u_geometry_normal, texcoord).xyz;
     float compositeDepth = min(texture(u_geometry_depth_particles, texcoord).r, texture(u_geometry_depth_translucent, texcoord).r);
     compositeDepth = min(handDepth, compositeDepth);
     vec4 composite = texture(u_composite, texcoord);
@@ -48,19 +52,14 @@ void main() {
 
     vec4 skyCol = min(texture(u_sky, texcoord), vec4(1.0));
 
-    float blockDist = texture(u_geometry_data, texcoord).b;
+    //float blockDist = texture(u_geometry_data, texcoord).b;
+    float blockDist = length(viewSpacePos);
     float dist = blockDist / frx_viewDistance;
 
-    vec3 timeFactors = getTimeOfDayFactors();
+    float fogFactor = frx_smootherstep(frx_fogStart, frx_fogEnd, blockDist);
+    if(frx_worldIsOverworld == 1) fogFactor = getOverworldFogDensity(getTimeOfDayFactors(), blockDist);
+    if(frx_worldIsNether == 1) fogFactor = getNetherFogDensity(blockDist, false);
 
-    float fogStartMin = 10.0;
-    float fogFactor = frx_smootherstep(fogStartMin, frx_viewDistance, blockDist);
-    fogFactor = 1.0 - exp(-fogFactor);
-
-    fogFactor += 0.2 * frx_smootherstep(0.0, 1.0, timeFactors.z); // denser fog at sunrise/sunset
-    fogFactor += -0.3 * frx_smootherstep(0.0, 1.0, timeFactors.x);
-    fogFactor = (1.0 - exp(-fogFactor));
-    fogFactor *= frx_eyeBrightness.y;
     clamp01(fogFactor);
 
     #ifdef ENABLE_FOG
@@ -94,20 +93,20 @@ void main() {
         sun = dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
     } else sun = dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
 
-    bool fullMoon = frx_worldDay == 0.0;
-    bool phase1 = frx_worldDay == 1.0;
-    bool phase2 = frx_worldDay == 2.0;
-    bool phase3 = frx_worldDay == 3.0;
-    bool phase4 = frx_worldDay == 4.0;
-    bool phase5 = frx_worldDay == 5.0;
-    bool phase6 = frx_worldDay == 6.0;
-    bool phase7 = frx_worldDay == 7.0;
+    bool fullMoon = mod(frx_worldDay, 8.0) == 0.0;
+    bool phase1 = mod(frx_worldDay, 8.0) == 1.0;
+    bool phase2 = mod(frx_worldDay, 8.0) == 2.0;
+    bool phase3 = mod(frx_worldDay, 8.0) == 3.0;
+    bool phase4 = mod(frx_worldDay, 8.0) == 4.0;
+    bool phase5 = mod(frx_worldDay, 8.0) == 5.0;
+    bool phase6 = mod(frx_worldDay, 8.0) == 6.0;
+    bool phase7 = mod(frx_worldDay, 8.0) == 7.0;
 
     float moon;
     if(frx_worldIsMoonlit == 1.0) {
         moon = dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
     } else moon = dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
-    // if(phase1 || phase7) moon -= step(0.9994, dot(viewSpacePos, vec3(frx_skyLightVector.xy, frx_skyLightVector.z - 0.025)) * 0.5 + 0.5);
+    // if(phase1 || phase7) moon -= step(0.9994, dot(viewSpacePos, vec3(frx_skyLightVector.xy, frx_skyLightVector.z - 0.0008)) * 0.5 + 0.5);
     // if(phase2 || phase6) moon -= step(0.9993, dot(viewSpacePos, vec3(frx_skyLightVector.xy, frx_skyLightVector.z - 0.02)) * 0.5 + 0.5);
     // if(phase3 || phase5) moon -= step(0.9995, dot(viewSpacePos, vec3(frx_skyLightVector.xy, frx_skyLightVector.z - 0.01)) * 0.5 + 0.5);
     // if(phase4) moon = 0.0;
@@ -117,8 +116,8 @@ void main() {
     vec4 sunCol = sun * vec4(2.0, 1.4, 0.4, 10.0);
     vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0);
 
-    if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += (sunCol + moonCol) * ((1.0 - cloudNoise * 0.75));
-    if(compositeDepth == 1.0 && frx_worldIsOverworld == 1) composite.rgb = mix(composite.rgb, mix(composite.rgb, composite.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
+    if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += (sunCol + moonCol);
+    if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite.rgb = mix(composite.rgb, mix(composite.rgb, composite.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
 
     compositeHand = composite;
 }

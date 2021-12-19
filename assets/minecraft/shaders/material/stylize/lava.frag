@@ -13,11 +13,11 @@ void frx_materialFragment() {
         vec2 distort = vec2(distortX * cos(frx_renderSeconds * 0.25), distortY * sin(frx_renderSeconds * 0.25));
 
         float magma = snoise((uv.xy + distort) * 0.25);
-        float magma1 = snoise((uv.yx + distort) * 0.5);
-        float magma2 = snoise((uv.xy + distort) * 1.0);
-        float magma3 = snoise((uv.yx + distort) * 1.5);
-        float magma4 = snoise((uv.xy + distort) * 2.0);
-        float magma5 = snoise((uv.yx + distort) * 2.5);
+        float magma1 = snoise((uv.yx + distort * 1.3) * 0.5);
+        float magma2 = snoise((uv.xy + distort * 1.5) * 1.0);
+        float magma3 = snoise((uv.yx + distort * 1.7) * 1.5);
+        float magma4 = snoise((uv.xy + distort * 1.1) * 2.0);
+        float magma5 = snoise((uv.yx + distort * 0.9) * 2.5);
 
         // lower detail lava based on distance
         magma5 *= 1.0 - frx_smootherstep(25, 35, frx_distance);
