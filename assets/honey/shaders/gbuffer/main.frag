@@ -26,29 +26,43 @@ void frx_pipelineFragment() {
     #ifdef VANILLA_LIGHTING
         float minCaveLight = MIN_CAVE_LIGHT;
         float minSkyLight = MIN_SKY_LIGHT;
+        float handheldLightIntensity = HANDHELD_LIGHT_INTENSITY;
+        vec3 torchColor = vec3(1.2, 0.7, 0.4);
+        float torchStrength = 5.0;
         if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) {
-            minCaveLight = 0.8;
-            minSkyLight = 0.8;
+            minCaveLight = 0.65;
+            minSkyLight = 0.65;
+            torchStrength = 2.0;
+            handheldLightIntensity *= 0.5;
         }
+
         vec3 lightmap = vec3(1.0);
         vec3 ldata = frx_fragLight;
         vec3 tdata = getTimeOfDayFactors();
+
         lightmap = mix(lightmap * minCaveLight, lightmap, ldata.y);
         lightmap = mix(lightmap, lightmap * minSkyLight, tdata.y * ldata.y);
-        lightmap = mix(lightmap, lightmap * vec3(4.8, 3.2, 2.8), max(ldata.x * (1.0 - ldata.y), ldata.x * (1.0 - tdata.x)));
+        lightmap = mix(lightmap, lightmap * torchColor * torchStrength, max(ldata.x * (1.0 - ldata.y), ldata.x * tdata.y));
         lightmap = mix(lightmap, lightmap * DAY_BRIGHTNESS, min(ldata.y, tdata.x));
         if(frx_matDisableAo == 0) lightmap *= ldata.z;
-        if(frx_matDisableDiffuse == 0) lightmap *= diffuse * 0.3 + 0.7;
+
+        vec3 diffuseColor = vec3(diffuse * 0.5 + 0.5);
+        diffuseColor = mix(diffuseColor, diffuseColor * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
+        diffuseColor = mix(diffuseColor, diffuseColor * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, diffuse));
+        diffuseColor = mix(diffuseColor, diffuseColor * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, diffuse));
+        diffuseColor = mix(diffuseColor, vec3(1.0), 1.0 - ldata.y);
+        diffuseColor = diffuseColor * 0.3 + 0.9;
+        if(frx_matDisableDiffuse == 0) lightmap *= diffuseColor;
 
         float heldLightDist = frx_heldLight.w * 10.0;
-        float heldLightFactor = (heldLightDist / frx_distance) * (1.0 - min((1.0 - tdata.y), ldata.y)) * (1.0 - frx_smootherstep(7.0, 12.0, frx_distance));
+        float heldLightFactor = (heldLightDist / frx_distance) * (1.0 - min((1.0 - tdata.y), ldata.y)) * (frx_smootherstep(10.0, 5.0, frx_distance));
         heldLightFactor *= dot(frx_vertex.xyz, -frx_vertexNormal.xyz) * 0.5 + 0.5;
-        heldLightFactor *= HANDHELD_LIGHT_INTENSITY;
+        heldLightFactor *= handheldLightIntensity;
         //clamp01(heldLightFactor);
         lightmap = mix(lightmap, lightmap * 2.0 * frx_heldLight.rgb, max(heldLightFactor, 0.0));
 
         if(!frx_isGui || frx_isHand) color.rgb *= lightmap;
-        if(frx_isGui && !frx_isHand) color.rgb *= diffuse * 0.3 + 0.7;
+        if(frx_isGui && !frx_isHand) color.rgb *= diffuse * 0.3 + 0.8;
     #endif
 
     // -------

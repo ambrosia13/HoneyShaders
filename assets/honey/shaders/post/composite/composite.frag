@@ -165,6 +165,9 @@ void main() {
         geometrySolid = sky;
     }
 
+    // -------
+    // Composite Sorting
+    // -------
     color_layers[0] = geometrySolid;
     depth_layers[0] = geometryDepthSolid;
     active_layers = 1;
