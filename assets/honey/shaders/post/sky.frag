@@ -40,10 +40,10 @@ void main() {
     // -------
     skyColLower = mix(skyColLower, vec3(0.1, 0.4, 0.7), nightFactor);
     skyColLower = mix(skyColLower, vec3(0.652,0.994,1.070), dayFactor);
-    skyColLower = mix(skyColLower, vec3(0.970,0.496,0.248), sunsetFactor);
+    skyColLower = mix(skyColLower, vec3(0.670,0.496,0.248), sunsetFactor);
     
-    skyColLower = mix(skyColLower, vec3(0.0, 0.5, 1.0), moonPos * moonPos * sunsetFactor);
-    skyColLower = mix(skyColLower, vec3(1.0, 0.5, 0.0), sunPos * sunPos * sunsetFactor);
+    skyColLower = mix(skyColLower, vec3(0.2, 0.7, 1.0), moonPos * moonPos * sunsetFactor);
+    skyColLower = mix(skyColLower, vec3(1.0, 0.6, 0.4), sunPos * sunPos * sunsetFactor);
 
     // -------
     // Upper sky color based on time of day
@@ -74,8 +74,8 @@ void main() {
     // -------
     // Custom sky for the End
     // -------
-    vec3 spaceColor = vec3(0.4, 0.2, 0.4);
-    spaceColor = mix(spaceColor, vec3(0.25, 0.1, 0.25), abs(dot(viewSpacePos, vec3(1.0))));
+    vec3 spaceColor = vec3(0.6, 0.3, 0.6);
+    spaceColor = mix(spaceColor, vec3(0.25, 0.1, 0.25), pow(abs(dot(viewSpacePos, vec3(0.0, 1.0, 0.0))), 0.3));
     spaceColor += vec3(frx_noise2d(viewSpacePos.xz)) / 6.0;
 
 

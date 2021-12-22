@@ -86,7 +86,14 @@
                 "u_geometry_depth_clouds",
                 "u_geometry_particles",
                 "u_geometry_depth_particles",
-                "u_sky"
+                "u_sky",
+                "u_geometry_light_solid",
+                "u_geometry_light_translucent",
+                "u_geometry_light_entity",
+                "u_geometry_light_weather",
+                "u_geometry_light_clouds",
+                "u_geometry_light_particles",
+                "u_geometry_data"
             ]
         },
         {

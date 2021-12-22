@@ -1,3 +1,8 @@
+// Define bloom quality in case pipeline is not loaded
+#ifndef BLOOM_QUALITY
+    #define BLOOM_QUALITY 5 
+#endif
+
 #include honey:shaders/lib/external.glsl 
 
 vec3 setupViewSpacePos(in vec2 texcoord, in float depth) {
@@ -29,3 +34,14 @@ vec3 getTimeOfDayFactors() {
 }
 
 #include honey:shaders/lib/fog.glsl 
+
+vec4 blur(in sampler2D image, in vec2 coord, in float radius, in vec2 direction) {
+    float weight = 0.1;
+    vec4 color;
+    float dst = radius / BLOOM_QUALITY; 
+    for(int i = -BLOOM_QUALITY; i < BLOOM_QUALITY; i++) {
+        color += texture(image, coord + (direction * float(i) * radius) / vec2(frx_viewWidth, frx_viewHeight));
+        weight += 1.0 - getGaussianWeights(float(i), 0.0, 1.0, 1.0);
+    }
+    return color / weight;
+}

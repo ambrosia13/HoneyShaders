@@ -76,6 +76,13 @@
                     "geometry_particles",
                     "geometry_depth_particles",
                     "sky"
+                    "geometry_light_solid",
+                    "geometry_light_translucent",
+                    "geometry_light_entity",
+                    "geometry_light_weather",
+                    "geometry_light_clouds",
+                    "geometry_light_particles",
+                    "geometry_data"
                 ]
             },
             {

@@ -35,11 +35,11 @@ void main() {
 
     #elif BLOOM_STYLE >= 1
 
-        if(!isSky) {
+        //if(!isSky) {
             float luminance = frx_luminance(frx_toneMap(color.rgb));
             brightColor += color * pow(luminance, 3.0);
             brightColor /= 2.0;
-        }
+        //}
 
     #endif
     #if BLOOM_STYLE == 2 // both emissivity and luminance

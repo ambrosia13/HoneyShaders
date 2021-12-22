@@ -7,6 +7,15 @@
     "config.honey.help.fog_enabled": "Whether or not fog is enabled.",
     "config.honey.name.bright_lightmap": "Bright Lightmap",
     "config.honey.help.bright_lightmap": "When enabled, makes all lighting brighter.",
+    "config.honey.name.min_sky_light": "Minimum Sky Light",
+    "config.honey.help.min_sky_light": "Brightness of sky light during night.",
+    "config.honey.name.min_cave_light": "Minimum Cave Light",
+    "config.honey.help.min_cave_light": "Brightness of caves.",
+    "config.honey.name.day_brightness": "Daytime Brightness",
+    "config.honey.help.day_brightness": "Brightness of lighting during daytime.",
+    "config.honey.name.handheld_light_intensity": "Handheld Light Intensity",
+    "config.honey.help.handheld_light_intensity": "Intensity of hand held lights.",
+
 
     "config.honey.category.colors": "Colors",
     "config.honey.name.saturation_boost": "Saturation Boost",

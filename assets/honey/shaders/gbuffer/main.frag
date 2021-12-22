@@ -12,6 +12,7 @@ in vec2 faceUV;
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out vec4 fragNormal;
 layout(location = 2) out vec4 fragData;
+layout(location = 3) out vec4 fragLight;
 
 //layout(location = 2) out vec4 fragLight;
 
@@ -20,61 +21,34 @@ void frx_pipelineFragment() {
     vec4 unshadedColor = color;
 
     // -------
-    // Vanilla lightmap
+    // Vanilla lighting - todo: support things like night vision, and lightmap tinting, etc
     // -------
     #ifdef VANILLA_LIGHTING
-        vec3 lightmap = texture(frxs_lightmap, frx_fragLight.xy).rgb;
+        float minCaveLight = MIN_CAVE_LIGHT;
+        float minSkyLight = MIN_SKY_LIGHT;
+        if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) {
+            minCaveLight = 0.8;
+            minSkyLight = 0.8;
+        }
+        vec3 lightmap = vec3(1.0);
+        vec3 ldata = frx_fragLight;
+        vec3 tdata = getTimeOfDayFactors();
+        lightmap = mix(lightmap * minCaveLight, lightmap, ldata.y);
+        lightmap = mix(lightmap, lightmap * minSkyLight, tdata.y * ldata.y);
+        lightmap = mix(lightmap, lightmap * vec3(4.8, 3.2, 2.8), max(ldata.x * (1.0 - ldata.y), ldata.x * (1.0 - tdata.x)));
+        lightmap = mix(lightmap, lightmap * DAY_BRIGHTNESS, min(ldata.y, tdata.x));
+        if(frx_matDisableAo == 0) lightmap *= ldata.z;
+        if(frx_matDisableDiffuse == 0) lightmap *= diffuse * 0.3 + 0.7;
 
-        // -------
-        // Handheld light cursed implementation (no spotlights yet)
-        // -------
-        vec3 heldLightColor = frx_heldLight.rgb;
-        float heldLightDist = frx_heldLight.a * 10.0;
-        vec3 heldLightTemp = (heldLightColor * (1.0 - smoothstep(heldLightDist / 2.0, heldLightDist, frx_distance)));
-        if(!frx_isGui || frx_isHand) lightmap += (heldLightTemp * (dot(normalize(frx_vertex.xyz), normalize(-frx_vertexNormal)) * 0.5 + 0.5)) / (2.0 - max(getTimeOfDayFactors().y, 1.0 - frx_fragLight.y));
+        float heldLightDist = frx_heldLight.w * 10.0;
+        float heldLightFactor = (heldLightDist / frx_distance) * (1.0 - min((1.0 - tdata.y), ldata.y)) * (1.0 - frx_smootherstep(7.0, 12.0, frx_distance));
+        heldLightFactor *= dot(frx_vertex.xyz, -frx_vertexNormal.xyz) * 0.5 + 0.5;
+        heldLightFactor *= HANDHELD_LIGHT_INTENSITY;
+        //clamp01(heldLightFactor);
+        lightmap = mix(lightmap, lightmap * 2.0 * frx_heldLight.rgb, max(heldLightFactor, 0.0));
 
-        // -------
-        // Lighting shouldn't be too dark
-        // -------
-        float minLight;
-        if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) { minLight = 0.5; } 
-        else minLight = 0.3;
-        lightmap = max(lightmap, vec3(minLight));
-
-        float fragDiffuse = diffuse * 0.3 + 0.7;
-
-        if(frx_matDisableAo == 0) lightmap.rgb *= frx_fragLight.z;
-        if(frx_matDisableDiffuse == 0) lightmap.rgb *= fragDiffuse;
-
-        // -------
-        // Tint lightmap red when spooky cave sound plays
-        // -------
-        #ifdef RED_MOOD_TINT
-            lightmap.rgb = mix(lightmap.rgb, vec3(lightmap.r * 0.8, 0.0, 0.0), frx_smootherstep(0.9, 1.0, frx_playerMood)); // red lightmap when spooky sound
-        #endif
-
-        #ifdef FIRE_RESISTANCE_TINT
-            if(frx_effectFireResistance == 1 && !frx_isGui) {
-                lightmap.r *= 1.5;
-            }
-        #endif
-
-        #ifdef WATER_BREATHING_TINT
-            if(frx_effectWaterBreathing == 1 && !frx_isGui) {
-                lightmap.b *= 1.5;
-            }
-        #endif
-
-        #ifdef BRIGHT_LIGHTMAP
-            // -------
-            // Make lighting brighter overall
-            // -------
-            if(!frx_isGui || frx_isHand) lightmap *= vec3(1.8, 1.5, 1.2);
-        #endif
-
-        lightmap += frx_noise2d(frx_texcoord) / 100.0;
-
-        color.rgb *= lightmap;
+        if(!frx_isGui || frx_isHand) color.rgb *= lightmap;
+        if(frx_isGui && !frx_isHand) color.rgb *= diffuse * 0.3 + 0.7;
     #endif
 
     // -------
@@ -106,8 +80,8 @@ void frx_pipelineFragment() {
     // -------
     fragColor = color;
     fragNormal = vec4((frx_vertexNormal * 0.5 + 0.5), 1.0);
-    fragData = vec4(frx_fragEmissive, 0.0, frx_distance, 1.0); // data for other post shaders to access
-    //fragLight = vec4(frx_fragLight, diffuse);
+    fragData = vec4(frx_fragEmissive, frx_matDisableAo, frx_distance, frx_matDisableDiffuse); // data for other post shaders to access
+    fragLight = vec4(frx_fragLight.xy, frx_fragLight.z, diffuse * 0.5 + 0.5);
 
     gl_FragDepth = gl_FragCoord.z;
 }

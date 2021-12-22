@@ -50,15 +50,14 @@ void main() {
 
     vec3 viewSpacePos = setupViewSpacePos(texcoord, compositeDepth);
 
-    vec4 skyCol = min(texture(u_sky, texcoord), vec4(1.0));
+    vec4 fogColor = texture(u_sky, texcoord);
+    if(frx_playerEyeInWater == 1) fogColor = vec4(0.0, 0.5, 1.0, 1.0);
+    if(frx_playerEyeInLava == 1) fogColor = vec4(1.0, 0.5, 0.0, 1.0);
 
     //float blockDist = texture(u_geometry_data, texcoord).b;
-    float blockDist = length(viewSpacePos);
-    float dist = blockDist / frx_viewDistance;
+    float blockDist = length(viewSpacePos); // more precise 
 
-    float fogFactor = frx_smootherstep(frx_fogStart, frx_fogEnd, blockDist);
-    if(frx_worldIsOverworld == 1) fogFactor = getOverworldFogDensity(getTimeOfDayFactors(), blockDist);
-    if(frx_worldIsNether == 1) fogFactor = getNetherFogDensity(blockDist, false);
+    float fogFactor = getFogDensity(getTimeOfDayFactors(), blockDist);
 
     clamp01(fogFactor);
 
@@ -66,9 +65,9 @@ void main() {
         if(compositeDepth != 1.0) {
             #ifdef RAINBOW_FOG
                 vec3 rainbow = vec3(sin(frx_renderSeconds / 5.0) * sin(frx_renderSeconds / 5.0), 1.0, 0.75);
-                skyCol.rgb = hsv2rgb(rainbow.rgb);
+                fogColor.rgb = hsv2rgb(rainbow.rgb);
             #endif
-            composite.rgb = mix(composite.rgb, skyCol.rgb, fogFactor);
+            composite.rgb = mix(composite.rgb, fogColor.rgb, fogFactor);
         }
     #endif
 
@@ -113,10 +112,13 @@ void main() {
     
     sun = step(0.9995, sun);
     moon = step(0.9996, moon);
-    vec4 sunCol = sun * vec4(2.0, 1.4, 0.4, 10.0);
+    vec4 sunCol = sun * vec4(2.0, 1.2, 0.4, 10.0);
     vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0);
 
-    if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite += (sunCol + moonCol);
+    if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) { 
+        composite += (sunCol + moonCol);
+        composite += step(0.95, snoise(viewSpacePos * 90.0) * 0.5 + 0.5) * (getTimeOfDayFactors().y + getTimeOfDayFactors().z);
+    }
     if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth == 0.0 && frx_worldIsOverworld == 1) composite.rgb = mix(composite.rgb, mix(composite.rgb, composite.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
 
     compositeHand = composite;
