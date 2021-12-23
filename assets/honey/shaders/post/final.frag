@@ -48,9 +48,12 @@ void main() {
     #endif
 
     color.rgb = frx_toneMap(color.rgb);
-    color.rgb = rgb2hsv(color.rgb);
-    color.g *= 1.6;
-    color.rgb = hsv2rgb(color.rgb);
+
+    #ifdef SATURATION_BOOST
+        color.rgb = rgb2hsv(color.rgb);
+        color.g *= 1.6;
+        color.rgb = hsv2rgb(color.rgb);
+    #endif
 
     clamp01(color.rgb);
     finalColor = vec4(color.rgb, 1.0);
