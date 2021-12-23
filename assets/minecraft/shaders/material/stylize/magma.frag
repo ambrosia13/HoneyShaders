@@ -1,7 +1,7 @@
 #include honey:shaders/lib/includes.glsl
 
 void frx_materialFragment() {
-    //#ifdef STYLIZED_LAVA
+    #ifndef CUSTOM_LAVA
     if(frx_fragColor.r > frx_fragColor.b * 2.0 && frx_fragColor.g > 0.3 && !frx_isGui) {
         vec3 lavaColor = vec3(0.320,0.025,0.005);
         vec2 uv = vec2(
@@ -33,9 +33,11 @@ void frx_materialFragment() {
             );
 
         frx_fragColor.rgb = lava * 1.5;
-    //#endif
     
 
         frx_fragEmissive = 1.0;
     }
+    #else
+        frx_fragEmissive = frx_fragColor.r > frx_fragColor.b * 2.0 && frx_fragColor.g > 0.3 ? 1.0 : 0.0;
+    #endif
 }

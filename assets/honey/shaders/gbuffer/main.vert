@@ -19,6 +19,9 @@ void frx_pipelineVertex() {
     // Diffuse shading
     // -------
     #ifdef VANILLA_LIGHTING
-        diffuse = dot(frx_vertexNormal.xyz, frx_skyLightVector);
+        vec3 sunVector = getSunVector();
+        vec3 moonVector = getMoonVector();
+        diffuse = mix(dot(frx_vertexNormal.xyz, sunVector), dot(frx_vertexNormal, vec3(0.0, 0.5, 1.0)), getTimeOfDayFactors().z);
+        diffuse = mix(diffuse, dot(frx_vertexNormal.xyz, moonVector), getTimeOfDayFactors().y);
     #endif
 }

@@ -115,7 +115,7 @@
         {
             name: "geometry_data",
             lod: 0,
-            internalFormat: "RGBA16F",
+            internalFormat: "R11F_G11F_B10F",
             pixelFormat: "RGBA",
             pixelDataType: "UNSIGNED_BYTE",
             target: "TEXTURE_2D",
@@ -187,7 +187,7 @@
     },
 
     include: [
-        "honey:include/shadow.json5",
+        //"honey:include/shadow.json5",
         "honey:include/composite/translucent.json5",
         "honey:include/composite/particles.json5",
         "honey:include/composite/clouds.json5",
@@ -208,11 +208,6 @@
                     nameKey: "config.honey.name.fog_enabled",
                     descriptionKey: "config.honey.help.fog_enabled"
                 },
-                // bright_lightmap: {
-                //     default: true,
-                //     nameKey: "config.honey.name.bright_lightmap",
-                //     descriptionKey: "config.honey.help.bright_lightmap"
-                // },
                 min_sky_light: {
                     default: 0.5,
                     min: 0.0,
@@ -251,6 +246,16 @@
                     default: true,
                     nameKey: "config.honey.name.saturation_boost",
                     descriptionKey: "config.honey.help.saturation_boost"
+                },
+                custom_water: {
+                    default: false,
+                    nameKey: "config.honey.name.custom_water",
+                    descriptionKey: "config.honey.help.custom_water"
+                },
+                custom_lava: {
+                    default: false,
+                    nameKey: "config.honey.name.custom_lava",
+                    descriptionKey: "config.honey.help.custom_lava"
                 }
             }
         },

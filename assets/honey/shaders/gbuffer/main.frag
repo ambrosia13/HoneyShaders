@@ -14,14 +14,12 @@ layout(location = 1) out vec4 fragNormal;
 layout(location = 2) out vec4 fragData;
 layout(location = 3) out vec4 fragLight;
 
-//layout(location = 2) out vec4 fragLight;
-
 void frx_pipelineFragment() {
     vec4 color = frx_fragColor;
     vec4 unshadedColor = color;
 
     // -------
-    // Vanilla lighting - todo: support things like night vision, and lightmap tinting, etc
+    // Vanilla lighting - todo: support things like lightmap tinting, etc
     // -------
     #ifdef VANILLA_LIGHTING
         float minCaveLight = MIN_CAVE_LIGHT;
@@ -29,11 +27,18 @@ void frx_pipelineFragment() {
         float handheldLightIntensity = HANDHELD_LIGHT_INTENSITY;
         vec3 torchColor = vec3(1.2, 0.7, 0.4);
         float torchStrength = 5.0;
+
         if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) {
             minCaveLight = 0.65;
             minSkyLight = 0.65;
             torchStrength = 2.0;
             handheldLightIntensity *= 0.5;
+        }
+        if(frx_effectNightVision == 1) {
+            minCaveLight = 0.9;
+            minSkyLight = 0.9;
+            torchStrength = 1.5;
+            handheldLightIntensity *= 0.2;
         }
 
         vec3 lightmap = vec3(1.0);
@@ -46,20 +51,21 @@ void frx_pipelineFragment() {
         lightmap = mix(lightmap, lightmap * DAY_BRIGHTNESS, min(ldata.y, tdata.x));
         if(frx_matDisableAo == 0) lightmap *= ldata.z;
 
-        vec3 diffuseColor = vec3(diffuse * 0.5 + 0.5);
-        diffuseColor = mix(diffuseColor, diffuseColor * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
-        diffuseColor = mix(diffuseColor, diffuseColor * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, diffuse));
-        diffuseColor = mix(diffuseColor, diffuseColor * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, diffuse));
-        diffuseColor = mix(diffuseColor, vec3(1.0), 1.0 - ldata.y);
-        diffuseColor = diffuseColor * 0.3 + 0.9;
-        if(frx_matDisableDiffuse == 0) lightmap *= diffuseColor;
+        vec3 coloredDiffuse = vec3(diffuse * 0.5 + 0.5);
+        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
+        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, diffuse));
+        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, diffuse));
+        coloredDiffuse = mix(coloredDiffuse, vec3(1.0), 1.0 - ldata.y);
+        coloredDiffuse = coloredDiffuse * 0.3 + 0.9;
+        if(frx_matDisableDiffuse == 0) lightmap *= coloredDiffuse;
 
         float heldLightDist = frx_heldLight.w * 10.0;
         float heldLightFactor = (heldLightDist / frx_distance) * (1.0 - min((1.0 - tdata.y), ldata.y)) * (frx_smootherstep(10.0, 5.0, frx_distance));
         heldLightFactor *= dot(frx_vertex.xyz, -frx_vertexNormal.xyz) * 0.5 + 0.5;
         heldLightFactor *= handheldLightIntensity;
         //clamp01(heldLightFactor);
-        lightmap = mix(lightmap, lightmap * 2.0 * frx_heldLight.rgb, max(heldLightFactor, 0.0));
+        vec3 heldLightColor = frx_heldLight.rgb;
+        lightmap = mix(lightmap, lightmap * 2.0 * heldLightColor.rgb, max(heldLightFactor, 0.0) * (1.0 - ldata.x));
 
         if(!frx_isGui || frx_isHand) color.rgb *= lightmap;
         if(frx_isGui && !frx_isHand) color.rgb *= diffuse * 0.3 + 0.8;
@@ -94,7 +100,7 @@ void frx_pipelineFragment() {
     // -------
     fragColor = color;
     fragNormal = vec4((frx_vertexNormal * 0.5 + 0.5), 1.0);
-    fragData = vec4(frx_fragEmissive, frx_matDisableAo, frx_distance, frx_matDisableDiffuse); // data for other post shaders to access
+    fragData = vec4(frx_fragEmissive, frx_matDisableAo, frx_distance, 1.0); // data for other post shaders to access
     fragLight = vec4(frx_fragLight.xy, frx_fragLight.z, diffuse * 0.5 + 0.5);
 
     gl_FragDepth = gl_FragCoord.z;

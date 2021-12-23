@@ -104,7 +104,7 @@ void main() {
 
     color.rgb = frx_toneMap(color.rgb);
     color.rgb = rgb2hsv(color.rgb);
-    color.g *= 1.4;
+    color.g *= 1.6;
     color.rgb = hsv2rgb(color.rgb);
 
     finalColor = vec4(color.rgb, 1.0);
