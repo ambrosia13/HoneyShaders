@@ -53,5 +53,5 @@ void main() {
     vec3 viewSpacePos = setupViewSpacePos(texcoord, min(handDepth, min(translucentDepth, particlesDepth)));
     float dist = length(viewSpacePos) / frx_viewDistance;
 
-    //if(frx_worldIsNether == 1) brightColor *= getNetherFogDensity(dist, true);
+    if(frx_worldIsNether == 1) brightColor *= clamp(getNetherFogDensity(dist, true), 0.0, 1.0);
 }

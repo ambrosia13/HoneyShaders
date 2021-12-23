@@ -32,7 +32,7 @@ void frx_materialFragment() {
             * vec3(0.995,0.415,0.084)
             );
 
-        frx_fragColor.rgb = lava * 1.5;
+        frx_fragColor.rgb = max(lava, vec3(0.0));
     
 
         frx_fragEmissive = 1.0;

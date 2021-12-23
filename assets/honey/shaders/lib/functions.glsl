@@ -15,6 +15,22 @@ vec3 setupViewSpacePos(in vec2 texcoord, in float depth) {
 void clamp01(inout float a) {
     a = clamp(a, 0.0, 1.0);
 }
+void clamp01(inout vec2 a) {
+    a = clamp(a, vec2(0.0), vec2(1.0));
+}
+void clamp01(inout vec3 a) {
+    a = clamp(a, vec3(0.0), vec3(1.0));
+}
+// float clamp01(in float a) {
+//     return clamp(a, 0.0, 1.0);
+// }
+// vec2 clamp01(in vec2 a) {
+//     return clamp(a, vec2(0.0), vec2(1.0));
+// }
+// vec3 clamp01(in vec3 a) {
+//     return clamp(a, vec3(0.0), vec3(1.0));
+// }
+
 
 float getGaussianWeights(in float val, in float center, in float height, in float width) {
     float n = -1.0 * (val - center) * (val - center);

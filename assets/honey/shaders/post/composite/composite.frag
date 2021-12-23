@@ -160,10 +160,7 @@ void main() {
     // -------
     // Apply custom sky
     // -------
-    vec4 sky = texture(u_sky, texcoord);
-    if(max(geometryDepthTranslucent, geometryDepthParticles) == 1.0) { 
-        geometrySolid = sky;
-    }
+    geometrySolid = mix(geometrySolid, texture(u_sky, texcoord), floor(max(geometryDepthTranslucent, geometryDepthParticles)));
 
     // -------
     // Composite Sorting

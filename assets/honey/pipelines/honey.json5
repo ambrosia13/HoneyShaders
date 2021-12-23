@@ -339,23 +339,23 @@
             includeToken: "honey:misc",
             categoryKey: "config.honey.category.misc",
             elements: {
-                among_us_overlay: {
-                    default: false,
-                    nameKey: "config.honey.name.among_us",
-                    descriptionKey: "config.honey.help.among_us"
-                },
-                trans_sky_overlay: {
-                    default: false,
-                    nameKey: "config.honey.name.trans_sky",
-                    descriptionKey: "config.honey.help.trans_sky"
-                },
-                drunk_shader: {
-                    default: false,
-                    nameKey: "config.honey.name.drunk_shaders",
-                    descriptionKey: "config.honey.help.drunk_shaders"
-                },
+                // among_us_overlay: {
+                //     default: false,
+                //     nameKey: "config.honey.name.among_us",
+                //     descriptionKey: "config.honey.help.among_us"
+                // },
+                // trans_sky_overlay: {
+                //     default: false,
+                //     nameKey: "config.honey.name.trans_sky",
+                //     descriptionKey: "config.honey.help.trans_sky"
+                // },
+                // drunk_shader: {
+                //     default: false,
+                //     nameKey: "config.honey.name.drunk_shaders",
+                //     descriptionKey: "config.honey.help.drunk_shaders"
+                // },
                 red_mood_tint: {
-                    default: true,
+                    default: false,
                     nameKey: "config.honey.name.red_mood_tint",
                     descriptionKey: "config.honey.help.red_mood_tint"
                 },

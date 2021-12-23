@@ -25,21 +25,20 @@ void frx_pipelineFragment() {
         float minCaveLight = MIN_CAVE_LIGHT;
         float minSkyLight = MIN_SKY_LIGHT;
         float handheldLightIntensity = HANDHELD_LIGHT_INTENSITY;
-        vec3 torchColor = vec3(1.2, 0.7, 0.4);
+        vec3 torchColor = vec3(1.2, 0.9, 0.7);
         float torchStrength = 5.0;
 
-        if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) {
-            minCaveLight = 0.65;
-            minSkyLight = 0.65;
-            torchStrength = 2.0;
-            handheldLightIntensity *= 0.5;
-        }
-        if(frx_effectNightVision == 1) {
-            minCaveLight = 0.9;
-            minSkyLight = 0.9;
-            torchStrength = 1.5;
-            handheldLightIntensity *= 0.2;
-        }
+        float netherOrEnd = clamp(float(frx_worldIsNether + frx_worldIsEnd), 0.0, 1.0);
+        minCaveLight = mix(minCaveLight, 0.65, netherOrEnd);
+        minSkyLight = mix(minSkyLight, 0.65, netherOrEnd);
+        torchStrength = mix(torchStrength, 2.0, netherOrEnd);
+        handheldLightIntensity = mix(handheldLightIntensity, handheldLightIntensity * 0.5, netherOrEnd);
+
+        float nightVision = float(frx_effectNightVision);
+        minCaveLight = mix(minCaveLight, 0.9, nightVision);
+        minSkyLight = mix(minSkyLight, 0.9, nightVision);
+        torchStrength = mix(torchStrength, 1.5, nightVision);
+        handheldLightIntensity = mix(handheldLightIntensity, handheldLightIntensity * 0.2, nightVision);
 
         vec3 lightmap = vec3(1.0);
         vec3 ldata = frx_fragLight;
@@ -50,6 +49,7 @@ void frx_pipelineFragment() {
         lightmap = mix(lightmap, lightmap * torchColor * torchStrength, max(ldata.x * (1.0 - ldata.y), ldata.x * tdata.y));
         lightmap = mix(lightmap, lightmap * DAY_BRIGHTNESS, min(ldata.y, tdata.x));
         if(frx_matDisableAo == 0) lightmap *= ldata.z;
+        //lightmap = mix(lightmap, lightmap * ldata.z, 1.0 - float(frx_matDisableAo));
 
         vec3 coloredDiffuse = vec3(diffuse * 0.5 + 0.5);
         coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
@@ -67,6 +67,16 @@ void frx_pipelineFragment() {
         vec3 heldLightColor = frx_heldLight.rgb;
         lightmap = mix(lightmap, lightmap * 2.0 * heldLightColor.rgb, max(heldLightFactor, 0.0) * (1.0 - ldata.x));
 
+        #ifdef RED_MOOD_TINT
+            lightmap = mix(lightmap, lightmap * vec3(1.0, 0.3, 0.3), frx_smootherstep(0.9, 1.0, frx_playerMood));
+        #endif
+        #ifdef FIRE_RESISTANCE_TINT
+            lightmap = mix(lightmap, lightmap * vec3(1.4, 1.0, 1.0), frx_effectFireResistance);
+        #endif
+        #ifdef WATER_BREATHING_TINT
+            lightmap = mix(lightmap, lightmap * vec3(1.0, 1.0, 1.4), frx_effectWaterBreathing);
+        #endif
+
         if(!frx_isGui || frx_isHand) color.rgb *= lightmap;
         if(frx_isGui && !frx_isHand) color.rgb *= diffuse * 0.3 + 0.8;
     #endif
@@ -80,13 +90,8 @@ void frx_pipelineFragment() {
         frx_fragEmissive += frx_luminance(glint) * 0.5;
     }
 
-    if(frx_matHurt == 1) {
-        color *= vec4(1.5, 0.6, 0.6, 1.0);
-    }
-
-    if(frx_matFlash == 1) {
-        color += vec4(1.0, 1.0, 1.0, 0.1) / 3.0;
-    }
+    color.rgb = mix(color.rgb, color.rgb * vec3(1.5, 0.6, 0.6), float(frx_matHurt));
+    color.rgb = mix(color.rgb, color.rgb * 10.0, float(frx_matFlash));
 
     // -------
     // Apply emissivity

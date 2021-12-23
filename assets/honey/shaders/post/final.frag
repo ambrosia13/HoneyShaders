@@ -21,7 +21,7 @@ void main() {
         }
     #endif
 
-    float depth = texture(u_geometry_depth_translucent, texcoord).r;
+    //float depth = texture(u_geometry_depth_translucent, texcoord).r;
     
     if(frx_cameraInWater == 1) {
         #if UNDERWATER_BLUR_AMT != 0
@@ -32,7 +32,9 @@ void main() {
     }
 
     if(frx_cameraInLava == 1) {
-        color = blur(u_color, texcoord, UNDERWATER_BLUR_AMT);
+        #if UNDERWATER_BLUR_AMT != 0
+            color = blur(u_color, texcoord, UNDERWATER_BLUR_AMT);
+        #endif
 
         color *= vec4(1.5, 0.8, 0.8, 1.0);
     }
@@ -45,67 +47,11 @@ void main() {
         }
     #endif
 
-    #ifdef TRANS_SKY_OVERLAY
-        vec3 transSky = vec3(0.0);
-
-        if(texcoord.y >= 0.0 && texcoord.y <= 0.2) {
-            transSky += vec3(0.428,0.924,0.980);
-        }
-
-        if(texcoord.y > 0.2 && texcoord.y <= 0.4) {
-            transSky += vec3(0.990,0.742,0.962);
-        }
-
-        if(texcoord.y > 0.4 && texcoord.y <= 0.6) {
-            transSky += vec3(1.0);
-        }
-
-        if(texcoord.y > 0.6 && texcoord.y <= 0.8) {
-            transSky += vec3(0.990,0.742,0.962);
-        }
-
-        if(texcoord.y >= 0.8 && texcoord.y <= 1.0) {
-            transSky += vec3(0.428,0.924,0.980);
-        }
-
-        if(depth == 1.0) {
-        color.rgb *= (transSky);
-        }
-    #endif
-
-    #ifdef AMONG_US_OVERLAY
-        vec3 sussy = vec3(1.000,0.076,0.029);
-        
-        if(texcoord.x < 0.9 && texcoord.x > 0.1 && texcoord.y < 0.8 && texcoord.y > 0.3) {
-            sussy = vec3(0.022,0.023,0.025);
-        }
-
-        if(texcoord.x < 0.8 && texcoord.x > 0.2 && texcoord.y < 0.7 && texcoord.y > 0.4) {
-            sussy = vec3(0.655,0.941,0.950);
-        }
-
-        if(texcoord.x < 0.8 && texcoord.x > 0.2 && texcoord.y < 0.5 && texcoord.y > 0.4 
-        || texcoord.x < 0.8 && texcoord.x > 0.7 && texcoord.y < 0.7 && texcoord.y > 0.4) {
-            sussy = vec3(0.270,0.365,0.545);
-        }
-
-        if(texcoord.x < 0.6 && texcoord.x > 0.3 && texcoord.y < 0.7 && texcoord.y > 0.6) {
-            sussy = vec3(0.924,0.971,1.000);
-        }
-
-        color.rgb *= sussy;
-    #endif
-
-    #ifdef DRUNK_SHADER
-        vec3 drunk1 = texture(u_color, texcoord + vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
-        vec3 drunk2 = texture(u_color, texcoord - vec2(sin(frx_renderSeconds)/10.0, cos(frx_renderSeconds)/10.0)).rgb;
-        color.rgb += (drunk1 * drunk2);
-    #endif
-
     color.rgb = frx_toneMap(color.rgb);
     color.rgb = rgb2hsv(color.rgb);
     color.g *= 1.6;
     color.rgb = hsv2rgb(color.rgb);
 
+    clamp01(color.rgb);
     finalColor = vec4(color.rgb, 1.0);
 }

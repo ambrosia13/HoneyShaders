@@ -66,7 +66,7 @@
     "config.honey.name.drunk_shaders": "Drunk Shaders",
     "config.honey.help.drunk_shaders": "When true, adds some extra crazy. Don't use this if you get dizzy or epileptic!",
     "config.honey.name.red_mood_tint": "Red Mood Tint",
-    "config.honey.help.red_mood_tint": "When true, tints the lightmap and emissive color red the longer the player is underground, ;becoming more and more red and peaking when a spooky cave sound plays. ;Added during Halloween.",
+    "config.honey.help.red_mood_tint": "When true, tints the lightmap and emissive color red the longer the player is underground, ;becoming more and more red and peaking when a spooky cave sound plays. ;Enable if you want to feel the spooks.",
     "config.honey.name.rainbow_fog": "Rainbow Fog",
     "config.honey.help.rainbow_fog": "Changes the color of fog to be an animated rainbow color.",
     "config.honey.name.highlight_snow": "Highlight Powder Snow",

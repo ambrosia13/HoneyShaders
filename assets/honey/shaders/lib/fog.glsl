@@ -22,8 +22,11 @@ float getNetherFogDensity(in float blockDist, in bool reverse) {
 float getFogDensity(in vec3 timeFactors, in float blockDist) {
     float fogFactor = frx_smootherstep(frx_fogStart, frx_fogEnd, blockDist); // vanilla fog unless specified otherwise
 
-    if(frx_worldIsOverworld == 1 && frx_playerEyeInFluid == 0) fogFactor = getOverworldFogDensity(timeFactors, blockDist);
-    if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) fogFactor = getNetherFogDensity(blockDist, false);
+    float overworldOutOfWater = clamp(float(frx_worldIsOverworld) + float(frx_playerEyeInFluid), 0.0, 1.0);
+    fogFactor = mix(fogFactor, getOverworldFogDensity(timeFactors, blockDist), overworldOutOfWater);
 
+    float netherOrEnd = clamp(float(frx_worldIsNether + frx_worldIsEnd), 0.0, 1.0);
+    fogFactor = mix(fogFactor, getNetherFogDensity(blockDist, false), netherOrEnd);
+    
     return fogFactor;
 }

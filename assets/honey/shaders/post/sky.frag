@@ -32,8 +32,8 @@ void main() {
     // -------
     // Sun & Moon position
     // -------
-    float sunPos = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5;
-    float moonPos = frx_worldIsMoonlit == 0.0 ? dot((viewSpacePos), -frx_skyLightVector) * 0.5 + 0.5 : dot((viewSpacePos), frx_skyLightVector) * 0.5 + 0.5;
+    float sunPos = dot(viewSpacePos, getSunVector()) * 0.5 + 0.5;
+    float moonPos = dot(viewSpacePos, getMoonVector()) * 0.5 + 0.5;
 
     // -------
     // Lower sky color based on time of day
