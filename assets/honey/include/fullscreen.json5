@@ -297,6 +297,8 @@
             fragmentSource: "honey:shaders/post/bloom/bright_color.frag",
             samplers: [
                 "u_geometry_data",
+                "u_geometry_data_particles",
+                "u_geometry_data_translucent",
                 "u_geometry_depth_particles",
                 "u_geometry_depth_translucent",
                 "u_geometry_depth_solid",
@@ -412,7 +414,9 @@
                 framebuffer: "bright_color",
                 samplerImages: [
                     "geometry_data",
-                    "geometry_depth_particles"
+                    "geometry_data_particles",
+                    "geometry_data_translucent",
+                    "geometry_depth_particles",
                     "geometry_depth_translucent",
                     "geometry_depth_solid",
                     "geometry_depth_clouds",

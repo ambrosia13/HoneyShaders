@@ -13,8 +13,8 @@ void frx_materialFragment() {
         float distortY = cos(frx_var0.x * 1.0 + frx_renderSeconds * 0.5) * 0.2;
         vec2 distort = vec2(distortX, distortY);
         float foam = waterlayer(uv * 0.5 + distort);
-        vec3 water = (waterColor + foam / 4.5);
+        vec3 water = (waterColor + foam / 3.5);
 
-        frx_fragColor.rgb = water;
+        frx_fragColor.rgb = mix(water, frx_vertexColor.rgb, 0.5);
     #endif
 }

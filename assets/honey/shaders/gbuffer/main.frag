@@ -45,19 +45,13 @@ void frx_pipelineFragment() {
         vec3 tdata = getTimeOfDayFactors();
 
         lightmap = mix(lightmap * minCaveLight, lightmap, ldata.y);
+        float temp = 1.0 - minSkyLight;
+        lightmap = mix(lightmap, lightmap * (minSkyLight + temp / 2.0), tdata.z * ldata.y);
         lightmap = mix(lightmap, lightmap * minSkyLight, tdata.y * ldata.y);
         lightmap = mix(lightmap, lightmap * torchColor * torchStrength, max(ldata.x * (1.0 - ldata.y), ldata.x * tdata.y));
         lightmap = mix(lightmap, lightmap * DAY_BRIGHTNESS, min(ldata.y, tdata.x));
         if(frx_matDisableAo == 0) lightmap *= ldata.z;
         //lightmap = mix(lightmap, lightmap * ldata.z, 1.0 - float(frx_matDisableAo));
-
-        vec3 coloredDiffuse = vec3(diffuse * 0.5 + 0.5);
-        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
-        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, diffuse));
-        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, diffuse));
-        coloredDiffuse = mix(coloredDiffuse, vec3(1.0), 1.0 - ldata.y);
-        coloredDiffuse = coloredDiffuse * 0.3 + 0.9;
-        if(frx_matDisableDiffuse == 0) lightmap *= coloredDiffuse;
 
         float heldLightDist = frx_heldLight.w * 10.0;
         float heldLightFactor = (heldLightDist / frx_distance) * (1.0 - min((1.0 - tdata.y), ldata.y)) * (frx_smootherstep(10.0, 5.0, frx_distance));
@@ -66,6 +60,16 @@ void frx_pipelineFragment() {
         //clamp01(heldLightFactor);
         vec3 heldLightColor = frx_heldLight.rgb;
         lightmap = mix(lightmap, lightmap * 2.0 * heldLightColor.rgb, max(heldLightFactor, 0.0) * (1.0 - ldata.x));
+
+        // diffuse lighting calculation
+        vec3 coloredDiffuse = vec3(diffuse * 0.5 + 0.5);
+        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
+        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, diffuse));
+        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, diffuse));
+        coloredDiffuse = mix(coloredDiffuse, vec3(1.0), 1.0 - ldata.y);
+        coloredDiffuse = coloredDiffuse + 0.4;
+        if(frx_matDisableDiffuse == 0) lightmap *= (coloredDiffuse);
+
 
         #ifdef RED_MOOD_TINT
             lightmap = mix(lightmap, lightmap * vec3(1.0, 0.3, 0.3), frx_smootherstep(0.9, 1.0, frx_playerMood));
@@ -85,7 +89,8 @@ void frx_pipelineFragment() {
     // Vanilla effects
     // -------
     if(frx_matGlint == 1) {
-        vec3 glint = texture(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 1.5).rgb;
+        vec3 glint = texture(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 2.0).rgb;
+        glint *= glint;
         color.rgb += glint;
         frx_fragEmissive += frx_luminance(glint) * 0.5;
     }

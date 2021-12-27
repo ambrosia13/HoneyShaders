@@ -15,14 +15,15 @@ layout(location = 0) out vec4 compositeHand;
 
 void main() {
     float handDepth = texture(u_geometry_depth_solid, texcoord).r;
-    vec4 color = texture(u_geometry_solid, texcoord);
-
-    vec3 normal = texture(u_geometry_normal, texcoord).xyz;
+    handDepth = floor(handDepth);
 
     float compositeDepth = min(texture(u_geometry_depth_particles, texcoord).r, texture(u_geometry_depth_translucent, texcoord).r);
     compositeDepth = min(handDepth, compositeDepth);
 
-    handDepth = floor(handDepth);
+    vec3 normal = texture(u_geometry_normal, texcoord).xyz * 2.0 - 1.0;
+    vec4 color = texture(u_geometry_solid, texcoord);
+
+
 
     // -------
     // Fog
@@ -56,6 +57,7 @@ void main() {
     plane += frx_renderSeconds * 0.05;
 
     vec2 planeGrid = floor(plane);
+    //planeGrid = mod(plane, 0.5);
     float cloudNoise;
     cloudNoise = step(0.5 - frx_rainGradient * 0.2 - frx_thunderGradient * 0.2, snoise(planeGrid));
     cloudNoise *= frx_smootherstep(0.0, 0.1, viewSpacePos.y);
@@ -85,11 +87,18 @@ void main() {
     vec4 sunCol = sun * vec4(2.0, 1.2, 0.4, 10.0);
     vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0);
 
+    // -------
+    // End sky extras
+    // -------
+    vec3 end = vec3(0.3, 0.1, 0.3) * pow(1.0 - abs(dot(viewSpacePos, vec3(0.0, -1.0, 0.0))), 20.0);
+
     if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth != 0.0 && frx_worldIsOverworld == 1) { 
         color += (sunCol + moonCol);
         color += step(0.95, snoise(viewSpacePos * 90.0) * 0.5 + 0.5) * (getTimeOfDayFactors().y + getTimeOfDayFactors().z);
         color.rgb = mix(color.rgb, mix(color.rgb, color.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
     }
+    if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth != 0.0 && frx_worldIsEnd == 1) color.rgb += end;
+
 
     compositeHand = color;
 }

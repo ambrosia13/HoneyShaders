@@ -29,6 +29,20 @@
             ]
         },
         {
+            name: "geometry_data_particles",
+            lod: 0,
+            internalFormat: "RGBA16F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {name: "TEXTURE_MIN_FILTER", val: "NEAREST"},
+                {name: "TEXTURE_MAG_FILTER", val: "NEAREST"},
+                {name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"}, 
+                {name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"}
+            ]
+        },
+        {
             name: "geometry_depth_particles",
             lod: 0,
             internalFormat: "DEPTH_COMPONENT",
@@ -62,7 +76,7 @@
                     clearColor: 0x00000000
                 }, 
                 {
-                    image: "geometry_data",
+                    image: "geometry_data_particles",
                     clearColor: 0x00000000
                 }, 
                 {

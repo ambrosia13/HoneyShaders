@@ -19,7 +19,7 @@
 
     "config.honey.category.colors": "Colors",
     "config.honey.name.saturation_boost": "Saturation Boost",
-    "config.honey.help.saturation_boost": "Slightly increases the saturation of the image after tone mapping.",
+    "config.honey.help.saturation_boost": "Increases the saturation of the image after tone mapping at the cost of minor color clipping.",
     "config.honey.name.custom_water": "Disable Custom Water",
     "config.honey.help.custom_water": "If disabled, will use custom stylized water shader, else will use vanilla water. ;Note - water texture not made my me. See readme for proper credit.",
     "config.honey.name.custom_lava": "Disable Custom Lava & Magma",
