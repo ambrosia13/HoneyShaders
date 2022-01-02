@@ -5,7 +5,7 @@ uniform sampler2D u_shadowmap;
 uniform sampler2D u_fog_density;
 
 #ifdef VANILLA_LIGHTING
-    in float diffuse;
+    in vec3 diffuse;
 #endif
 in vec2 faceUV;
 
@@ -27,6 +27,7 @@ void frx_pipelineFragment() {
         float handheldLightIntensity = HANDHELD_LIGHT_INTENSITY;
         vec3 torchColor = vec3(1.2, 0.9, 0.7);
         float torchStrength = 5.0;
+        float sunsetLight = minSkyLight * 1.2;
 
         float netherOrEnd = clamp(float(frx_worldIsNether + frx_worldIsEnd), 0.0, 1.0);
         minCaveLight = mix(minCaveLight, 0.65, netherOrEnd);
@@ -45,8 +46,7 @@ void frx_pipelineFragment() {
         vec3 tdata = getTimeOfDayFactors();
 
         lightmap = mix(lightmap * minCaveLight, lightmap, ldata.y);
-        float temp = 1.0 - minSkyLight;
-        lightmap = mix(lightmap, lightmap * (minSkyLight + temp / 2.0), tdata.z * ldata.y);
+        lightmap = mix(lightmap, lightmap * sunsetLight, tdata.z * ldata.y);
         lightmap = mix(lightmap, lightmap * minSkyLight, tdata.y * ldata.y);
         lightmap = mix(lightmap, lightmap * torchColor * torchStrength, max(ldata.x * (1.0 - ldata.y), ldata.x * tdata.y));
         lightmap = mix(lightmap, lightmap * DAY_BRIGHTNESS, min(ldata.y, tdata.x));
@@ -58,19 +58,13 @@ void frx_pipelineFragment() {
         heldLightFactor *= dot(frx_vertex.xyz, -frx_vertexNormal.xyz) * 0.5 + 0.5;
         heldLightFactor *= handheldLightIntensity;
         //clamp01(heldLightFactor);
+        heldLightFactor *= clamp(heldLightFactor, 0.0, 1.0);
         vec3 heldLightColor = frx_heldLight.rgb;
         lightmap = mix(lightmap, lightmap * 2.0 * heldLightColor.rgb, max(heldLightFactor, 0.0) * (1.0 - ldata.x));
 
-        // diffuse lighting calculation
-        vec3 coloredDiffuse = vec3(diffuse * 0.5 + 0.5);
-        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
-        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, diffuse));
-        coloredDiffuse = mix(coloredDiffuse, coloredDiffuse * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, diffuse));
-        coloredDiffuse = mix(coloredDiffuse, vec3(1.0), 1.0 - ldata.y);
-        coloredDiffuse = coloredDiffuse + 0.4;
-        if(frx_matDisableDiffuse == 0) lightmap *= (coloredDiffuse);
-
-
+        if(frx_matDisableDiffuse == 0) lightmap *= (diffuse);
+        //else lightmap *= max(vec3(1.0), coloredDiffuse); // only highlighting non-diffuse materials, not darkening
+    
         #ifdef RED_MOOD_TINT
             lightmap = mix(lightmap, lightmap * vec3(1.0, 0.3, 0.3), frx_smootherstep(0.9, 1.0, frx_playerMood));
         #endif
@@ -82,14 +76,14 @@ void frx_pipelineFragment() {
         #endif
 
         if(!frx_isGui || frx_isHand) color.rgb *= lightmap;
-        if(frx_isGui && !frx_isHand) color.rgb *= diffuse * 0.3 + 0.8;
+        if(frx_isGui && !frx_isHand) color.rgb *= dot(frx_vertexNormal, vec3(0.3, 1.0, 0.6)) * 0.3 + 0.7;
     #endif
 
     // -------
     // Vanilla effects
     // -------
     if(frx_matGlint == 1) {
-        vec3 glint = texture(u_glint, (frx_texcoord + frx_renderSeconds / 15.0) * 2.0).rgb;
+        vec3 glint = texture(u_glint, (frx_normalizeMappedUV(frx_texcoord) + frx_renderSeconds / 15.0)).rgb;
         glint *= glint;
         color.rgb += glint;
         frx_fragEmissive += frx_luminance(glint) * 0.5;
@@ -110,7 +104,7 @@ void frx_pipelineFragment() {
     // -------
     fragColor = color;
     fragNormal = vec4((frx_vertexNormal * 0.5 + 0.5), 1.0);
-    fragData = vec4(frx_fragEmissive, frx_matDisableAo, frx_distance, 1.0); // data for other post shaders to access
+    fragData = vec4(frx_fragEmissive, frx_fragReflectance, frx_distance, 1.0); // data for other post shaders to access
     fragLight = vec4(frx_fragLight.xy, frx_fragLight.z, diffuse * 0.5 + 0.5);
 
     gl_FragDepth = gl_FragCoord.z;

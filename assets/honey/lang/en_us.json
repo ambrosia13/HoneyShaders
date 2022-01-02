@@ -25,6 +25,10 @@
     "config.honey.name.custom_lava": "Disable Custom Lava & Magma",
     "config.honey.help.custom_lava": "If disabled, will use custom stylized lava shader, else will use vanilla lava.",
 
+    "config.honey.category.reflections": "Reflections",
+    "config.honey.name.enable_reflections": "Enable Reflections",
+    "config.honey.help.enable_reflections": "Whether to enable reflections. Currently hardcoded for water & all translucents. WIP, broken.",
+
     "config.honey.category.bloom": "Bloom",
     "config.honey.name.enable_bloom": "Enable Bloom",
     "config.honey.help.enable_bloom": "Whether or not bloom is enabled. ;Medium performance cost.",

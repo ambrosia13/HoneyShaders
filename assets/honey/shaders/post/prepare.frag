@@ -11,24 +11,25 @@ uniform sampler2D u_geometry_normal;
 
 in vec2 texcoord;
 
-layout(location = 0) out vec4 compositeHand;
+layout(location = 0) out vec4 fragColor;
 
 void main() {
+    vec4 color = texture(u_geometry_solid, texcoord);
+    vec4 geometryData = texture(u_geometry_data, texcoord);
+    vec3 normal = texture(u_geometry_normal, texcoord).xyz * 2.0 - 1.0;
+
     float handDepth = texture(u_geometry_depth_solid, texcoord).r;
+    float translucentDepth = texture(u_geometry_depth_translucent, texcoord).r;
+    float particlesDepth = texture(u_geometry_depth_particles, texcoord).r;
+
+    float compositeDepth = min(handDepth, min(translucentDepth, particlesDepth));
     handDepth = floor(handDepth);
 
-    float compositeDepth = min(texture(u_geometry_depth_particles, texcoord).r, texture(u_geometry_depth_translucent, texcoord).r);
-    compositeDepth = min(handDepth, compositeDepth);
-
-    vec3 normal = texture(u_geometry_normal, texcoord).xyz * 2.0 - 1.0;
-    vec4 color = texture(u_geometry_solid, texcoord);
-
-
+    vec3 viewSpacePos = setupViewSpacePos(texcoord, compositeDepth);
 
     // -------
     // Fog
     // -------
-    vec3 viewSpacePos = setupViewSpacePos(texcoord, compositeDepth);
 
     vec4 fogColor = texture(u_sky, texcoord);
     if(frx_playerEyeInWater == 1) fogColor = vec4(0.0, 0.5, 1.0, 1.0);
@@ -84,7 +85,7 @@ void main() {
     
     sun = step(0.9995, sun);
     moon = step(0.9996, moon);
-    vec4 sunCol = sun * vec4(2.0, 1.2, 0.4, 10.0);
+    vec4 sunCol = sun * vec4(2.0, 1.2, 0.4, 10.0) * 2.0;
     vec4 moonCol = moon * vec4(0.3, 0.8, 1.8, 10.0);
 
     // -------
@@ -99,6 +100,5 @@ void main() {
     }
     if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth != 0.0 && frx_worldIsEnd == 1) color.rgb += end;
 
-
-    compositeHand = color;
+    fragColor = color;
 }

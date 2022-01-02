@@ -1,3 +1,5 @@
+// very messy functions file. todo: organize
+
 // Define bloom quality in case pipeline is not loaded
 #ifndef BLOOM_QUALITY
     #define BLOOM_QUALITY 5 
@@ -11,14 +13,20 @@ vec3 setupViewSpacePos(in vec2 texcoord, in float depth) {
     vec4 temp = frx_inverseViewProjectionMatrix * vec4(clipSpacePos, 1.0);
     return temp.xyz / temp.w;
 }
-// vec3 getReflectionVector(in vec2 texcoord, in float depth, in vec3 normal) {
-//     vec3 screenSpacePos = vec3(texcoord, depth);
-//     vec3 clipSpacePos = screenSpacePos * 2.0 - 1.0;
-//     vec4 temp = frx_inverseViewProjectionMatrix * vec4(clipSpacePos, 1.0);
-//     vec4 reflectedViewPos = vec4(reflect(temp.xyz, normal), 1.0);
-//     vec3 reflectedClipSpacePos = (frx_viewProjectionMatrix * reflectedViewPos).xyz;
-//     return reflectedClipSpacePos * 0.5 + 0.5;
-// }
+vec3 viewSpaceToScreenSpace(in vec3 viewSpacePos) {
+    vec4 temp = frx_viewProjectionMatrix * vec4(viewSpacePos, 1.0);
+    return (temp.xyz / temp.w) * 0.5 + 0.5;
+}
+vec3 setupCleanViewSpacePos(in vec2 texcoord, in float depth) {
+    vec3 screenSpacePos = vec3(texcoord, depth);
+    vec3 clipSpacePos = screenSpacePos * 2.0 - 1.0;
+    vec4 temp = frx_inverseCleanViewProjectionMatrix * vec4(clipSpacePos, 1.0);
+    return temp.xyz / temp.w;
+}
+vec3 cleanViewSpaceToScreenSpace(in vec3 viewSpacePos) {
+    vec4 temp = frx_cleanViewProjectionMatrix * vec4(viewSpacePos, 1.0);
+    return (temp.xyz / temp.w) * 0.5 + 0.5;
+}
 
 void clamp01(inout float a) {
     a = clamp(a, 0.0, 1.0);
@@ -67,7 +75,7 @@ vec3 getTimeOfDayFactors() {
 //         color += texture(image, coord + (direction * float(i) * radius) / vec2(frx_viewWidth, frx_viewHeight));
 //         weight += getGaussianWeights(float(i), 0.0, 1.0, 1.0);
 //     }
-//     return color / weight;
+//     return color / (weight * 2.5);
 // }
 
 vec3 getSunVector() {
@@ -79,3 +87,10 @@ vec3 getMoonVector() {
     return moon;
 }
 
+vec3 reinhard(in vec3 color, in float white) {
+    float luminance = frx_luminance(color);
+    luminance = luminance * (1.0 + luminance / (white * white)) / (1.0 + luminance);
+    return color * (luminance / frx_luminance(color));
+}
+
+#include honey:shaders/lib/sky.glsl 

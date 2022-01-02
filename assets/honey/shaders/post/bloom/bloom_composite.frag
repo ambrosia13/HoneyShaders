@@ -7,6 +7,7 @@ uniform sampler2D u_bloom3;
 uniform sampler2D u_bloom4;
 uniform sampler2D u_bloom5;
 uniform sampler2D u_bloom6;
+uniform sampler2D u_prepare;
 
 in vec2 texcoord;
 
@@ -20,8 +21,9 @@ void main() {
     vec4 bloom4 = texture(u_bloom4, texcoord);
     vec4 bloom5 = texture(u_bloom5, texcoord);
     vec4 bloom6 = texture(u_bloom6, texcoord);
+    vec4 color = texture(u_prepare, texcoord);
 
     vec3 composite = bloom0.rgb + bloom1.rgb + bloom2.rgb + bloom3.rgb + bloom4.rgb + bloom5.rgb + bloom6.rgb;
 
-    bloomComposite = vec4(composite, 1.0);
+    bloomComposite = vec4(composite + color.rgb, 1.0);
 }

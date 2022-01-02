@@ -23,6 +23,9 @@ void main() {
     float handDepth = texture(u_geometry_depth_solid, texcoord).r;
 
     float compositeDepth = min(handDepth, min(particlesDepth, translucentDepth));
+
+    vec3 viewSpacePos = setupViewSpacePos(texcoord, min(handDepth, min(translucentDepth, particlesDepth)));
+    float dist = length(viewSpacePos);
     
     // checks for emissivity bloom 
     bool isHand = handDepth != 1.0;
@@ -50,8 +53,9 @@ void main() {
     #elif BLOOM_STYLE >= 1
 
         //if(!isSky) {
+            float a = mix(2.0, 7.0, frx_smoothedEyeBrightness.y);
             float luminance = max(frx_luminance(frx_toneMap(color.rgb)), 0.01);
-            brightColor += color * pow(luminance, 6.0);
+            brightColor += color * pow(luminance, a);
             brightColor /= 2.0;
         //}
 
@@ -63,8 +67,6 @@ void main() {
 
     #endif
 
-    vec3 viewSpacePos = setupViewSpacePos(texcoord, min(handDepth, min(translucentDepth, particlesDepth)));
-    float dist = length(viewSpacePos) / frx_viewDistance;
 
-    if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) brightColor *= clamp(getNetherFogDensity(dist, true), 0.0, 1.0);
+    if(frx_worldIsNether == 1 || frx_worldIsEnd == 1) brightColor = mix(brightColor, vec4(0.0), clamp(getFogDensity(getTimeOfDayFactors(), dist), 0.0, 1.0));
 }

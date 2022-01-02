@@ -23,6 +23,28 @@
             ]
         },
         {
+            name: "prepare2",
+            lod: 0,
+            internalFormat: "RGBA16F",
+            pixelFormat: "RGBA",
+            pixelDataType: "UNSIGNED_BYTE",
+            target: "TEXTURE_2D",
+            texParams: [
+                {
+                    name: "TEXTURE_MIN_FILTER", val: "LINEAR"
+                }, 
+                {
+                    name: "TEXTURE_MAG_FILTER", val: "LINEAR"
+                },
+                {
+                    name: "TEXTURE_WRAP_S", val: "CLAMP_TO_EDGE"
+                }, 
+                {
+                    name: "TEXTURE_WRAP_T", val: "CLAMP_TO_EDGE"
+                }
+            ]
+        },
+        {
             name: "bright_color",
             lod: 0,
             internalFormat: "R11F_G11F_B10F",
@@ -210,6 +232,17 @@
             ]
         },
         {
+            name: "prepare2",
+            colorAttachments: [
+                {
+                    image: "prepare2"
+                },
+                {
+                    image: "geometry_data"
+                }
+            ]
+        },
+        {
             name: "bright_color",
             colorAttachments: [
                 {
@@ -289,6 +322,20 @@
                 "u_geometry_depth_translucent",
                 "u_geometry_depth_particles",
                 "u_geometry_normal"
+            ]
+        },
+        {
+            name: "prepare2",
+            vertexSource: "honey:shaders/post/basic_frame.vert",
+            fragmentSource: "honey:shaders/post/prepare2.frag",
+            samplers: [
+                "u_prepare",
+                "u_geometry_solid",
+                "u_geometry_data",
+                "u_geometry_normal"
+                "u_geometry_depth_solid",
+                "u_geometry_depth_translucent",
+                "u_geometry_depth_particles",
             ]
         },
         {
@@ -374,7 +421,8 @@
                 "u_bloom3",
                 "u_bloom4",
                 "u_bloom5",
-                "u_bloom6"
+                "u_bloom6",
+                "u_prepare"
             ]
         },
         {
@@ -409,6 +457,20 @@
                 ]
             },
             {
+                name: "prepare2",
+                program: "prepare2",
+                framebuffer: "prepare2",
+                samplerImages: [
+                    "prepare",
+                    "geometry_solid",
+                    "geometry_data",
+                    "geometry_normal"
+                    "geometry_depth_solid",
+                    "geometry_depth_translucent",
+                    "geometry_depth_particles",
+                ]
+            },
+            {
                 name: "bright_color",
                 program: "bright_color",
                 framebuffer: "bright_color",
@@ -420,7 +482,7 @@
                     "geometry_depth_translucent",
                     "geometry_depth_solid",
                     "geometry_depth_clouds",
-                    "prepare"
+                    "prepare2"
                 ],
                 toggleConfig: "enable_bloom"
             },
@@ -489,17 +551,8 @@
                     "bloom_pass3",
                     "bloom_pass4",
                     "bloom_pass5",
-                    "bloom_pass6"
-                ],
-                toggleConfig: "enable_bloom"
-            },
-            {
-                name: "bloom_merge",
-                program: "bloom_merge",
-                framebuffer: "prepare",
-                samplerImages: [
-                    "bloom_composite",
-                    "prepare"
+                    "bloom_pass6",
+                    "prepare2"
                 ],
                 toggleConfig: "enable_bloom"
             },
@@ -508,7 +561,7 @@
                 program: "final",
                 framebuffer: "copy_to_main",
                 samplerImages: [
-                    "prepare",
+                    "bloom_composite",
                     "geometry_depth_translucent",
                     "behind_translucent",
                     "geometry_data",

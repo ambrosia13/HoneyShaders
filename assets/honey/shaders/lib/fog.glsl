@@ -27,6 +27,9 @@ float getFogDensity(in vec3 timeFactors, in float blockDist) {
 
     float netherOrEnd = clamp(float(frx_worldIsNether + frx_worldIsEnd), 0.0, 1.0);
     fogFactor = mix(fogFactor, getNetherFogDensity(blockDist, false), netherOrEnd);
+
+    // float fluidFog = frx_smootherstep(frx_fogStart, frx_fogEnd, blockDist);
+    // fogFactor = mix(fogFactor, fogFactor, float(frx_playerEyeInFluid));
     
     return fogFactor;
 }
