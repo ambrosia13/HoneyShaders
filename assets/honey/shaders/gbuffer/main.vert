@@ -1,7 +1,7 @@
 #include honey:shaders/lib/includes.glsl 
 
 #ifdef VANILLA_LIGHTING
-    out vec3 diffuse;
+    out vec3 directionalLight;
 #endif
 out vec2 faceUV;
 
@@ -23,12 +23,12 @@ void frx_pipelineVertex() {
         vec3 moonVector = getMoonVector();
         float temp = mix(dot(frx_vertexNormal.xyz, sunVector), dot(frx_vertexNormal, vec3(0.0, 0.5, 1.0)), getTimeOfDayFactors().z);
         temp = mix(temp, dot(frx_vertexNormal.xyz, moonVector), getTimeOfDayFactors().y);
-        diffuse = vec3(temp * 0.5 + 0.5);
+        directionalLight = vec3(temp * 0.5 + 0.5);
         vec3 tdata = getTimeOfDayFactors();
-        diffuse = mix(diffuse, diffuse * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, diffuse));
-        diffuse = mix(diffuse, diffuse * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, diffuse));
-        diffuse = mix(diffuse, diffuse * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, diffuse));
-        diffuse = mix(diffuse, vec3(1.0), 1.0 - frx_vertexLight.y);
-        diffuse = diffuse + 0.4;
+        directionalLight = mix(directionalLight, directionalLight * vec3(0.8, 1.5, 2.0), tdata.y * frx_smootherstep(0.5, 1.0, directionalLight));
+        directionalLight = mix(directionalLight, directionalLight * vec3(2.0, 1.5, 0.8), tdata.z * frx_smootherstep(0.5, 1.0, directionalLight));
+        directionalLight = mix(directionalLight, directionalLight * vec3(2.0, 1.8, 1.4), tdata.x * frx_smootherstep(0.5, 1.0, directionalLight));
+        directionalLight = mix(directionalLight, vec3(1.0), 1.0 - frx_vertexLight.y);
+        directionalLight = directionalLight + 0.4;
     #endif
 }

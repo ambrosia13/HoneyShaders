@@ -2,10 +2,7 @@
     nameKey: "pipeline.honey.name",
     descriptionKey: "pipeline.honey.desc",
 
-    runVanillaClear: false,
-    brightnessSmoothingFrames: 20,
-    rainSmoothingFrames: 500,
-    glslVersion: 330,
+    smoothBrightnessBidirectionaly: true,
     enablePBR: true,
 
     materialProgram: {
@@ -273,6 +270,11 @@
                     default: true,
                     nameKey: "config.honey.name.enable_reflections",
                     descriptionKey: "config.honey.help.enable_reflections"
+                },
+                rain_reflections: {
+                    default: true,
+                    nameKey: "config.honey.name.rain_reflections",
+                    descriptionKey: "config.honey.help.rain_reflections"
                 }
             }
         },

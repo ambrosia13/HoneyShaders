@@ -22,7 +22,7 @@ vec3 calculateSky(in vec3 viewSpacePos) {
     // -------
     // Lower sky color based on time of day
     // -------
-    skyColLower = mix(skyColLower, vec3(0.1, 0.4, 0.7), nightFactor);
+    skyColLower = mix(skyColLower, vec3(0.1, 0.4, 0.6), nightFactor);
     skyColLower = mix(skyColLower, vec3(1.3, 1.5, 1.8), dayFactor);
     skyColLower = mix(skyColLower, vec3(0.9, 0.6, 0.6), sunsetFactor);
     
@@ -33,7 +33,7 @@ vec3 calculateSky(in vec3 viewSpacePos) {
     // Upper sky color based on time of day
     // -------
     vec3 skyColDay = pow(vec3(0.8, 1.0, 1.2), vec3(5.0));
-    vec3 skyColNight = pow(skyColLower, vec3(2.0));
+    vec3 skyColNight = pow(vec3(0.3, 0.4, 0.6), vec3(2.0));
     vec3 skyColDayNight = mix(skyColDay, skyColNight, frx_worldIsMoonlit);
     vec3 skyColSunset = pow(vec3(0.7, 0.9, 1.0), vec3(5.0));
     vec3 skyColTime = mix(skyColDayNight, skyColSunset, sunsetFactor);
@@ -53,6 +53,7 @@ vec3 calculateSky(in vec3 viewSpacePos) {
     // Mix upper and lower sky colors
     // -------
     skyColUpper.rgb = mix(skyColUpper.rgb, skyColLower.rgb, 1.0 - frx_smootherstep(-0.5, 0.5, viewSpacePos.y));
+    skyColUpper.rgb = mix(skyColUpper.rgb, skyColUpper.rgb * 0.5 + 0.25, frx_rainGradient);
     skyColUpper.rgb += vec3(frx_noise2d(viewSpacePos.xy)) / 50.0; // Fake dithering effect
 
     // -------

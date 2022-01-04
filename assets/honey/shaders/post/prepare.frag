@@ -58,7 +58,6 @@ void main() {
     plane += frx_renderSeconds * 0.05;
 
     vec2 planeGrid = floor(plane);
-    //planeGrid = mod(plane, 0.5);
     float cloudNoise;
     cloudNoise = step(0.5 - frx_rainGradient * 0.2 - frx_thunderGradient * 0.2, snoise(planeGrid));
     cloudNoise *= frx_smootherstep(0.0, 0.1, viewSpacePos.y);
@@ -96,7 +95,7 @@ void main() {
     if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth != 0.0 && frx_worldIsOverworld == 1) { 
         color += (sunCol + moonCol);
         color += step(0.95, snoise(viewSpacePos * 90.0) * 0.5 + 0.5) * (getTimeOfDayFactors().y + getTimeOfDayFactors().z);
-        color.rgb = mix(color.rgb, mix(color.rgb, color.rgb * vec3(1.2 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
+        color.rgb = mix(color.rgb, mix(color.rgb, color.rgb * vec3(1.25 * cloudNoise), cloudNoise), frx_smootherstep(0.0, 0.3, viewSpacePos.y));
     }
     if(texture(u_geometry_depth_particles, texcoord).r == 1.0 && handDepth != 0.0 && frx_worldIsEnd == 1) color.rgb += end;
 

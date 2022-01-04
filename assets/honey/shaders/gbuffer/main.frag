@@ -5,7 +5,7 @@ uniform sampler2D u_shadowmap;
 uniform sampler2D u_fog_density;
 
 #ifdef VANILLA_LIGHTING
-    in vec3 diffuse;
+    in vec3 directionalLight;
 #endif
 in vec2 faceUV;
 
@@ -62,8 +62,8 @@ void frx_pipelineFragment() {
         vec3 heldLightColor = frx_heldLight.rgb;
         lightmap = mix(lightmap, lightmap * 2.0 * heldLightColor.rgb, max(heldLightFactor, 0.0) * (1.0 - ldata.x));
 
-        if(frx_matDisableDiffuse == 0) lightmap *= (diffuse);
-        //else lightmap *= max(vec3(1.0), coloredDiffuse); // only highlighting non-diffuse materials, not darkening
+        if(frx_matDisableDiffuse == 0) lightmap *= (directionalLight);
+        //else lightmap *= max(vec3(1.0), coloredDiffuse); // only highlighting non-directionalLight materials, not darkening
     
         #ifdef RED_MOOD_TINT
             lightmap = mix(lightmap, lightmap * vec3(1.0, 0.3, 0.3), frx_smootherstep(0.9, 1.0, frx_playerMood));
@@ -105,7 +105,7 @@ void frx_pipelineFragment() {
     fragColor = color;
     fragNormal = vec4((frx_vertexNormal * 0.5 + 0.5), 1.0);
     fragData = vec4(frx_fragEmissive, frx_fragReflectance, frx_distance, 1.0); // data for other post shaders to access
-    fragLight = vec4(frx_fragLight.xy, frx_fragLight.z, diffuse * 0.5 + 0.5);
+    fragLight = vec4(frx_fragLight.xy, frx_fragLight.z, directionalLight * 0.5 + 0.5);
 
     gl_FragDepth = gl_FragCoord.z;
 }

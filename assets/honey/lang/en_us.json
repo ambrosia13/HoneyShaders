@@ -28,6 +28,8 @@
     "config.honey.category.reflections": "Reflections",
     "config.honey.name.enable_reflections": "Enable Reflections",
     "config.honey.help.enable_reflections": "Whether to enable reflections. Currently hardcoded for water & all translucents. WIP, broken.",
+    "config.honey.name.rain_reflections": "Rain Reflections",
+    "config.honey.help.rain_reflections": "Enable reflection on surfaces facing up during rain",
 
     "config.honey.category.bloom": "Bloom",
     "config.honey.name.enable_bloom": "Enable Bloom",

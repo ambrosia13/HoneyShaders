@@ -17,4 +17,5 @@ void frx_materialFragment() {
 
         frx_fragColor.rgb = mix(water, frx_vertexColor.rgb, 0.5);
     #endif
+    frx_fragReflectance = 1.0;
 }
